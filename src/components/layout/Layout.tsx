@@ -5,7 +5,7 @@ import { ConnectButton } from "@/components"
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <>
+    <div className="min-h-screen grid grid-cols-1 grid-rows-[auto,1fr]">
       <header className="py-5 bg-grey-700 border-b border-b-grey">
         <div className="layout items-center flex justify-center sm:justify-between flex-wrap gap-4">
           <div className="">
@@ -28,6 +28,6 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
       </header>
 
       {children}
-    </>
+    </div>
   )
 }
