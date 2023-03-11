@@ -3,9 +3,21 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    @apply h-screen text-silver;
+    background: linear-gradient(
+        171.08deg,
+        #010101 -11.16%,
+        #141921 6.1%,
+        #0a0d11 49.05%,
+        #000000 93.22%
+      )
+      no-repeat fixed;
+  }
+
   .layout {
     /* 1100px */
-    max-width: 68.75rem;
-    @apply mx-auto w-11/12;
+    max-width: 80rem;
+    @apply mx-auto w-full px-8;
   }
 }

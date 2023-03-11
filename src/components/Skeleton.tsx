@@ -1,10 +1,11 @@
 import * as React from "react"
+import { ComponentPropsWithoutRef, FC } from "react"
 
 import clsxm from "@/lib/clsxm"
 
-type SkeletonProps = React.ComponentPropsWithoutRef<"div">
+type SkeletonProps = ComponentPropsWithoutRef<"div">
 
-export default function Skeleton({ className, ...rest }: SkeletonProps) {
+export const Skeleton: FC<SkeletonProps> = ({ className, ...rest }) => {
   return (
     <div
       className={clsxm("animate-shimmer bg-[#f6f7f8]", className)}
