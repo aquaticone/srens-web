@@ -1,21 +1,27 @@
 # self-repaying-ens/web
 
-## Setup
+## Getting started
 
 1. Install dependencies: `pnpm i`
+2. Configure environment varibles: `cp .env.example .env`
+3. Start dev server: `pnpm dev`
 
-2. Start dev server: `pnpm dev`
+### Environment variables
 
-## Codegen
+- `ETHERSCAN_API_KEY` - used to fetch ABIs for codegen
+- `NEXT_PUBLIC_ALCHEMY_KEY` - required for mainnet RPC
+- `NEXT_PUBLIC_ENABLE_FOUNDRY` - set to `true` to enable localhost network
 
-[@wagmi/cli] is used to manage ABIs and generate hooks for interacting with contracts.
+### Codegen
 
-Configuration can be found in `wagmi.config.ts`.
+[@wagmi/cli](https://wagmi.sh/cli/getting-started) is used to manage ABIs and generate hooks for interacting with contracts. Configuration can be found in `wagmi.config.ts`.
 
-### Setup
+#### Running codegen
 
-1. `cp .env.example .env`
+1. Make sure you've configured your `ETHERSCAN_API_KEY` in `.env`
+2. Run codegen: `pnpm codgen`
 
-2. Fill in your Etherscan API key
+#### Notes
 
-3. Run codegen: `pnpm codegen`
+- configuration can be found in `wagmi.config.ts`
+- generated code can be found in `src/lib/generated.ts`
