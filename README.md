@@ -1,4 +1,4 @@
-# self-repaying-ens/web
+# srens-web
 
 ## Getting started
 
