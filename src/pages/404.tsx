@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import Seo from "@/components/Seo"
+import { Seo } from "@/components"
 
 export default function NotFoundPage() {
   return (

@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "codegen": "pnpm wagmi generate",
+    "codegen:wagmi": "pnpm wagmi generate",
+    "codegen:graphql": "pnpm graphclient build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -16,8 +17,11 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@lukemorales/query-key-factory": "^1.2.0",
     "@rainbow-me/rainbowkit": "^0.12.1",
+    "@tanstack/react-query": "^4.26.1",
     "clsx": "^1.2.1",
+    "dayjs": "^1.11.7",
     "ethers": "5",
     "next": "^13.2.3",
     "react": "^18.2.0",
@@ -27,7 +31,7 @@
     "wagmi": "^0.12.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.0",
+    "@graphprotocol/client-cli": "^2.2.20",
     "@svgr/webpack": "^6.5.1",
     "@types/node": "18.15.0",
     "@types/react": "^18.0.28",

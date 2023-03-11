@@ -52,9 +52,9 @@ module.exports = {
           600: "#10151B",
           700: "#0E1116",
         },
-        silver: {
-          DEFAULT: "#F1EEE9",
-        },
+        silver: "#F1EEE9",
+        orange: "#ec8339",
+        red: "#fc4544",
       },
     },
   },

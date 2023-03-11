@@ -1,0 +1,11 @@
+sources:
+  - name: ens
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/ensdomains/ens
+    transforms:
+      - autoPagination:
+        validateSchema: true
+
+documents:
+  - ./src/graphql/*.graphql

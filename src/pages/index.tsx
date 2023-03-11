@@ -3,7 +3,7 @@ import { FaRegMinusSquare, FaSignature } from "react-icons/fa"
 import { MdMonitorHeart } from "react-icons/md"
 import { TbArrowBarToUp } from "react-icons/tb"
 
-import { Layout, Seo } from "@/components"
+import { Layout, MyEnsNames, Seo } from "@/components"
 
 export default function HomePage() {
   return (
@@ -11,7 +11,7 @@ export default function HomePage() {
       <Seo />
 
       <div className="layout grid md:grid-cols-3 md:divide-x md:divide-grey-500 min-h-full">
-        <aside className="mt-6 md:text-xs lg:text-sm pr-6">
+        <aside className="pt-6 md:text-xs lg:text-sm pr-6">
           <h1 className="text-grey-100 text-xs uppercase font-medium">
             How it works
           </h1>
@@ -61,12 +61,17 @@ export default function HomePage() {
           </div>
         </aside>
 
-        <main className="col-span-2"></main>
+        <main className="col-span-2 pt-6 pl-6">
+          <section className="rounded border border-grey-400 overflow-hidden">
+            <div className="bg-grey-500 py-3 px-4">
+              <h1 className="text-lg">My domains</h1>
+            </div>
+            <div className="bg-grey-600">
+              <MyEnsNames />
+            </div>
+          </section>
+        </main>
       </div>
     </Layout>
   )
 }
-
-// 1. The Alchemix user MUST authorize this app to create some self repaying ETH debt for them.
-// 2. They can subscribe to the Self Repaying ENS renewal (aka SRENS) service for one or more ENS names. They do not need to own them but the names need to be registered, non expired or in their grace period (i.e. 90 days after expiry). It tells the app to monitor the names and renew them when possible by creating self repaying ETH debt from the user's Alchemix account. The app tries to get a cheaper renewal cost by also monitoring the transaction cost 90 days before expiry.
-// 3. They can unsubscribe from the SRENS service for one or more ENS names when they want.
