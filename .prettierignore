@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+pnpm-lock.yaml
 
 # next.js
 .next
@@ -31,3 +32,6 @@ npm-debug.log*
 
 # changelog
 CHANGELOG.md
+
+# codegen
+/src/lib/generated.ts
