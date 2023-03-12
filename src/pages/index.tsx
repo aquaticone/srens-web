@@ -3,15 +3,15 @@ import { FaRegMinusSquare, FaSignature } from "react-icons/fa"
 import { MdMonitorHeart } from "react-icons/md"
 import { TbArrowBarToUp } from "react-icons/tb"
 
-import { Layout, MyEnsNames, Seo } from "@/components"
+import { Layout, MyDomains, Seo } from "@/components"
 
 export default function HomePage() {
   return (
     <Layout>
       <Seo />
 
-      <div className="layout grid md:grid-cols-3 md:divide-x md:divide-grey-500 min-h-full">
-        <aside className="pt-6 md:text-xs lg:text-sm pr-6">
+      <div className="layout md:grid md:grid-cols-3 md:divide-x md:divide-grey-500 md:min-h-full">
+        <aside className="pt-6 md:text-xs lg:text-sm md:pr-6">
           <h1 className="text-grey-100 text-xs uppercase font-medium">
             How it works
           </h1>
@@ -61,13 +61,20 @@ export default function HomePage() {
           </div>
         </aside>
 
-        <main className="col-span-2 pt-6 pl-6">
+        <main className="md:col-span-2 md:pt-6 max-md:mt-12 md:pl-6 space-y-6">
+          <section className="rounded border border-grey-400 overflow-hidden">
+            <div className="bg-grey-500 py-3 px-4">
+              <h1 className="text-lg">Domain lookup</h1>
+            </div>
+            <div className="bg-grey-600"></div>
+          </section>
+
           <section className="rounded border border-grey-400 overflow-hidden">
             <div className="bg-grey-500 py-3 px-4">
               <h1 className="text-lg">My domains</h1>
             </div>
             <div className="bg-grey-600">
-              <MyEnsNames />
+              <MyDomains />
             </div>
           </section>
         </main>

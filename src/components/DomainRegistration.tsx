@@ -13,17 +13,19 @@ type EnsRegistrationProps = {
   }
 }
 
-export const EnsRegistration: FC<EnsRegistrationProps> = ({ registration }) => {
+export const DomainRegistration: FC<EnsRegistrationProps> = ({
+  registration,
+}) => {
   const expiryDate = dayjs.unix(registration.expiryDate)
   const isSubscribed = false
 
   return (
-    <div className="py-3 px-4 grid grid-cols-[1fr,auto]">
+    <div className="py-3 px-4 grid max-sm:gap-y-3 sm:grid-cols-[1fr,auto] items-center">
       <div>
         <h1 className="text-bronze mb-1 font-semibold">
           {registration.domain.name}
         </h1>
-        <div className="text-sm text-grey-200">
+        <div className="text-xs text-grey-200">
           Expires: {expiryDate.format("L")} @ {expiryDate.format("LT (UTCZ)")}
         </div>
       </div>
@@ -51,7 +53,7 @@ const SubscribeButton: FC<SubUnsubButtonProps> = ({ name }) => {
 
   return (
     <button
-      className="text-sm font-medium pl-3 pr-2.5 py-1.5 border border-green-400/50 text-green-400 hover:bg-green-400 hover:text-grey-700 rounded flex items-center gap-1"
+      className="text-sm max-sm:w-full max-sm max-sm:justify-center transition-colors font-medium pl-3 pr-2.5 py-1.5 border border-green-400/50 text-green-400 hover:bg-green-400 hover:text-grey-700 rounded flex items-center gap-1"
       onClick={onClick}
     >
       Subscribe
@@ -69,7 +71,7 @@ const UnsubscribeButton: FC<SubUnsubButtonProps> = ({ name }) => {
 
   return (
     <button
-      className="text-sm font-medium pl-3 pr-2.5 py-1.5 border border-orange/50 text-orange hover:bg-orange hover:text-grey-700 rounded flex items-center gap-1"
+      className="text-sm max-sm:w-full max-sm max-sm:justify-center transition-colors font-medium pl-3 pr-2.5 py-1.5 border border-orange/50 text-orange hover:bg-orange hover:text-grey-700 rounded flex items-center gap-1"
       onClick={onClick}
     >
       Unsubscribe
