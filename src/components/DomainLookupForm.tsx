@@ -40,7 +40,7 @@ export const DomainLookupForm: FC<DomainLookupFormProps> = ({
     >
       <input
         id="domain"
-        className="bg-transparent text-grey-100 focus:outline-none relative z-10 col-start-1 row-start-2 peer text-xl w-full block px-4 rounded py-3 placeholder:text-grey-300"
+        className="bg-transparent text-grey-100 focus:outline-none relative z-10 col-start-1 row-start-2 peer text-xl w-full block px-4 rounded py-3 placeholder:text-grey-200"
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -51,17 +51,17 @@ export const DomainLookupForm: FC<DomainLookupFormProps> = ({
         placeholder="vitalik.eth"
       />
       <button
-        className="relative peer z-10 px-4 col-start-2 focus:outline-none hover:underline focus-visible:ring-1 focus-visible:ring-inset rounded focus-visible:ring-bronze row-start-2 uppercase text-sm text-green-300 disabled:text-grey-300"
+        className="relative peer z-10 px-4 col-start-2 focus:outline-none enabled:hover:underline focus-visible:ring-1 focus-visible:ring-inset rounded focus-visible:ring-bronze row-start-2 uppercase text-sm text-green-300 disabled:text-grey-200"
         disabled={name === submittedName}
         type="submit"
       >
         Find
       </button>
 
-      <div className="col-span-full peer-focus:ring-1 border-t border-t-grey-400 peer-focus:ring-inset peer-focus:ring-grey-300 row-start-2 bg-black/25 col-start-1" />
+      <div className="col-span-full peer-focus:ring-1 border-t border-t-grey-300 peer-focus:ring-inset peer-focus:ring-grey-200 row-start-2 bg-black/25 col-start-1" />
 
       {error && (
-        <div className="col-span-full col-start-1 border-t border-t-grey-400 px-4 pt-2 pb-3 text-sm text-red row-start-3 font-medium">
+        <div className="col-span-full col-start-1 border-t border-t-grey-300 px-4 pt-2 pb-3 text-sm text-red row-start-3 font-medium">
           {error}
         </div>
       )}

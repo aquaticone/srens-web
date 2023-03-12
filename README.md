@@ -12,17 +12,7 @@
 - `NEXT_PUBLIC_ALCHEMY_KEY` - required for mainnet RPC
 - `NEXT_PUBLIC_ENABLE_FOUNDRY` - set to `true` to enable localhost network
 
-## Codegen
-
-### Contracts
-
-[@wagmi/cli](https://wagmi.sh/cli/getting-started) is used to manage ABIs and generate hooks for interacting with contracts.
-
-- `ETHERSCAN_API_KEY` is required in `.env` for pulling the ABI from Etherscan
-- configuration is defined in `wagmi.config.ts`
-- run generation with: `pnpm codegen:wagmi`
-
-### GraphQL
+## GraphQL codegen
 
 [@graphprotocol/client-cli](https://thegraph.com/docs/en/querying/querying-from-an-application/) is used to generate an SDK for querying the ENS subgraph.
 

@@ -31,7 +31,7 @@ export const ConnectButton: FC = () => {
                 {connected ? (
                   chain.unsupported ? (
                     <button
-                      className="bg-grey-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border px-3 border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
+                      className="bg-grey-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border px-3 border-grey-300 hover:border-grey-200 text-sm text-grey-100 hover:text-silver hover:bg-grey-300 rounded"
                       onClick={openChainModal}
                       type="button"
                     >
@@ -41,7 +41,7 @@ export const ConnectButton: FC = () => {
                     <>
                       {chains.length > 1 && (
                         <button
-                          className="bg-grey-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
+                          className="bg-grey-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border border-grey-300 hover:border-grey-200 text-sm text-grey-100 hover:text-silver hover:bg-grey-300 rounded"
                           onClick={openChainModal}
                           type="button"
                         >
@@ -60,7 +60,7 @@ export const ConnectButton: FC = () => {
                       )}
 
                       <button
-                        className="bg-grey-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors group border border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
+                        className="bg-grey-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors group border border-grey-300 hover:border-grey-200 text-sm text-grey-100 hover:text-silver hover:bg-grey-300 rounded"
                         onClick={openAccountModal}
                         type="button"
                       >
@@ -68,7 +68,7 @@ export const ConnectButton: FC = () => {
                           {account.displayName}
                         </span>
                         {account.displayBalance ? (
-                          <span className="px-3 py-1.5 border-l group-hover:border-l-grey-300 border-l-grey-400">
+                          <span className="px-3 py-1.5 border-l group-hover:border-l-grey-200 border-l-grey-300">
                             {account.displayBalance}
                           </span>
                         ) : null}
@@ -77,7 +77,7 @@ export const ConnectButton: FC = () => {
                   )
                 ) : (
                   <button
-                    className="bg-grey-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border px-3 py-1.5 border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
+                    className="bg-grey-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border px-3 py-1.5 border-grey-300 hover:border-grey-200 text-sm text-grey-100 hover:text-silver hover:bg-grey-300 rounded"
                     onClick={openConnectModal}
                     type="button"
                   >

@@ -2,6 +2,11 @@ import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 import { FC, MouseEventHandler } from "react"
 import { FaMinus, FaPlus } from "react-icons/fa"
+import { useAccount } from "wagmi"
+
+import { useIsClientReady, useReadAlchemistMintAllowance } from "@/hooks"
+
+import { Button } from "@/components/Button"
 
 import { Maybe } from ".graphclient"
 
@@ -20,7 +25,7 @@ export const Domain: FC<DomainProps> = ({ name, expiryDate }) => {
     <div className="py-3 px-4 grid max-sm:gap-y-3 sm:grid-cols-[1fr,auto] items-center">
       <div>
         <h1 className="text-bronze mb-1 font-semibold">{name}</h1>
-        <div className="text-xs text-grey-200">
+        <div className="text-xs text-grey-100">
           Expires: {expiryDateObj.format("L")} @{" "}
           {expiryDateObj.format("LT (UTCZ)")}
         </div>
@@ -41,6 +46,9 @@ type SubUnsubButtonProps = {
 }
 
 const SubscribeButton: FC<SubUnsubButtonProps> = ({ name }) => {
+  const isClientReady = useIsClientReady()
+  const mintAllowance = useReadAlchemistMintAllowance()
+
   const onClick: MouseEventHandler<HTMLButtonElement> = () => {
     // TODO: Contract interaction
     // eslint-disable-next-line no-console
@@ -48,17 +56,23 @@ const SubscribeButton: FC<SubUnsubButtonProps> = ({ name }) => {
   }
 
   return (
-    <button
-      className="text-sm focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze max-sm:w-full max-sm max-sm:justify-center transition-colors font-medium pl-3 pr-2.5 py-1.5 border border-green-400/50 text-green-400 hover:bg-green-400 hover:text-grey-700 rounded flex items-center gap-1"
+    <Button
+      color="green"
+      disabled={!isClientReady || !mintAllowance.data}
+      isLoading={false}
+      loadingText="Subscribing"
+      icon={FaPlus}
       onClick={onClick}
     >
       Subscribe
-      <FaPlus />
-    </button>
+    </Button>
   )
 }
 
 const UnsubscribeButton: FC<SubUnsubButtonProps> = ({ name }) => {
+  const isClientReady = useIsClientReady()
+  const { isConnected } = useAccount()
+
   const onClick: MouseEventHandler<HTMLButtonElement> = () => {
     // TODO: Contract interaction
     // eslint-disable-next-line no-console
@@ -66,12 +80,15 @@ const UnsubscribeButton: FC<SubUnsubButtonProps> = ({ name }) => {
   }
 
   return (
-    <button
-      className="text-sm focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze max-sm:w-full max-sm max-sm:justify-center transition-colors font-medium pl-3 pr-2.5 py-1.5 border border-orange/50 text-orange hover:bg-orange hover:text-grey-700 rounded flex items-center gap-1"
+    <Button
+      color="orange"
+      disabled={!isClientReady || !isConnected}
+      isLoading={false}
+      loadingText="Unsubscribing"
+      icon={FaMinus}
       onClick={onClick}
     >
       Unsubscribe
-      <FaMinus />
-    </button>
+    </Button>
   )
 }

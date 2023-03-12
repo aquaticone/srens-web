@@ -9,7 +9,7 @@ import Etherscan from "~/svg/etherscan.svg"
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="min-h-screen grid grid-cols-1 grid-rows-[auto,1fr,auto]">
-      <header className="py-5 bg-grey-700 border-b border-b-grey">
+      <header className="py-5 bg-grey-600 border-b border-b-grey">
         <div className="layout items-center flex justify-center sm:justify-between flex-wrap gap-4">
           <div>
             <h1 className="text-lg uppercase font-semibold tracking-widest">
@@ -40,19 +40,19 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
               href="https://github.com/The-Wary-One/self-repaying-ens"
               target="_blank"
             >
-              <FaGithub className="w-8 h-8 md:w-5 md:h-5 fill-grey-200" />
+              <FaGithub className="w-8 h-8 md:w-5 md:h-5 fill-grey-100" />
             </Link>
             <Link
               className="rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze-100"
               href="https://etherscan.io/address/0xef6274Eb92b55dA6D4BCE0b7D686f37064348aBB#code"
               target="_blank"
             >
-              <Etherscan className="w-8 h-8 md:w-5 md:h-5 fill-grey-200" />
+              <Etherscan className="w-8 h-8 md:w-5 md:h-5 fill-grey-100" />
             </Link>
           </div>
           <div>
             <Link
-              className="text-xs text-grey-200 focus:outline-none focus-visible:ring-1 rounded focus-visible:ring-bronze-100"
+              className="text-xs text-grey-100 focus:outline-none focus-visible:ring-1 rounded focus-visible:ring-bronze-100"
               href="https://alchemix.fi"
               target="_blank"
             >
