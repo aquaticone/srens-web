@@ -5,14 +5,14 @@ import { useAccount } from "wagmi"
 import { queries } from "@/lib/query"
 import { useIsClientReady } from "@/hooks"
 
-import { DomainRegistration } from "@/components/DomainRegistration"
+import { Domain } from "@/components/Domain"
 import { Spinner } from "@/components/Spinner"
 
 export const MyDomains: FC = () => {
   const isClientReady = useIsClientReady()
   const { address, isConnected } = useAccount()
   const { data, isLoading } = useQuery({
-    ...queries.user.domains(address ?? "0x"),
+    ...queries.domains.user(address ?? "0x"),
     enabled: !!address,
   })
 
@@ -29,9 +29,10 @@ export const MyDomains: FC = () => {
       ) : data?.account?.registrations?.length ? (
         <div className="divide-y divide-gray-800">
           {data.account.registrations.map((registration) => (
-            <DomainRegistration
+            <Domain
               key={registration.domain.id}
-              registration={registration}
+              name={registration.domain.name}
+              expiryDate={registration.expiryDate}
             />
           ))}
         </div>

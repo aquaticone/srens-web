@@ -5098,11 +5098,17 @@ const merger = new(BareMerger as any)({
     get documents() {
       return [
       {
-        document: GetDomainsForOwnerDocument,
+        document: GetDomainsForAddressDocument,
         get rawSDL() {
-          return printWithCache(GetDomainsForOwnerDocument);
+          return printWithCache(GetDomainsForAddressDocument);
         },
-        location: 'GetDomainsForOwnerDocument.graphql'
+        location: 'GetDomainsForAddressDocument.graphql'
+      },{
+        document: GetDomainByNameDocument,
+        get rawSDL() {
+          return printWithCache(GetDomainByNameDocument);
+        },
+        location: 'GetDomainByNameDocument.graphql'
       }
     ];
     },
@@ -5141,21 +5147,31 @@ export function getBuiltGraphSDK<TGlobalContext = any, TOperationContext = any>(
   const sdkRequester$ = getBuiltGraphClient().then(({ sdkRequesterFactory }) => sdkRequesterFactory(globalContext));
   return getSdk<TOperationContext, TGlobalContext>((...args) => sdkRequester$.then(sdkRequester => sdkRequester(...args)));
 }
-export type getDomainsForOwnerQueryVariables = Exact<{
+export type getDomainsForAddressQueryVariables = Exact<{
   address: Scalars['ID'];
   first?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type getDomainsForOwnerQuery = { account?: Maybe<{ registrations?: Maybe<Array<(
+export type getDomainsForAddressQuery = { account?: Maybe<{ registrations?: Maybe<Array<(
       Pick<Registration, 'expiryDate' | 'registrationDate'>
       & { domain: Pick<Domain, 'id' | 'name'> }
     )>> }> };
 
+export type getDomainByNameQueryVariables = Exact<{
+  name?: InputMaybe<Scalars['String']>;
+}>;
 
-export const getDomainsForOwnerDocument = gql`
-    query getDomainsForOwner($address: ID!, $first: Int = 100, $skip: Int = 0) {
+
+export type getDomainByNameQuery = { domains: Array<(
+    Pick<Domain, 'id' | 'name'>
+    & { registration?: Maybe<Pick<Registration, 'expiryDate' | 'registrationDate'>> }
+  )> };
+
+
+export const getDomainsForAddressDocument = gql`
+    query getDomainsForAddress($address: ID!, $first: Int = 100, $skip: Int = 0) {
   account(id: $address) {
     registrations(
       first: $first
@@ -5172,14 +5188,30 @@ export const getDomainsForOwnerDocument = gql`
     }
   }
 }
-    ` as unknown as DocumentNode<getDomainsForOwnerQuery, getDomainsForOwnerQueryVariables>;
+    ` as unknown as DocumentNode<getDomainsForAddressQuery, getDomainsForAddressQueryVariables>;
+export const getDomainByNameDocument = gql`
+    query getDomainByName($name: String) {
+  domains(first: 1, where: {name: $name}) {
+    id
+    name
+    registration {
+      expiryDate
+      registrationDate
+    }
+  }
+}
+    ` as unknown as DocumentNode<getDomainByNameQuery, getDomainByNameQueryVariables>;
+
 
 
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
-    getDomainsForOwner(variables: getDomainsForOwnerQueryVariables, options?: C): Promise<getDomainsForOwnerQuery> {
-      return requester<getDomainsForOwnerQuery, getDomainsForOwnerQueryVariables>(getDomainsForOwnerDocument, variables, options) as Promise<getDomainsForOwnerQuery>;
+    getDomainsForAddress(variables: getDomainsForAddressQueryVariables, options?: C): Promise<getDomainsForAddressQuery> {
+      return requester<getDomainsForAddressQuery, getDomainsForAddressQueryVariables>(getDomainsForAddressDocument, variables, options) as Promise<getDomainsForAddressQuery>;
+    },
+    getDomainByName(variables?: getDomainByNameQueryVariables, options?: C): Promise<getDomainByNameQuery> {
+      return requester<getDomainByNameQuery, getDomainByNameQueryVariables>(getDomainByNameDocument, variables, options) as Promise<getDomainByNameQuery>;
     }
   };
 }

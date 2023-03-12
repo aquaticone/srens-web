@@ -31,7 +31,7 @@ export const ConnectButton: FC = () => {
                 {connected ? (
                   chain.unsupported ? (
                     <button
-                      className="bg-grey-500 transition-colors border px-3 border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
+                      className="bg-grey-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border px-3 border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
                       onClick={openChainModal}
                       type="button"
                     >
@@ -41,7 +41,7 @@ export const ConnectButton: FC = () => {
                     <>
                       {chains.length > 1 && (
                         <button
-                          className="bg-grey-500 transition-colors border border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
+                          className="bg-grey-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
                           onClick={openChainModal}
                           type="button"
                         >
@@ -60,7 +60,7 @@ export const ConnectButton: FC = () => {
                       )}
 
                       <button
-                        className="bg-grey-500 transition-colors group border border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
+                        className="bg-grey-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors group border border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
                         onClick={openAccountModal}
                         type="button"
                       >
@@ -77,7 +77,7 @@ export const ConnectButton: FC = () => {
                   )
                 ) : (
                   <button
-                    className="bg-grey-500 transition-colors border px-3 py-1.5 border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
+                    className="bg-grey-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border px-3 py-1.5 border-grey-400 hover:border-grey-300 text-sm text-grey-200 hover:text-silver hover:bg-grey-400 rounded"
                     onClick={openConnectModal}
                     type="button"
                   >

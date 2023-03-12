@@ -1,11 +1,19 @@
-import * as React from "react"
+import { useState } from "react"
 import { FaRegMinusSquare, FaSignature } from "react-icons/fa"
 import { MdMonitorHeart } from "react-icons/md"
 import { TbArrowBarToUp } from "react-icons/tb"
 
-import { Layout, MyDomains, Seo } from "@/components"
+import {
+  DomainLookupForm,
+  DomainLookupResults,
+  Layout,
+  MyDomains,
+  Seo,
+} from "@/components"
 
 export default function HomePage() {
+  const [domainLookupName, setDomainLookupName] = useState<string>("")
+
   return (
     <Layout>
       <Seo />
@@ -64,9 +72,19 @@ export default function HomePage() {
         <main className="md:col-span-2 md:pt-6 max-md:mt-12 md:pl-6 space-y-6">
           <section className="rounded border border-grey-400 overflow-hidden">
             <div className="bg-grey-500 py-3 px-4">
-              <h1 className="text-lg">Domain lookup</h1>
+              <label htmlFor="domain" className="text-lg">
+                Domain lookup
+              </label>
             </div>
-            <div className="bg-grey-600"></div>
+            <DomainLookupForm
+              submittedName={domainLookupName}
+              onSubmit={setDomainLookupName}
+            />
+            {domainLookupName !== "" && (
+              <div className="bg-grey-600 border-t border-t-grey-400">
+                <DomainLookupResults name={domainLookupName} />
+              </div>
+            )}
           </section>
 
           <section className="rounded border border-grey-400 overflow-hidden">

@@ -9,10 +9,15 @@ export const queryClient = new QueryClient()
 const sdk = getBuiltGraphSDK()
 
 export const queries = createQueryKeyStore({
-  user: {
-    domains: (address: Address) => ({
+  domains: {
+    user: (address: Address) => ({
       queryKey: [address],
-      queryFn: () => sdk.getDomainsForOwner({ address: address.toLowerCase() }),
+      queryFn: () =>
+        sdk.getDomainsForAddress({ address: address.toLowerCase() }),
+    }),
+    lookup: (name: string) => ({
+      queryKey: [name],
+      queryFn: () => sdk.getDomainByName({ name }),
     }),
   },
 })
