@@ -7,9 +7,15 @@ query getDomainsForAddress($address: ID!, $first: Int = 100, $skip: Int = 0) {
       orderDirection: asc
     ) {
       expiryDate
+      registrationDate
       domain {
         id
         name
+      }
+      events(first: 1000) {
+        ... on NameRenewed {
+          blockNumber
+        }
       }
     }
   }
@@ -20,7 +26,14 @@ query getDomainByName($name: String) {
     id
     name
     registration {
+      id
       expiryDate
+      registrationDate
+      events(first: 1000) {
+        ... on NameRenewed {
+          blockNumber
+        }
+      }
     }
   }
 }

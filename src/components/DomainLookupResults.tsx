@@ -30,6 +30,8 @@ export const DomainLookupResults: FC<DomainLookupResultsProps> = ({ name }) => {
             key={domain.id}
             name={domain.name}
             expiryDate={domain.registration?.expiryDate}
+            registrationDate={domain.registration?.registrationDate}
+            renewalEvents={domain.registration?.events}
           />
         ))
       )}

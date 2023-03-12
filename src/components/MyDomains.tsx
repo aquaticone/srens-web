@@ -27,7 +27,7 @@ export const MyDomains: FC = () => {
         <div className="flex h-full w-full items-center justify-center">
           <Spinner className="h-8 w-8" />
         </div>
-      ) : !data?.account?.registrations ? (
+      ) : !data?.account?.registrations?.length ? (
         <FallbackMessage>You don't own any domains</FallbackMessage>
       ) : (
         <div className="divide-y divide-gray-800">
@@ -36,6 +36,8 @@ export const MyDomains: FC = () => {
               key={registration.domain.id}
               name={registration.domain.name}
               expiryDate={registration.expiryDate}
+              registrationDate={registration.registrationDate}
+              renewalEvents={registration.events}
             />
           ))}
         </div>

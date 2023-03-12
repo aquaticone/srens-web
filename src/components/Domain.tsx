@@ -5,33 +5,71 @@ import { FaMinus, FaPlus } from "react-icons/fa"
 import { useAccount } from "wagmi"
 
 import { useIsClientReady, useReadAlchemistMintAllowance } from "@/hooks"
+import { useBlockTimestamp } from "@/hooks/useBlockTimestamp"
 
 import { Button } from "@/components/Button"
 
-import { Maybe } from ".graphclient"
+import { Maybe, NameRenewed } from ".graphclient"
 
 dayjs.extend(localizedFormat)
+
+type RenewalEvent = Pick<NameRenewed, "blockNumber">
 
 type DomainProps = {
   name: Maybe<string> | undefined
   expiryDate: number
+  registrationDate: number
+  renewalEvents?: Array<object | RenewalEvent>
 }
 
-export const Domain: FC<DomainProps> = ({ name, expiryDate }) => {
-  const expiryDateObj = dayjs.unix(expiryDate)
+export const Domain: FC<DomainProps> = ({
+  name,
+  expiryDate,
+  registrationDate,
+  renewalEvents,
+}) => {
+  const nearestRenewalEvent = renewalEvents?.find((e) =>
+    Object.hasOwn(e, "blockNumber")
+  ) as RenewalEvent | undefined
+  const rewnewalDate = useBlockTimestamp(nearestRenewalEvent?.blockNumber)
+
   const isSubscribed = false
 
   return (
-    <div className="py-3 px-4 grid max-sm:gap-y-3 sm:grid-cols-[1fr,auto] items-center">
+    <div className="py-3 px-4 grid max-sm:gap-y-3 sm:grid-cols-[1fr,auto] items-end">
       <div>
         <h1 className="text-bronze mb-1 font-semibold">{name}</h1>
-        <div className="text-xs text-grey-100">
-          Expires: {expiryDateObj.format("L")} @{" "}
-          {expiryDateObj.format("LT (UTCZ)")}
-        </div>
+        <dl className="text-xs flex flex-wrap justify-between sm:grid sm:grid-cols-3 sm:gap-x-3 gap-y-1 mt-2">
+          <dt className="uppercase max-sm:w-1/3 sm:row-start-2 text-grey-100">
+            Expires
+          </dt>
+          <dd className="font-mono max-sm:w-2/3 max-sm:text-right sm:row-start-1">
+            <FormattedDate date={expiryDate} />
+          </dd>
+          <dt className="uppercase max-sm:w-1/3 sm:row-start-2 text-grey-100">
+            Registered
+          </dt>
+          <dd className="font-mono max-sm:w-2/3 max-sm:text-right sm:row-start-1">
+            <FormattedDate date={registrationDate} />
+          </dd>
+          <dt className="uppercase max-sm:w-1/3 sm:row-start-2 text-grey-100">
+            Renewed
+          </dt>
+          <dd className="font-mono max-sm:w-2/3 max-sm:text-right sm:row-start-1">
+            {rewnewalDate.isLoading ? (
+              "Loading..."
+            ) : rewnewalDate.isError ? (
+              "Error fetching renewal date"
+            ) : rewnewalDate.data ? (
+              <FormattedDate date={rewnewalDate.data} />
+            ) : (
+              "Never"
+            )}
+          </dd>
+        </dl>
       </div>
-      <div>
-        {isSubscribed ? (
+      <div className="max-sm:my-2">
+        {!isSubscribed ? (
           <UnsubscribeButton name={name} />
         ) : (
           <SubscribeButton name={name} />
@@ -90,5 +128,19 @@ const UnsubscribeButton: FC<SubUnsubButtonProps> = ({ name }) => {
     >
       Unsubscribe
     </Button>
+  )
+}
+
+type FormattedDateProps = {
+  date: number
+}
+
+const FormattedDate: FC<FormattedDateProps> = ({ date }) => {
+  const dateObj = dayjs.unix(date)
+  return (
+    <>
+      {dateObj.format("L")}
+      <span className="sm:max-xl:hidden">, {dateObj.format("LT")}</span>
+    </>
   )
 }

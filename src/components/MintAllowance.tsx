@@ -35,7 +35,7 @@ export const MintAllowance: FC = () => {
         <FallbackMessage>Error fetching SRENS mint allowance</FallbackMessage>
       ) : mintAllowance.data ? (
         <div>
-          <p className="text-sm">
+          <p className="text-sm md:max-lg:text-xs">
             You're all set to use Self-Repaying ENS. You can revoke allowance at
             any time to disable service.
           </p>
@@ -54,7 +54,7 @@ export const MintAllowance: FC = () => {
         </div>
       ) : (
         <div>
-          <p className="text-sm">
+          <p className="text-sm md:max-lg:text-xs">
             To get started with Self-Repaying ENS, you must approve the SRENS
             service to mint alETH on your behalf. Minted alETH will be used to
             cover domain renewals.

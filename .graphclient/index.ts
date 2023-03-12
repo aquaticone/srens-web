@@ -5156,7 +5156,7 @@ export type getDomainsForAddressQueryVariables = Exact<{
 
 export type getDomainsForAddressQuery = { account?: Maybe<{ registrations?: Maybe<Array<(
       Pick<Registration, 'expiryDate' | 'registrationDate'>
-      & { domain: Pick<Domain, 'id' | 'name'> }
+      & { domain: Pick<Domain, 'id' | 'name'>, events: Array<Pick<NameRenewed, 'blockNumber'> | {}> }
     )>> }> };
 
 export type getDomainByNameQueryVariables = Exact<{
@@ -5166,7 +5166,10 @@ export type getDomainByNameQueryVariables = Exact<{
 
 export type getDomainByNameQuery = { domains: Array<(
     Pick<Domain, 'id' | 'name'>
-    & { registration?: Maybe<Pick<Registration, 'expiryDate' | 'registrationDate'>> }
+    & { registration?: Maybe<(
+      Pick<Registration, 'id' | 'expiryDate' | 'registrationDate'>
+      & { events: Array<Pick<NameRenewed, 'blockNumber'> | {}> }
+    )> }
   )> };
 
 
@@ -5185,6 +5188,11 @@ export const getDomainsForAddressDocument = gql`
         id
         name
       }
+      events(first: 1000) {
+        ... on NameRenewed {
+          blockNumber
+        }
+      }
     }
   }
 }
@@ -5195,8 +5203,14 @@ export const getDomainByNameDocument = gql`
     id
     name
     registration {
+      id
       expiryDate
       registrationDate
+      events(first: 1000) {
+        ... on NameRenewed {
+          blockNumber
+        }
+      }
     }
   }
 }
