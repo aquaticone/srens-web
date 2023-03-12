@@ -68,7 +68,7 @@ export const ConnectButton: FC = () => {
                           {account.displayName}
                         </span>
                         {account.displayBalance ? (
-                          <span className="px-3 py-1.5 border-l group-hover:border-l-grey-200 border-l-grey-300">
+                          <span className="px-3 py-1.5 border-l group-hover:border-l-grey-200 border-l-grey-300 transition-colors">
                             {account.displayBalance}
                           </span>
                         ) : null}
