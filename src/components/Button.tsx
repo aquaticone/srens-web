@@ -29,15 +29,13 @@ export const Button: FC<ButtonProps> = ({
   return (
     <button
       className={clsxm(
-        "text-sm focus:outline-none justify-center focus-visible:ring-1 focus-visible:ring-bronze max-sm:w-full max-sm max-sm:justify-center transition-colors font-medium pl-3 pr-2.5 py-2 border enabled:hover:text-grey-600 rounded flex items-center gap-2",
+        "max-sm focus-focus-visible:ring-bronze flex items-center justify-center gap-2 rounded border-2 py-2 pl-3 pr-2.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 enabled:hover:text-comet-900",
         {
-          "border-green-400/50 text-green-400 enabled:hover:bg-green-400":
+          "border-green-400 text-green-300 enabled:hover:bg-green-400":
             !disabled && color === "green",
-          "border-orange/50 text-orange enabled:hover:bg-orange":
-            !disabled && color === "orange",
-          "border-grey-200 text-grey-100 enabled:hover:bg-grey-100":
+          "border-comet-100 text-comet-50 enabled:hover:bg-comet-100":
             !disabled && color === "grey",
-          "border-grey-300 text-grey-300 cursor-not-allowed": disabled,
+          "cursor-not-allowed border-comet-600 text-comet-600": disabled,
           "cursor-wait border-0": isLoading,
         },
         className
@@ -48,9 +46,9 @@ export const Button: FC<ButtonProps> = ({
     >
       {isLoading && loadingText ? loadingText : children}
       {isLoading ? (
-        <Spinner className="fill-current h-4 w-4" />
+        <Spinner className="h-5 w-5 fill-current" />
       ) : Icon ? (
-        <Icon className="fill-current h-4 w-4" />
+        <Icon className="h-5 w-5 fill-current" />
       ) : null}
     </button>
   )

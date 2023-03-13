@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply h-screen text-silver;
+    @apply h-screen text-white;
     background: linear-gradient(
         171.08deg,
         #010101 -11.16%,
@@ -17,7 +17,7 @@
 
   .layout {
     /* 1100px */
-    max-width: 80rem;
-    @apply mx-auto w-full lg:px-8 px-4;
+    max-width: 60rem;
+    @apply mx-auto w-full px-4 lg:px-8;
   }
 }

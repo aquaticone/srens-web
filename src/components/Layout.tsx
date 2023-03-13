@@ -8,20 +8,20 @@ import Etherscan from "~/svg/etherscan.svg"
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="min-h-screen grid grid-cols-1 grid-rows-[auto,1fr,auto]">
-      <header className="py-5 bg-grey-600 border-b border-b-grey">
-        <div className="layout items-center flex justify-center sm:justify-between flex-wrap gap-4">
+    <div className="grid min-h-screen grid-cols-1 grid-rows-[auto,1fr,auto]">
+      <header className="border-b border-b-comet-700 py-5">
+        <div className="layout flex flex-wrap items-center justify-center gap-4 sm:justify-between">
           <div>
-            <h1 className="text-lg uppercase font-semibold tracking-widest">
+            <h1 className="text-lg font-semibold uppercase tracking-widest">
               Self-Repaying ENS
             </h1>
             <Link
-              className="text-xs max-sm:mt-2 rounded text-bronze-200 max-sm:block max-sm:text-center hover:underline focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze-100"
+              className="focus-focus-visible:ring-bronze focus-visible:ring-offset-comet-800-100 rounded text-xs text-bronze-200 hover:underline focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 max-sm:mt-2 max-sm:block max-sm:text-center"
               href="https://alchemix.fi"
               target="_blank"
             >
               <span>Powered by</span>{" "}
-              <span className="text-bronze-100 font-medium">Alchemix</span>
+              <span className="font-medium text-bronze-100">Alchemix</span>
             </Link>
           </div>
           <div className="shrink-0">
@@ -32,32 +32,26 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
 
       {children}
 
-      <footer className="border-t border-t-grey py-6">
-        <div className="layout md:flex md:justify-between max-md:text-center max-md:space-y-3">
-          <div className="inline-flex gap-5 md:gap-3 max-md:mx-auto">
+      <footer className="border-t border-t-comet-700 py-6">
+        <div className="layout max-md:space-y-3 max-md:text-center md:flex md:justify-between">
+          <div className="inline-flex gap-5 max-md:mx-auto md:gap-3">
             <Link
-              className="rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze-100"
+              className="focus-focus-visible:ring-bronze focus-visible:ring-offset-comet-800-100 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
               href="https://github.com/The-Wary-One/self-repaying-ens"
               target="_blank"
             >
-              <FaGithub className="w-8 h-8 md:w-5 md:h-5 fill-grey-100" />
+              <FaGithub className="h-8 w-8 fill-comet-100 md:h-5 md:w-5" />
             </Link>
             <Link
-              className="rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze-100"
+              className="focus-focus-visible:ring-bronze focus-visible:ring-offset-comet-800-100 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
               href="https://etherscan.io/address/0xef6274Eb92b55dA6D4BCE0b7D686f37064348aBB#code"
               target="_blank"
             >
-              <Etherscan className="w-8 h-8 md:w-5 md:h-5 fill-grey-100" />
+              <Etherscan className="h-8 w-8 fill-comet-100 md:h-5 md:w-5" />
             </Link>
           </div>
-          <div>
-            <Link
-              className="text-xs text-grey-100 focus:outline-none focus-visible:ring-1 rounded focus-visible:ring-bronze-100"
-              href="https://alchemix.fi"
-              target="_blank"
-            >
-              Powered by <span className="font-medium">Alchemix</span>
-            </Link>
+          <div className="focus-focus-visible:ring-bronze focus-visible:ring-offset-comet-800-100 rounded text-xs text-comet-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800">
+            Powered by <span className="font-medium">Alchemix</span>
           </div>
         </div>
       </footer>

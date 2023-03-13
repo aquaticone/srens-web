@@ -1,8 +1,22 @@
 import { FC, PropsWithChildren } from "react"
 
-export const FallbackMessage: FC<PropsWithChildren> = ({ children }) => {
+import clsxm from "@/lib/clsxm"
+
+type FallbackMessageProps = {
+  className?: string
+}
+
+export const FallbackMessage: FC<PropsWithChildren<FallbackMessageProps>> = ({
+  children,
+  className,
+}) => {
   return (
-    <div className="flex h-full w-full items-center text-gray-400 justify-center">
+    <div
+      className={clsxm(
+        "flex h-36 w-full items-center justify-center rounded",
+        className
+      )}
+    >
       {children}
     </div>
   )

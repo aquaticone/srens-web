@@ -31,7 +31,7 @@ export const ConnectButton: FC = () => {
                 {connected ? (
                   chain.unsupported ? (
                     <button
-                      className="bg-grey-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border px-3 border-grey-300 hover:border-grey-200 text-sm text-grey-100 hover:text-silver hover:bg-grey-300 rounded"
+                      className="focus-focus-visible:ring-bronze rounded border border-comet-600 bg-comet-700 px-3 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
                       onClick={openChainModal}
                       type="button"
                     >
@@ -41,7 +41,7 @@ export const ConnectButton: FC = () => {
                     <>
                       {chains.length > 1 && (
                         <button
-                          className="bg-grey-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border border-grey-300 hover:border-grey-200 text-sm text-grey-100 hover:text-silver hover:bg-grey-300 rounded"
+                          className="focus-focus-visible:ring-bronze rounded border border-comet-600 bg-comet-700 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
                           onClick={openChainModal}
                           type="button"
                         >
@@ -51,7 +51,7 @@ export const ConnectButton: FC = () => {
                               <img
                                 alt={chain.name ?? "Chain icon"}
                                 src={chain.iconUrl}
-                                className="w-4 h-4"
+                                className="h-4 w-4"
                               />
                             )}
                             <span className="max-md:hidden">{chain.name}</span>
@@ -60,7 +60,7 @@ export const ConnectButton: FC = () => {
                       )}
 
                       <button
-                        className="bg-grey-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors group border border-grey-300 hover:border-grey-200 text-sm text-grey-100 hover:text-silver hover:bg-grey-300 rounded"
+                        className="focus-focus-visible:ring-bronze group rounded border border-comet-600 bg-comet-700 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
                         onClick={openAccountModal}
                         type="button"
                       >
@@ -68,7 +68,7 @@ export const ConnectButton: FC = () => {
                           {account.displayName}
                         </span>
                         {account.displayBalance ? (
-                          <span className="px-3 py-1.5 border-l group-hover:border-l-grey-200 border-l-grey-300 transition-colors">
+                          <span className="border-l border-inherit px-3 py-1.5">
                             {account.displayBalance}
                           </span>
                         ) : null}
@@ -77,7 +77,7 @@ export const ConnectButton: FC = () => {
                   )
                 ) : (
                   <button
-                    className="bg-grey-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze transition-colors border px-3 py-1.5 border-grey-300 hover:border-grey-200 text-sm text-grey-100 hover:text-silver hover:bg-grey-300 rounded"
+                    className="focus-focus-visible:ring-bronze rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
                     onClick={openConnectModal}
                     type="button"
                   >

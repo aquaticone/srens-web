@@ -21,9 +21,8 @@ export const MintAllowance: FC = () => {
     : constants.MaxUint256
   const setMintAllowance = useWriteAlchemistMintAllowance(amountToApprove)
 
-  const onClick: MouseEventHandler<HTMLButtonElement> = () => {
+  const onClick: MouseEventHandler<HTMLButtonElement> = () =>
     setMintAllowance.write?.()
-  }
 
   return (
     <div className="grid">
@@ -32,10 +31,12 @@ export const MintAllowance: FC = () => {
           <Spinner className="h-8 w-8" />
         </FallbackMessage>
       ) : mintAllowance.isError ? (
-        <FallbackMessage>Error fetching SRENS mint allowance</FallbackMessage>
+        <FallbackMessage className="border border-comet-600 bg-comet-700">
+          Error fetching SRENS mint allowance
+        </FallbackMessage>
       ) : mintAllowance.data ? (
         <div>
-          <p className="text-sm md:max-lg:text-xs">
+          <p className="max-w-prose text-sm md:max-lg:text-xs">
             You're all set to use Self-Repaying ENS. You can revoke allowance at
             any time to disable service.
           </p>
@@ -54,7 +55,7 @@ export const MintAllowance: FC = () => {
         </div>
       ) : (
         <div>
-          <p className="text-sm md:max-lg:text-xs">
+          <p className="max-w-prose text-sm md:max-lg:text-xs">
             To get started with Self-Repaying ENS, you must approve the SRENS
             service to mint alETH on your behalf. Minted alETH will be used to
             cover domain renewals.
@@ -87,15 +88,15 @@ export const MintAllowanceStatus: FC = () => {
   return (
     <div
       className={clsxm(
-        "inline-flex items-center border px-2 py-1 rounded gap-2",
+        "inline-flex items-center gap-2 rounded border px-2 py-1",
         {
-          "border-grey-100 text-grey-100": isLoading,
+          "border-comet-100 text-comet-100": isLoading,
           "border-green-300 text-green-300": !isLoading && isAllowed,
           "border-orange text-orange": !isLoading && !isAllowed,
         }
       )}
     >
-      <div className="col-span-full leading-none font-semibold uppercase text-xs">
+      <div className="col-span-full text-xs font-semibold uppercase leading-none">
         <span className="md:max-lg:hidden">
           {isLoading ? "Status " : "Service "}
         </span>
@@ -103,7 +104,7 @@ export const MintAllowanceStatus: FC = () => {
           {isLoading ? "Loading" : isAllowed ? "Enabled" : "Disabled"}
         </span>
       </div>
-      {isLoading && <Spinner className="w-3 h-3 fill-grey-100" />}
+      {isLoading && <Spinner className="h-3 w-3 fill-comet-100" />}
     </div>
   )
 }

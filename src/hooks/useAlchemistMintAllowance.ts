@@ -17,18 +17,20 @@ export function useReadAlchemistMintAllowance() {
     args: [address ?? "0x", selfRepayingEnsAddress],
     enabled: !!address,
     select: (data) => data.gt(0),
-    watch: true,
   })
 }
 
-export function useWriteAlchemistMintAllowance(amount: BigNumber) {
+export function useWriteAlchemistMintAllowance(
+  amount: BigNumber,
+  onSuccess?: (data: unknown) => void
+) {
   const prepare = usePrepareContractWrite({
     ...alchemistConfig,
     functionName: "approveMint",
     args: [selfRepayingEnsAddress, amount],
   })
   const write = useContractWrite(prepare.config)
-  const wait = useWaitForTransaction(write.data?.hash)
+  const wait = useWaitForTransaction({ hash: write.data?.hash, onSuccess })
   return {
     isError: prepare.isError || write.isError,
     isLoading: prepare.isLoading,

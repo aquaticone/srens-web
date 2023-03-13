@@ -1,47 +1,68 @@
 import { useQuery } from "@tanstack/react-query"
-import { FC } from "react"
+import { FC, useMemo } from "react"
 import { useAccount } from "wagmi"
 
 import { queries } from "@/lib/query"
-import { useIsClientReady } from "@/hooks"
+import { useIsClientReady, useReadSubscriptions } from "@/hooks"
 
 import { Domain } from "@/components/Domain"
 import { FallbackMessage } from "@/components/FallbackMessage"
 import { Spinner } from "@/components/Spinner"
 
-export const MyDomains: FC = () => {
+type MyDomainsProps = {
+  include: "all" | "subscribed" | "unsubscribed"
+}
+
+export const MyDomains: FC<MyDomainsProps> = ({ include }) => {
   const isClientReady = useIsClientReady()
   const { address, isConnected } = useAccount()
-  const { data, isLoading } = useQuery({
+
+  const ownedDomains = useQuery({
     ...queries.domains.user(address ?? "0x"),
     enabled: !!address,
   })
 
+  const subscribedDomains = useReadSubscriptions()
+
+  const visibleDomains = useMemo(() => {
+    const registrations = ownedDomains.data?.account?.registrations ?? []
+    if (include !== "all" && registrations.length) {
+      return registrations.filter(
+        (r) => r.domain.name && subscribedDomains.data?.includes(r.domain.name)
+      )
+    }
+    return registrations
+  }, [
+    include,
+    ownedDomains.data?.account?.registrations,
+    subscribedDomains.data,
+  ])
+
   return (
-    <div className="min-h-[4.5rem] grid">
+    <>
       {!isConnected && isClientReady ? (
-        <FallbackMessage>
+        <FallbackMessage className="bg-comet-700">
           Connect your wallet to view your domains
         </FallbackMessage>
-      ) : isLoading ? (
-        <div className="flex h-full w-full items-center justify-center">
+      ) : ownedDomains.isLoading || subscribedDomains.isLoading ? (
+        <FallbackMessage>
           <Spinner className="h-8 w-8" />
-        </div>
-      ) : !data?.account?.registrations?.length ? (
-        <FallbackMessage>You don't own any domains</FallbackMessage>
+        </FallbackMessage>
+      ) : !visibleDomains?.length ? (
+        <FallbackMessage className="bg-comet-700">
+          You don't own any domains
+        </FallbackMessage>
       ) : (
-        <div className="divide-y divide-gray-800">
-          {data.account.registrations.map((registration) => (
-            <Domain
-              key={registration.domain.id}
-              name={registration.domain.name}
-              expiryDate={registration.expiryDate}
-              registrationDate={registration.registrationDate}
-              renewalEvents={registration.events}
-            />
-          ))}
-        </div>
+        visibleDomains.map((registration) => (
+          <Domain
+            key={registration.domain.id}
+            name={registration.domain.name}
+            expiryDate={registration.expiryDate}
+            registrationDate={registration.registrationDate}
+            renewalEvents={registration.events}
+          />
+        ))
       )}
-    </div>
+    </>
   )
 }
