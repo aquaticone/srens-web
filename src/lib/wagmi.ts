@@ -8,10 +8,7 @@ const isFoundryEnabled = process.env.NEXT_PUBLIC_ENABLE_FOUNDRY === "true"
 
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet, ...(isFoundryEnabled ? [foundry] : [])],
-  [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY ?? "" }),
-    publicProvider(),
-  ]
+  [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY ?? "" }), publicProvider()]
 )
 
 const { connectors } = getDefaultWallets({

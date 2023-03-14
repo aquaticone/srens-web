@@ -12,8 +12,7 @@ export const queries = createQueryKeyStore({
   domains: {
     user: (address: Address) => ({
       queryKey: [address],
-      queryFn: () =>
-        sdk.getDomainsForAddress({ address: address.toLowerCase() }),
+      queryFn: () => sdk.getDomainsForAddress({ address: address.toLowerCase() }),
     }),
     lookup: (name: string) => ({
       queryKey: [name],

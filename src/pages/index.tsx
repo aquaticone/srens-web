@@ -4,13 +4,7 @@ import { Fragment, useState } from "react"
 import { montserrat } from "@/lib"
 import { useIsClientReady } from "@/hooks"
 
-import {
-  Layout,
-  MyDomains,
-  QueuedChanges,
-  SearchDomains,
-  Seo,
-} from "@/components"
+import { Layout, MyDomains, QueuedChanges, SearchDomains, Seo } from "@/components"
 
 import { useQueueStore } from "@/store"
 
@@ -26,9 +20,7 @@ export default function HomePage() {
       <div className="layout divide-x divide-comet-700 md:grid md:grid-cols-[2fr,1fr] lg:grid-cols-[3fr,1fr]">
         <main className="space-y-6 py-4 md:pr-4">
           <section>
-            <h1 className="mb-3 text-xs uppercase text-comet-50">
-              Search domains
-            </h1>
+            <h1 className="mb-3 text-xs uppercase text-comet-50">Search domains</h1>
             <div className="space-y-4">
               <SearchDomains />
             </div>
@@ -73,10 +65,7 @@ export default function HomePage() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div
-              className="fixed inset-0 z-0 bg-comet-800/50"
-              aria-hidden="true"
-            />
+            <div className="fixed inset-0 z-0 bg-comet-800/50" aria-hidden="true" />
           </Transition.Child>
 
           <div className="fixed inset-0 flex justify-end">

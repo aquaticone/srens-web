@@ -43,9 +43,7 @@ export const QueuedChanges: FC<QueuedChangesProps> = ({ onUpdated }) => {
                   ) : (
                     <FiMinus className="h-5 w-5 stroke-orange" />
                   )}
-                  <div className="grow-0 overflow-hidden text-ellipsis text-sm">
-                    {name}
-                  </div>
+                  <div className="grow-0 overflow-hidden text-ellipsis text-sm">{name}</div>
                   <button
                     className="rounded text-comet-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
                     onClick={() => removeCall(name)}
@@ -56,16 +54,12 @@ export const QueuedChanges: FC<QueuedChangesProps> = ({ onUpdated }) => {
               ))}
             </ul>
 
-            {mintAllowance.data ? (
-              <UpdateSubscriptions onUpdated={onUpdated} />
-            ) : (
-              <ApproveAlchemist />
-            )}
+            {mintAllowance.data ? <UpdateSubscriptions onUpdated={onUpdated} /> : <ApproveAlchemist />}
           </>
         ) : (
           <div className="text-xs text-comet-100">
-            Subscription changes you make will appear here for review. You can
-            submit multiple changes in a single transaction.
+            Subscription changes you make will appear here for review. You can submit multiple changes in a single
+            transaction.
           </div>
         )}
       </div>
@@ -74,9 +68,7 @@ export const QueuedChanges: FC<QueuedChangesProps> = ({ onUpdated }) => {
 }
 
 const ApproveAlchemist: FC = () => {
-  const writeMintAllowance = useWriteAlchemistMintAllowance(
-    ethers.constants.MaxUint256
-  )
+  const writeMintAllowance = useWriteAlchemistMintAllowance(ethers.constants.MaxUint256)
 
   const onClickApprove = () => {
     writeMintAllowance.write?.()
@@ -86,8 +78,7 @@ const ApproveAlchemist: FC = () => {
     <div>
       <h1 className="mb-3 text-xs uppercase text-comet-50">Mint allowance</h1>
       <p className="mb-4 text-xs text-comet-100">
-        For Self-Repaying ENS to work you must approve SRENS to mint alETH on
-        your behalf.
+        For Self-Repaying ENS to work you must approve SRENS to mint alETH on your behalf.
       </p>
       <button
         className={clsxm(
@@ -102,9 +93,7 @@ const ApproveAlchemist: FC = () => {
         onClick={onClickApprove}
       >
         Approve
-        {writeMintAllowance.isWaiting && (
-          <Spinner className="h-3 w-3 fill-current" />
-        )}
+        {writeMintAllowance.isWaiting && <Spinner className="h-3 w-3 fill-current" />}
       </button>
     </div>
   )
@@ -137,9 +126,7 @@ const UpdateSubscriptions: FC<QueuedChangesProps> = ({ onUpdated }) => {
         onClick={onClickUpdate}
       >
         Update Subscriptions
-        {writeSubscriptions.isWaiting && (
-          <Spinner className="h-3 w-3 fill-current" />
-        )}
+        {writeSubscriptions.isWaiting && <Spinner className="h-3 w-3 fill-current" />}
       </button>
     </div>
   )

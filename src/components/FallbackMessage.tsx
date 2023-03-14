@@ -7,11 +7,7 @@ type FallbackMessageProps = {
   variant: "transparent" | "black"
 }
 
-export const FallbackMessage: FC<PropsWithChildren<FallbackMessageProps>> = ({
-  className,
-  children,
-  variant,
-}) => {
+export const FallbackMessage: FC<PropsWithChildren<FallbackMessageProps>> = ({ className, children, variant }) => {
   return (
     <div
       className={clsxm(

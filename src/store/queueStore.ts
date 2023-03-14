@@ -20,8 +20,7 @@ export const useQueueStore = create<QueueStore>()(
     (set) => ({
       calls: [],
       addCall: (call) => set((state) => ({ calls: [...state.calls, call] })),
-      removeCall: (name) =>
-        set((state) => ({ calls: state.calls.filter((c) => c.name !== name) })),
+      removeCall: (name) => set((state) => ({ calls: state.calls.filter((c) => c.name !== name) })),
       removeAllCalls: () => set({ calls: [] }),
     }),
     { name: "srens.queue" }

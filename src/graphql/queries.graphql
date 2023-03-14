@@ -1,11 +1,6 @@
 query getDomainsForAddress($address: ID!, $first: Int = 100, $skip: Int = 0) {
   account(id: $address) {
-    registrations(
-      first: $first
-      skip: $skip
-      orderBy: expiryDate
-      orderDirection: asc
-    ) {
+    registrations(first: $first, skip: $skip, orderBy: expiryDate, orderDirection: asc) {
       expiryDate
       registrationDate
       domain {

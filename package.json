@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "codegen:wagmi": "pnpm wagmi generate",
     "codegen:graphql": "pnpm graphclient build",
     "dev": "next dev",
     "build": "next build",

@@ -317,9 +317,7 @@ const alchemistABI = [
   {
     type: "event",
     anonymous: false,
-    inputs: [
-      { name: "version", internalType: "uint8", type: "uint8", indexed: false },
-    ],
+    inputs: [{ name: "version", internalType: "uint8", type: "uint8", indexed: false }],
     name: "Initialized",
   },
   {
@@ -1044,9 +1042,7 @@ const alchemistABI = [
   {
     stateMutability: "view",
     type: "function",
-    inputs: [
-      { name: "underlyingToken", internalType: "address", type: "address" },
-    ],
+    inputs: [{ name: "underlyingToken", internalType: "address", type: "address" }],
     name: "getLiquidationLimitInfo",
     outputs: [
       { name: "currentLimit", internalType: "uint256", type: "uint256" },
@@ -1068,9 +1064,7 @@ const alchemistABI = [
   {
     stateMutability: "view",
     type: "function",
-    inputs: [
-      { name: "underlyingToken", internalType: "address", type: "address" },
-    ],
+    inputs: [{ name: "underlyingToken", internalType: "address", type: "address" }],
     name: "getRepayLimitInfo",
     outputs: [
       { name: "currentLimit", internalType: "uint256", type: "uint256" },
@@ -1095,9 +1089,7 @@ const alchemistABI = [
   {
     stateMutability: "view",
     type: "function",
-    inputs: [
-      { name: "underlyingToken", internalType: "address", type: "address" },
-    ],
+    inputs: [{ name: "underlyingToken", internalType: "address", type: "address" }],
     name: "getUnderlyingTokenParameters",
     outputs: [
       {
@@ -1238,9 +1230,7 @@ const alchemistABI = [
   {
     stateMutability: "view",
     type: "function",
-    inputs: [
-      { name: "underlyingToken", internalType: "address", type: "address" },
-    ],
+    inputs: [{ name: "underlyingToken", internalType: "address", type: "address" }],
     name: "isSupportedUnderlyingToken",
     outputs: [{ name: "", internalType: "bool", type: "bool" }],
   },
@@ -1634,8 +1624,7 @@ const alchemistABI = [
   },
 ] as const
 
-export const alchemistAddress =
-  "0x938DBA3B746B3cc6D47C703Aac3a7485287c0ed7" as const
+export const alchemistAddress = "0x938DBA3B746B3cc6D47C703Aac3a7485287c0ed7" as const
 
 export const alchemistConfig = {
   address: alchemistAddress,

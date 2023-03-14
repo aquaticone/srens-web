@@ -28,9 +28,7 @@ export const Domain: FC<DomainProps> = ({
   registrationDate: _registrationDate,
   renewalEvents,
 }) => {
-  const nearestRenewalEvent = renewalEvents?.find((e) =>
-    Object.hasOwn(e, "blockNumber")
-  ) as RenewalEvent | undefined
+  const nearestRenewalEvent = renewalEvents?.find((e) => Object.hasOwn(e, "blockNumber")) as RenewalEvent | undefined
 
   const renewalBlockDate = useBlockTimestamp(nearestRenewalEvent?.blockNumber)
   const subscribedDomains = useReadSubscriptions()
@@ -42,16 +40,11 @@ export const Domain: FC<DomainProps> = ({
 
   const expiryDate = dayjs.unix(_expiryDate)
   const registrationDate = dayjs.unix(_registrationDate)
-  const renewalDate = renewalBlockDate.data
-    ? dayjs.unix(renewalBlockDate.data)
-    : undefined
+  const renewalDate = renewalBlockDate.data ? dayjs.unix(renewalBlockDate.data) : undefined
 
   const isExpired = expiryDate.add(90, "days").isBefore(dayjs())
-  const isSubscribed = subscribedDomains.data?.includes(
-    subscriptionName(name) ?? ""
-  )
-  const isSwitchChecked =
-    (queuedCall?.type && queuedCall.type === "subscribe") ?? isSubscribed
+  const isSubscribed = subscribedDomains.data?.includes(subscriptionName(name) ?? "")
+  const isSwitchChecked = (queuedCall?.type && queuedCall.type === "subscribe") ?? isSubscribed
   // TODO: Disable switches during transactions
   const isSwitchDisabled = false
 
@@ -93,13 +86,10 @@ export const Domain: FC<DomainProps> = ({
                   )}
                 >
                   <span
-                    className={clsxm(
-                      "inline-block h-4 w-4 translate-x-1 transform rounded-full transition-transform",
-                      {
-                        "translate-x-6 bg-white": isSwitchChecked,
-                        "translate-x-1 bg-comet-300": !isSwitchChecked,
-                      }
-                    )}
+                    className={clsxm("inline-block h-4 w-4 translate-x-1 transform rounded-full transition-transform", {
+                      "translate-x-6 bg-white": isSwitchChecked,
+                      "translate-x-1 bg-comet-300": !isSwitchChecked,
+                    })}
                   />
                 </Switch>
               </div>
@@ -108,21 +98,15 @@ export const Domain: FC<DomainProps> = ({
         </div>
 
         <dl className="flex flex-wrap justify-between p-4 text-xs leading-loose md:grid-cols-3 lg:inline-grid lg:max-w-xl lg:gap-x-12 lg:leading-relaxed">
-          <dt className="uppercase text-comet-200 max-lg:w-1/3 lg:row-start-2">
-            Expires
-          </dt>
+          <dt className="uppercase text-comet-200 max-lg:w-1/3 lg:row-start-2">Expires</dt>
           <dd className="font-mono max-lg:w-2/3 max-lg:text-right lg:row-start-1">
             <FormattedDate date={expiryDate} />
           </dd>
-          <dt className="uppercase text-comet-200 max-lg:w-1/3 lg:row-start-2">
-            Registered
-          </dt>
+          <dt className="uppercase text-comet-200 max-lg:w-1/3 lg:row-start-2">Registered</dt>
           <dd className="font-mono max-lg:w-2/3 max-lg:text-right lg:row-start-1">
             <FormattedDate date={registrationDate} />
           </dd>
-          <dt className="uppercase text-comet-200 max-lg:w-1/3 lg:row-start-2">
-            Renewed
-          </dt>
+          <dt className="uppercase text-comet-200 max-lg:w-1/3 lg:row-start-2">Renewed</dt>
           <dd className="font-mono max-lg:w-2/3 max-lg:text-right lg:row-start-1">
             {renewalBlockDate.isLoading ? (
               "Loading..."

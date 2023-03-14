@@ -27,31 +27,21 @@ export const MyDomains: FC<MyDomainsProps> = ({ include }) => {
   const visibleDomains = useMemo(() => {
     const registrations = ownedDomains.data?.account?.registrations ?? []
     if (include !== "all" && registrations.length) {
-      return registrations.filter(
-        (r) => r.domain.name && subscribedDomains.data?.includes(r.domain.name)
-      )
+      return registrations.filter((r) => r.domain.name && subscribedDomains.data?.includes(r.domain.name))
     }
     return registrations
-  }, [
-    include,
-    ownedDomains.data?.account?.registrations,
-    subscribedDomains.data,
-  ])
+  }, [include, ownedDomains.data?.account?.registrations, subscribedDomains.data])
 
   return (
     <>
       {!isConnected && isClientReady ? (
-        <FallbackMessage variant="black">
-          Connect your wallet to view your domains
-        </FallbackMessage>
+        <FallbackMessage variant="black">Connect your wallet to view your domains</FallbackMessage>
       ) : ownedDomains.isLoading || subscribedDomains.isLoading ? (
         <FallbackMessage variant="transparent">
           <Spinner className="h-8 w-8" />
         </FallbackMessage>
       ) : !visibleDomains?.length ? (
-        <FallbackMessage variant="black">
-          You don't own any domains
-        </FallbackMessage>
+        <FallbackMessage variant="black">You don't own any domains</FallbackMessage>
       ) : (
         visibleDomains.map((registration) => (
           <Domain

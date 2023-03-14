@@ -23,9 +23,7 @@ export const Seo: FC<SeoProps> = (props) => {
     ...defaultMeta,
     ...props,
   }
-  meta["title"] = props.templateTitle
-    ? `${props.templateTitle} | ${meta.siteName}`
-    : meta.title
+  meta["title"] = props.templateTitle ? `${props.templateTitle} | ${meta.siteName}` : meta.title
 
   return (
     <Head>

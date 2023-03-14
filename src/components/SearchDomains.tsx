@@ -1,12 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import {
-  ChangeEventHandler,
-  createRef,
-  FC,
-  FormEventHandler,
-  KeyboardEventHandler,
-  useState,
-} from "react"
+import { ChangeEventHandler, createRef, FC, FormEventHandler, KeyboardEventHandler, useState } from "react"
 import { FiX } from "react-icons/fi"
 
 import { queries } from "@/lib"
@@ -39,8 +32,7 @@ export const SearchDomains: FC = () => {
     inputRef.current?.focus?.()
   }
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = (e) =>
-    setValue(e.target.value)
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => setValue(e.target.value)
 
   const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === "Escape") onClear()
@@ -48,10 +40,7 @@ export const SearchDomains: FC = () => {
 
   return (
     <>
-      <form
-        className="grid grid-cols-[1fr,auto] grid-rows-[1fr,auto,auto]"
-        onSubmit={onSubmit}
-      >
+      <form className="grid grid-cols-[1fr,auto] grid-rows-[1fr,auto,auto]" onSubmit={onSubmit}>
         <input
           id="domain"
           ref={inputRef}
@@ -85,9 +74,7 @@ export const SearchDomains: FC = () => {
               <Spinner className="h-8 w-8" />
             </FallbackMessage>
           ) : isError ? (
-            <FallbackMessage variant="black">
-              Error finding domains
-            </FallbackMessage>
+            <FallbackMessage variant="black">Error finding domains</FallbackMessage>
           ) : !data?.domains.length ? (
             <FallbackMessage variant="black">Domain not found</FallbackMessage>
           ) : (

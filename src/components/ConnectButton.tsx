@@ -6,14 +6,7 @@ import { chains } from "@/lib"
 export const ConnectButton: FC = () => {
   return (
     <RainbowConnectButton.Custom>
-      {({
-        account,
-        chain,
-        openAccountModal,
-        openChainModal,
-        openConnectModal,
-        mounted,
-      }) => {
+      {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
         const connected = mounted && account && chain
         return (
           <div
@@ -48,11 +41,7 @@ export const ConnectButton: FC = () => {
                           <div className="flex items-center gap-3 px-3 py-1.5">
                             {chain.hasIcon && chain.iconUrl && (
                               // eslint-disable-next-line @next/next/no-img-element
-                              <img
-                                alt={chain.name ?? "Chain icon"}
-                                src={chain.iconUrl}
-                                className="h-4 w-4"
-                              />
+                              <img alt={chain.name ?? "Chain icon"} src={chain.iconUrl} className="h-4 w-4" />
                             )}
                             <span className="max-md:hidden">{chain.name}</span>
                           </div>

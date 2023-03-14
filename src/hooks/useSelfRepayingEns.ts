@@ -25,18 +25,10 @@ export function useReadSubscriptions() {
   })
 }
 
-export function useWriteSubscriptions(
-  changes: Array<QueuedCall>,
-  onSuccess: () => void
-) {
-  const contractInterface = new ethers.utils.Interface(
-    selfRepayingEnsConfig.abi
-  )
+export function useWriteSubscriptions(changes: Array<QueuedCall>, onSuccess: () => void) {
+  const contractInterface = new ethers.utils.Interface(selfRepayingEnsConfig.abi)
   const calldata = changes.map(
-    (change) =>
-      contractInterface.encodeFunctionData(change.type, [
-        subscriptionName(change.name),
-      ]) as Address
+    (change) => contractInterface.encodeFunctionData(change.type, [subscriptionName(change.name)]) as Address
   )
   const prepare = usePrepareContractWrite({
     ...selfRepayingEnsConfig,

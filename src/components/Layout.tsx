@@ -12,16 +12,13 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
       <header className="border-b border-b-comet-700 py-5">
         <div className="layout flex flex-wrap items-center justify-center gap-4 sm:justify-between">
           <div>
-            <h1 className="text-lg font-semibold uppercase tracking-widest">
-              Self-Repaying ENS
-            </h1>
+            <h1 className="text-lg font-semibold uppercase tracking-widest">Self-Repaying ENS</h1>
             <Link
               className="focus-visible:ring-offset-comet-800-100 rounded text-xs text-bronze-200 hover:underline focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 max-sm:mt-2 max-sm:block max-sm:text-center"
               href="https://alchemix.fi"
               target="_blank"
             >
-              <span>Powered by</span>{" "}
-              <span className="font-medium text-bronze-100">Alchemix</span>
+              <span>Powered by</span> <span className="font-medium text-bronze-100">Alchemix</span>
             </Link>
           </div>
           <div className="flex shrink-0 gap-3">

@@ -1,11 +1,5 @@
 import { BigNumber } from "ethers"
-import {
-  useAccount,
-  useContractRead,
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction,
-} from "wagmi"
+import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from "wagmi"
 
 import { alchemistConfig, selfRepayingEnsAddress } from "@/constant"
 
@@ -21,10 +15,7 @@ export function useReadAlchemistMintAllowance() {
   })
 }
 
-export function useWriteAlchemistMintAllowance(
-  amount: BigNumber,
-  onSuccess?: (data: unknown) => void
-) {
+export function useWriteAlchemistMintAllowance(amount: BigNumber, onSuccess?: (data: unknown) => void) {
   const prepare = usePrepareContractWrite({
     ...alchemistConfig,
     functionName: "approveMint",
