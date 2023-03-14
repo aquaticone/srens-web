@@ -16,7 +16,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
               Self-Repaying ENS
             </h1>
             <Link
-              className="focus-focus-visible:ring-bronze focus-visible:ring-offset-comet-800-100 rounded text-xs text-bronze-200 hover:underline focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 max-sm:mt-2 max-sm:block max-sm:text-center"
+              className="focus-visible:ring-offset-comet-800-100 rounded text-xs text-bronze-200 hover:underline focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 max-sm:mt-2 max-sm:block max-sm:text-center"
               href="https://alchemix.fi"
               target="_blank"
             >
@@ -24,7 +24,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
               <span className="font-medium text-bronze-100">Alchemix</span>
             </Link>
           </div>
-          <div className="shrink-0">
+          <div className="flex shrink-0 gap-3">
             <ConnectButton />
           </div>
         </div>
@@ -36,21 +36,21 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
         <div className="layout max-md:space-y-3 max-md:text-center md:flex md:justify-between">
           <div className="inline-flex gap-5 max-md:mx-auto md:gap-3">
             <Link
-              className="focus-focus-visible:ring-bronze focus-visible:ring-offset-comet-800-100 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+              className="focus-visible:ring-offset-comet-800-100 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
               href="https://github.com/The-Wary-One/self-repaying-ens"
               target="_blank"
             >
               <FaGithub className="h-8 w-8 fill-comet-100 md:h-5 md:w-5" />
             </Link>
             <Link
-              className="focus-focus-visible:ring-bronze focus-visible:ring-offset-comet-800-100 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+              className="focus-visible:ring-offset-comet-800-100 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
               href="https://etherscan.io/address/0xef6274Eb92b55dA6D4BCE0b7D686f37064348aBB#code"
               target="_blank"
             >
               <Etherscan className="h-8 w-8 fill-comet-100 md:h-5 md:w-5" />
             </Link>
           </div>
-          <div className="focus-focus-visible:ring-bronze focus-visible:ring-offset-comet-800-100 rounded text-xs text-comet-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800">
+          <div className="focus-visible:ring-offset-comet-800-100 rounded text-xs text-comet-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800">
             Powered by <span className="font-medium">Alchemix</span>
           </div>
         </div>

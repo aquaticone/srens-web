@@ -16,8 +16,7 @@
   }
 
   .layout {
-    /* 1100px */
-    max-width: 60rem;
+    max-width: 72rem;
     @apply mx-auto w-full px-4 lg:px-8;
   }
 }

@@ -1,19 +1,22 @@
 import { FC, PropsWithChildren } from "react"
 
-import clsxm from "@/lib/clsxm"
+import { clsxm } from "@/lib"
 
 type FallbackMessageProps = {
   className?: string
+  variant: "transparent" | "black"
 }
 
 export const FallbackMessage: FC<PropsWithChildren<FallbackMessageProps>> = ({
-  children,
   className,
+  children,
+  variant,
 }) => {
   return (
     <div
       className={clsxm(
-        "flex h-36 w-full items-center justify-center rounded",
+        "flex h-[134px] w-full items-center justify-center rounded px-6 py-4",
+        { "bg-comet-800 text-comet-300": variant === "black" },
         className
       )}
     >

@@ -6,9 +6,7 @@ import { WagmiConfig } from "wagmi"
 import "@rainbow-me/rainbowkit/styles.css"
 import "@/styles/globals.css"
 
-import { montserrat } from "@/lib/font"
-import { queryClient } from "@/lib/query"
-import { chains, wagmiClient } from "@/lib/wagmi"
+import { chains, montserrat, queryClient, wagmiClient } from "@/lib"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

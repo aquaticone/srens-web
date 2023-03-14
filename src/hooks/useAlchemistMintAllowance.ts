@@ -17,6 +17,7 @@ export function useReadAlchemistMintAllowance() {
     args: [address ?? "0x", selfRepayingEnsAddress],
     enabled: !!address,
     select: (data) => data.gt(0),
+    watch: true,
   })
 }
 

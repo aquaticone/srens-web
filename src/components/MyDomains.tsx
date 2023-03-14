@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { FC, useMemo } from "react"
 import { useAccount } from "wagmi"
 
-import { queries } from "@/lib/query"
+import { queries } from "@/lib"
 import { useIsClientReady, useReadSubscriptions } from "@/hooks"
 
 import { Domain } from "@/components/Domain"
@@ -41,15 +41,15 @@ export const MyDomains: FC<MyDomainsProps> = ({ include }) => {
   return (
     <>
       {!isConnected && isClientReady ? (
-        <FallbackMessage className="bg-comet-700">
+        <FallbackMessage variant="black">
           Connect your wallet to view your domains
         </FallbackMessage>
       ) : ownedDomains.isLoading || subscribedDomains.isLoading ? (
-        <FallbackMessage>
+        <FallbackMessage variant="transparent">
           <Spinner className="h-8 w-8" />
         </FallbackMessage>
       ) : !visibleDomains?.length ? (
-        <FallbackMessage className="bg-comet-700">
+        <FallbackMessage variant="black">
           You don't own any domains
         </FallbackMessage>
       ) : (

@@ -36,6 +36,7 @@ specifiers:
   typescript: ^4.9.5
   wagmi: ^0.12.1
   zod: ^3.21.4
+  zustand: ^4.3.6
 
 dependencies:
   '@headlessui/react': 1.7.13_biqbaboplfbrettd7655fr4n2y
@@ -52,6 +53,7 @@ dependencies:
   react-icons: 4.8.0_react@18.2.0
   tailwind-merge: 1.10.0
   wagmi: 0.12.1_zzga6aozf7wjrtcyfblsrbk4zy
+  zustand: 4.3.6_react@18.2.0
 
 devDependencies:
   '@graphprotocol/client-cli': 2.2.20_u3g7ccgi6qlo3bdskms7job624

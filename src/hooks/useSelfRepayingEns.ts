@@ -1,4 +1,6 @@
+import { ethers } from "ethers"
 import {
+  Address,
   useAccount,
   useContractRead,
   useContractWrite,
@@ -6,9 +8,11 @@ import {
   useWaitForTransaction,
 } from "wagmi"
 
-import { selfRepayingEnsConfig } from "@/constant"
+import { subscriptionName } from "@/lib"
 
-import { Maybe } from ".graphclient"
+import { QueuedCall } from "@/store"
+
+import { selfRepayingEnsConfig } from "@/constant"
 
 export function useReadSubscriptions() {
   const { address } = useAccount()
@@ -21,19 +25,27 @@ export function useReadSubscriptions() {
   })
 }
 
-export function useWriteSubscription(
-  name: Maybe<string> | undefined,
-  subscribed: boolean,
-  onSettled?: (data: unknown) => void
+export function useWriteSubscriptions(
+  changes: Array<QueuedCall>,
+  onSuccess: () => void
 ) {
+  const contractInterface = new ethers.utils.Interface(
+    selfRepayingEnsConfig.abi
+  )
+  const calldata = changes.map(
+    (change) =>
+      contractInterface.encodeFunctionData(change.type, [
+        subscriptionName(change.name),
+      ]) as Address
+  )
   const prepare = usePrepareContractWrite({
     ...selfRepayingEnsConfig,
-    functionName: subscribed ? "subscribe" : "unsubscribe",
-    args: [name ?? ""],
-    enabled: !!name,
+    functionName: "multicall",
+    args: [calldata],
+    enabled: !!calldata.length,
   })
   const write = useContractWrite(prepare.config)
-  const wait = useWaitForTransaction({ hash: write.data?.hash, onSettled })
+  const wait = useWaitForTransaction({ hash: write.data?.hash, onSuccess })
   return {
     isError: prepare.isError || write.isError,
     isLoading: prepare.isLoading,

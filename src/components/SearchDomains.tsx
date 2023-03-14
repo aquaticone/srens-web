@@ -9,7 +9,7 @@ import {
 } from "react"
 import { FiX } from "react-icons/fi"
 
-import { queries } from "@/lib/query"
+import { queries } from "@/lib"
 
 import { Domain } from "@/components/Domain"
 import { FallbackMessage } from "@/components/FallbackMessage"
@@ -67,7 +67,7 @@ export const SearchDomains: FC = () => {
           placeholder="vitalik.eth"
         />
         <button
-          className="focus-focus-visible:ring-bronze peer relative z-10 col-start-2 row-start-2 rounded px-4 text-sm uppercase text-comet-200 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-bronze focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 enabled:hover:underline disabled:opacity-0"
+          className="peer relative z-10 col-start-2 row-start-2 rounded px-4 text-sm uppercase text-comet-200 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-bronze focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 enabled:hover:underline disabled:opacity-0"
           disabled={!value && !submitted}
           onClick={onClear}
           type="button"
@@ -81,17 +81,15 @@ export const SearchDomains: FC = () => {
       {!!submitted && (
         <div className="grid min-h-[4.5rem]">
           {isLoading ? (
-            <FallbackMessage>
+            <FallbackMessage variant="transparent">
               <Spinner className="h-8 w-8" />
             </FallbackMessage>
           ) : isError ? (
-            <FallbackMessage className="bg-comet-700">
+            <FallbackMessage variant="black">
               Error finding domains
             </FallbackMessage>
           ) : !data?.domains.length ? (
-            <FallbackMessage className="bg-comet-700">
-              Domain not found
-            </FallbackMessage>
+            <FallbackMessage variant="black">Domain not found</FallbackMessage>
           ) : (
             data.domains.map((domain) => (
               <Domain

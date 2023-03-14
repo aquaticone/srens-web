@@ -1,7 +1,7 @@
 import { ConnectButton as RainbowConnectButton } from "@rainbow-me/rainbowkit"
 import { FC } from "react"
 
-import { chains } from "@/lib/wagmi"
+import { chains } from "@/lib"
 
 export const ConnectButton: FC = () => {
   return (
@@ -31,7 +31,7 @@ export const ConnectButton: FC = () => {
                 {connected ? (
                   chain.unsupported ? (
                     <button
-                      className="focus-focus-visible:ring-bronze rounded border border-comet-600 bg-comet-700 px-3 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+                      className="rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
                       onClick={openChainModal}
                       type="button"
                     >
@@ -41,7 +41,7 @@ export const ConnectButton: FC = () => {
                     <>
                       {chains.length > 1 && (
                         <button
-                          className="focus-focus-visible:ring-bronze rounded border border-comet-600 bg-comet-700 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+                          className="rounded border border-comet-600 bg-comet-700 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
                           onClick={openChainModal}
                           type="button"
                         >
@@ -60,24 +60,17 @@ export const ConnectButton: FC = () => {
                       )}
 
                       <button
-                        className="focus-focus-visible:ring-bronze group rounded border border-comet-600 bg-comet-700 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+                        className="rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
                         onClick={openAccountModal}
                         type="button"
                       >
-                        <span className="px-3 py-1.5">
-                          {account.displayName}
-                        </span>
-                        {account.displayBalance ? (
-                          <span className="border-l border-inherit px-3 py-1.5">
-                            {account.displayBalance}
-                          </span>
-                        ) : null}
+                        {account.displayName}
                       </button>
                     </>
                   )
                 ) : (
                   <button
-                    className="focus-focus-visible:ring-bronze rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+                    className="rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
                     onClick={openConnectModal}
                     type="button"
                   >
