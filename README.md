@@ -8,7 +8,6 @@
 
 ### Environment variables
 
-- `ETHERSCAN_API_KEY` - used to fetch ABIs for codegen
 - `NEXT_PUBLIC_ALCHEMY_KEY` - required for mainnet RPC
 - `NEXT_PUBLIC_ENABLE_FOUNDRY` - set to `true` to enable localhost network
 
