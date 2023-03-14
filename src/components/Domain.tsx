@@ -24,25 +24,32 @@ type DomainProps = {
 
 export const Domain: FC<DomainProps> = ({
   name,
-  expiryDate,
-  registrationDate,
+  expiryDate: _expiryDate,
+  registrationDate: _registrationDate,
   renewalEvents,
 }) => {
   const nearestRenewalEvent = renewalEvents?.find((e) =>
     Object.hasOwn(e, "blockNumber")
   ) as RenewalEvent | undefined
-  const rewnewalDate = useBlockTimestamp(nearestRenewalEvent?.blockNumber)
-  const subscribedDomains = useReadSubscriptions()
 
-  const isSubscribed = subscribedDomains.data?.includes(
-    subscriptionName(name) ?? ""
-  )
+  const renewalBlockDate = useBlockTimestamp(nearestRenewalEvent?.blockNumber)
+  const subscribedDomains = useReadSubscriptions()
   const [queuedCall, addCall, removeCall] = useQueueStore((state) => [
     state.calls.find((c) => c.name === name),
     state.addCall,
     state.removeCall,
   ])
 
+  const expiryDate = dayjs.unix(_expiryDate)
+  const registrationDate = dayjs.unix(_registrationDate)
+  const renewalDate = renewalBlockDate.data
+    ? dayjs.unix(renewalBlockDate.data)
+    : undefined
+
+  const isExpired = expiryDate.add(90, "days").isBefore(dayjs())
+  const isSubscribed = subscribedDomains.data?.includes(
+    subscriptionName(name) ?? ""
+  )
   const isSwitchChecked =
     (queuedCall?.type && queuedCall.type === "subscribe") ?? isSubscribed
   // TODO: Disable switches during transactions
@@ -62,38 +69,42 @@ export const Domain: FC<DomainProps> = ({
         <div className="col-span-full flex items-center justify-between border-b border-b-comet-500/30 p-4">
           <h1 className="text-lg">{name}</h1>
 
-          <Switch.Group>
-            <div className="flex items-center">
-              <Switch.Label
-                className={clsxm("mr-3 text-xs uppercase text-comet-300", {
-                  "cursor-pointer": isSwitchChecked,
-                })}
-              >
-                Subscribe
-              </Switch.Label>
-              <Switch
-                checked={isSwitchChecked}
-                onChange={onChangeSwitch}
-                disabled={isSwitchDisabled}
-                className={clsxm(
-                  "relative inline-flex h-6 w-11 items-center rounded-full bg-comet-800 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800",
-                  {
-                    "bg-green-300": isSwitchChecked,
-                  }
-                )}
-              >
-                <span
+          {isExpired ? (
+            <span className="text-xs uppercase text-orange">Expired</span>
+          ) : (
+            <Switch.Group>
+              <div className="flex items-center">
+                <Switch.Label
+                  className={clsxm("mr-3 text-xs uppercase text-comet-300", {
+                    "cursor-pointer": isSwitchChecked,
+                  })}
+                >
+                  Subscribe
+                </Switch.Label>
+                <Switch
+                  checked={isSwitchChecked}
+                  onChange={onChangeSwitch}
+                  disabled={isSwitchDisabled}
                   className={clsxm(
-                    "inline-block h-4 w-4 translate-x-1 transform rounded-full transition-transform",
+                    "relative inline-flex h-6 w-11 items-center rounded-full bg-comet-800 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800",
                     {
-                      "translate-x-6 bg-white": isSwitchChecked,
-                      "translate-x-1 bg-comet-300": !isSwitchChecked,
+                      "bg-green-300": isSwitchChecked,
                     }
                   )}
-                />
-              </Switch>
-            </div>
-          </Switch.Group>
+                >
+                  <span
+                    className={clsxm(
+                      "inline-block h-4 w-4 translate-x-1 transform rounded-full transition-transform",
+                      {
+                        "translate-x-6 bg-white": isSwitchChecked,
+                        "translate-x-1 bg-comet-300": !isSwitchChecked,
+                      }
+                    )}
+                  />
+                </Switch>
+              </div>
+            </Switch.Group>
+          )}
         </div>
 
         <dl className="flex flex-wrap justify-between p-4 text-xs leading-loose md:grid-cols-3 lg:inline-grid lg:max-w-xl lg:gap-x-12 lg:leading-relaxed">
@@ -113,12 +124,12 @@ export const Domain: FC<DomainProps> = ({
             Renewed
           </dt>
           <dd className="font-mono max-lg:w-2/3 max-lg:text-right lg:row-start-1">
-            {rewnewalDate.isLoading ? (
+            {renewalBlockDate.isLoading ? (
               "Loading..."
-            ) : rewnewalDate.isError ? (
+            ) : renewalBlockDate.isError ? (
               "Error fetching renewal date"
-            ) : rewnewalDate.data ? (
-              <FormattedDate date={rewnewalDate.data} />
+            ) : renewalDate ? (
+              <FormattedDate date={renewalDate} />
             ) : (
               "Never"
             )}
@@ -130,14 +141,13 @@ export const Domain: FC<DomainProps> = ({
 }
 
 type FormattedDateProps = {
-  date: number
+  date: dayjs.Dayjs
 }
 
 const FormattedDate: FC<FormattedDateProps> = ({ date }) => {
-  const dateObj = dayjs.unix(date)
   return (
     <>
-      {dateObj.format("L")}, {dateObj.format("LT")}
+      {date.format("L")}, {date.format("LT")}
     </>
   )
 }
