@@ -7,7 +7,7 @@ import { clsxm, subscriptionName } from "@/lib"
 import { useReadSubscriptions } from "@/hooks"
 import { useBlockTimestamp } from "@/hooks/useBlockTimestamp"
 
-import { usePendingStore, useQueueStore } from "@/store"
+import { useQueueStore, useToastStore } from "@/store"
 
 import { Maybe, NameRenewed } from ".graphclient"
 
@@ -45,7 +45,7 @@ export const Domain: FC<DomainProps> = ({
   const isExpired = expiryDate.add(90, "days").isBefore(dayjs())
   const isSubscribed = subscribedDomains.data?.includes(subscriptionName(name) ?? "")
   const isSwitchChecked = (queuedCall?.type && queuedCall.type === "subscribe") ?? isSubscribed
-  const isSwitchDisabled = usePendingStore((state) => !!state.transaction)
+  const isSwitchDisabled = useToastStore((state) => state.status === "pending")
 
   const onChangeSwitch = (checked: boolean) => {
     if (queuedCall) {

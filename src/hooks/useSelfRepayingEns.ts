@@ -11,7 +11,6 @@ import {
 import { subscriptionName } from "@/lib"
 
 import { useQueueStore, useToastStore } from "@/store"
-import { usePendingStore } from "@/store"
 
 import { selfRepayingEnsConfig } from "@/constant"
 
@@ -28,7 +27,6 @@ export function useReadSubscriptions() {
 
 export function useWriteSubscriptions(onSuccess?: () => void) {
   const [calls, removeAllCalls] = useQueueStore((store) => [store.calls, store.removeAllCalls])
-  const [setTransaction, clearTransaction] = usePendingStore((store) => [store.setTransaction, store.clearTransaction])
   const setToast = useToastStore((store) => store.setToast)
 
   const contractInterface = new ethers.utils.Interface(selfRepayingEnsConfig.abi)
@@ -48,7 +46,6 @@ export function useWriteSubscriptions(onSuccess?: () => void) {
     onMutate: () => setToast("Waiting for signature", "pending"),
     onSuccess: () => {
       setToast("Waiting for confirmation", "pending")
-      setTransaction("updating subscriptions")
     },
   })
   const wait = useWaitForTransaction({
@@ -56,7 +53,6 @@ export function useWriteSubscriptions(onSuccess?: () => void) {
     onError: () => setToast("Error updating subscriptions", "error"),
     onSuccess: () => {
       setToast("Subscriptions updated", "success")
-      clearTransaction()
       removeAllCalls()
       onSuccess?.()
     },
