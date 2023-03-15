@@ -1,4 +1,3 @@
-import { ethers } from "ethers"
 import { FC } from "react"
 import { FiMinus, FiPlus, FiX } from "react-icons/fi"
 
@@ -6,10 +5,11 @@ import { clsxm } from "@/lib"
 import {
   useIsClientReady,
   useReadAlchemistMintAllowance,
-  useWriteAlchemistMintAllowance,
-  useWriteSubscriptions,
+  useUpdateAlchemistMintAllowance,
+  useUpdateSubscriptions,
 } from "@/hooks"
 
+import { SectionTitle } from "@/components/SectionTitle"
 import { Spinner } from "@/components/Spinner"
 
 import { useQueueStore } from "@/store"
@@ -26,9 +26,9 @@ export const QueuedChanges: FC<QueuedChangesProps> = ({ onUpdated }) => {
 
   return (
     <>
-      <h1 className="mb-3 flex items-center justify-between text-xs uppercase text-comet-50">
+      <SectionTitle className="flex items-center justify-between">
         Changes {isClientReady && calls.length > 0 && `(${calls.length})`}
-      </h1>
+      </SectionTitle>
       <div className="space-y-3">
         {isClientReady && calls.length > 0 ? (
           <>
@@ -68,15 +68,15 @@ export const QueuedChanges: FC<QueuedChangesProps> = ({ onUpdated }) => {
 }
 
 const ApproveAlchemist: FC = () => {
-  const writeMintAllowance = useWriteAlchemistMintAllowance(ethers.constants.MaxUint256)
+  const updateMintAllowance = useUpdateAlchemistMintAllowance()
 
   const onClickApprove = () => {
-    writeMintAllowance.write?.()
+    updateMintAllowance.write?.()
   }
 
   return (
     <div>
-      <h1 className="mb-3 text-xs uppercase text-comet-50">Mint allowance</h1>
+      <SectionTitle>Mint allowance</SectionTitle>
       <p className="mb-4 text-xs text-comet-100">
         For Self-Repaying ENS to work you must approve SRENS to mint alETH on your behalf.
       </p>
@@ -84,26 +84,26 @@ const ApproveAlchemist: FC = () => {
         className={clsxm(
           "flex w-full items-center justify-center gap-2 rounded bg-green-200 p-3 text-xs font-medium text-comet-900 transition-colors",
           {
-            "cursor-wait opacity-50": writeMintAllowance.isWaiting,
+            "cursor-wait opacity-50": updateMintAllowance.isWaiting,
             "enabled:hover:bg-green-100 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
-              !writeMintAllowance.isWaiting,
+              !updateMintAllowance.isWaiting,
           }
         )}
-        disabled={writeMintAllowance.isLoading || writeMintAllowance.isWaiting}
+        disabled={updateMintAllowance.isLoading || updateMintAllowance.isWaiting}
         onClick={onClickApprove}
       >
         Approve
-        {writeMintAllowance.isWaiting && <Spinner className="h-3 w-3 fill-current" />}
+        {updateMintAllowance.isWaiting && <Spinner className="h-3 w-3 fill-current" />}
       </button>
     </div>
   )
 }
 
 const UpdateSubscriptions: FC<QueuedChangesProps> = ({ onUpdated }) => {
-  const writeSubscriptions = useWriteSubscriptions(onUpdated)
+  const updateSubscriptions = useUpdateSubscriptions(onUpdated)
 
   const onClickUpdate = () => {
-    writeSubscriptions.write?.()
+    updateSubscriptions.write?.()
   }
 
   return (
@@ -112,16 +112,16 @@ const UpdateSubscriptions: FC<QueuedChangesProps> = ({ onUpdated }) => {
         className={clsxm(
           "flex w-full items-center justify-center gap-2 rounded bg-green-200 p-3 text-xs font-medium text-comet-900 transition-colors",
           {
-            "cursor-wait opacity-50": writeSubscriptions.isWaiting,
+            "cursor-wait opacity-50": updateSubscriptions.isWaiting,
             "enabled:hover:bg-green-100 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
-              !writeSubscriptions.isWaiting,
+              !updateSubscriptions.isWaiting,
           }
         )}
-        disabled={writeSubscriptions.isLoading || writeSubscriptions.isWaiting}
+        disabled={updateSubscriptions.isLoading || updateSubscriptions.isWaiting}
         onClick={onClickUpdate}
       >
         Update Subscriptions
-        {writeSubscriptions.isWaiting && <Spinner className="h-3 w-3 fill-current" />}
+        {updateSubscriptions.isWaiting && <Spinner className="h-3 w-3 fill-current" />}
       </button>
     </div>
   )

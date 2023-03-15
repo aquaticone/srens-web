@@ -3,7 +3,7 @@ import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 import { FC } from "react"
 
-import { clsxm, subscriptionName } from "@/lib"
+import { clsxm } from "@/lib"
 import { useReadSubscriptions } from "@/hooks"
 import { useBlockTimestamp } from "@/hooks/useBlockTimestamp"
 
@@ -43,7 +43,7 @@ export const Domain: FC<DomainProps> = ({
   const renewalDate = renewalBlockDate.data ? dayjs.unix(renewalBlockDate.data) : undefined
 
   const isExpired = expiryDate.add(90, "days").isBefore(dayjs())
-  const isSubscribed = subscribedDomains.data?.includes(subscriptionName(name) ?? "")
+  const isSubscribed = subscribedDomains.data?.includes(name ?? "")
   const isSwitchChecked = (queuedCall?.type && queuedCall.type === "subscribe") ?? isSubscribed
   const isSwitchDisabled = useToastStore((state) => state.status === "pending")
 

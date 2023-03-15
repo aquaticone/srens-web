@@ -8,30 +8,35 @@ import {
   useWaitForTransaction,
 } from "wagmi"
 
-import { subscriptionName } from "@/lib"
-
 import { useQueueStore, useToastStore } from "@/store"
 
 import { selfRepayingEnsConfig } from "@/constant"
 
 export function useReadSubscriptions() {
   const { address } = useAccount()
+  const setToast = useToastStore((store) => store.setToast)
   return useContractRead({
     ...selfRepayingEnsConfig,
     functionName: "subscribedNames",
     args: [address ?? "0x"],
     enabled: !!address,
     watch: true,
+    select: (data) => data.map((name) => `${name}.eth`),
+    onError: () => setToast("Error fetching subscriptions", "error"),
+    keepPreviousData: true,
   })
 }
 
-export function useWriteSubscriptions(onSuccess?: () => void) {
+export function useUpdateSubscriptions(onSuccess?: () => void) {
   const [calls, removeAllCalls] = useQueueStore((store) => [store.calls, store.removeAllCalls])
   const setToast = useToastStore((store) => store.setToast)
 
   const contractInterface = new ethers.utils.Interface(selfRepayingEnsConfig.abi)
   const calldata = calls.map(
-    (change) => contractInterface.encodeFunctionData(change.type, [subscriptionName(change.name)]) as Address
+    (change) =>
+      contractInterface.encodeFunctionData(change.type, [
+        change.name?.substring(0, change.name.indexOf(".eth")).toLowerCase(),
+      ]) as Address
   )
 
   const prepare = usePrepareContractWrite({
@@ -42,11 +47,9 @@ export function useWriteSubscriptions(onSuccess?: () => void) {
   })
   const write = useContractWrite({
     ...prepare.config,
-    onError: () => setToast("Transaction rejected", "error"),
+    onError: () => setToast("Transaction failed", "error"),
     onMutate: () => setToast("Waiting for signature", "pending"),
-    onSuccess: () => {
-      setToast("Waiting for confirmation", "pending")
-    },
+    onSuccess: () => setToast("Waiting for confirmation", "pending"),
   })
   const wait = useWaitForTransaction({
     hash: write.data?.hash,
@@ -62,7 +65,6 @@ export function useWriteSubscriptions(onSuccess?: () => void) {
     isError: prepare.isError || write.isError,
     isLoading: prepare.isLoading,
     isWaiting: write.isLoading || wait.isLoading,
-    isSuccess: write.isSuccess,
     write: write.write,
   }
 }

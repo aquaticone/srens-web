@@ -1,24 +1,15 @@
-query getDomainsForAddress($address: ID!, $first: Int = 100, $skip: Int = 0) {
+query getDomainsForAddress($address: ID!, $first: Int = 1000, $skip: Int = 0) {
   account(id: $address) {
     registrations(first: $first, skip: $skip, orderBy: expiryDate, orderDirection: asc) {
-      expiryDate
-      registrationDate
       domain {
-        id
         name
-      }
-      events(first: 1000) {
-        ... on NameRenewed {
-          blockNumber
-        }
       }
     }
   }
 }
 
-query getDomainByName($name: String) {
-  domains(first: 1, where: { name: $name }) {
-    id
+query getDomains($names: [String!]!, $first: Int = 1000, $skip: Int = 0) {
+  domains(first: $first, skip: $skip, where: { name_in: $names }) {
     name
     registration {
       id

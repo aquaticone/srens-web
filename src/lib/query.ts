@@ -4,7 +4,13 @@ import { Address } from "wagmi"
 
 import { getBuiltGraphSDK } from "../../.graphclient"
 
-export const queryClient = new QueryClient()
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 const sdk = getBuiltGraphSDK()
 
@@ -14,9 +20,9 @@ export const queries = createQueryKeyStore({
       queryKey: [address],
       queryFn: () => sdk.getDomainsForAddress({ address: address.toLowerCase() }),
     }),
-    lookup: (name: string) => ({
-      queryKey: [name],
-      queryFn: () => sdk.getDomainByName({ name }),
+    list: (names: Array<string>) => ({
+      queryKey: [names],
+      queryFn: () => sdk.getDomains({ names }),
     }),
   },
 })

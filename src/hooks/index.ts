@@ -1,5 +1,5 @@
 export * from "./useAlchemistMintAllowance"
+export * from "./useAllDomains"
 export * from "./useBlockTimestamp"
-export * from "./useClientEffect"
 export * from "./useIsClientReady"
 export * from "./useSelfRepayingEns"

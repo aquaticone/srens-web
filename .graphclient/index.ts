@@ -5104,11 +5104,11 @@ const merger = new(BareMerger as any)({
         },
         location: 'GetDomainsForAddressDocument.graphql'
       },{
-        document: GetDomainByNameDocument,
+        document: GetDomainsDocument,
         get rawSDL() {
-          return printWithCache(GetDomainByNameDocument);
+          return printWithCache(GetDomainsDocument);
         },
-        location: 'GetDomainByNameDocument.graphql'
+        location: 'GetDomainsDocument.graphql'
       }
     ];
     },
@@ -5154,18 +5154,17 @@ export type getDomainsForAddressQueryVariables = Exact<{
 }>;
 
 
-export type getDomainsForAddressQuery = { account?: Maybe<{ registrations?: Maybe<Array<(
-      Pick<Registration, 'expiryDate' | 'registrationDate'>
-      & { domain: Pick<Domain, 'id' | 'name'>, events: Array<Pick<NameRenewed, 'blockNumber'> | {}> }
-    )>> }> };
+export type getDomainsForAddressQuery = { account?: Maybe<{ registrations?: Maybe<Array<{ domain: Pick<Domain, 'name'> }>> }> };
 
-export type getDomainByNameQueryVariables = Exact<{
-  name?: InputMaybe<Scalars['String']>;
+export type getDomainsQueryVariables = Exact<{
+  names: Array<Scalars['String']> | Scalars['String'];
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type getDomainByNameQuery = { domains: Array<(
-    Pick<Domain, 'id' | 'name'>
+export type getDomainsQuery = { domains: Array<(
+    Pick<Domain, 'name'>
     & { registration?: Maybe<(
       Pick<Registration, 'id' | 'expiryDate' | 'registrationDate'>
       & { events: Array<Pick<NameRenewed, 'blockNumber'> | {}> }
@@ -5174,7 +5173,7 @@ export type getDomainByNameQuery = { domains: Array<(
 
 
 export const getDomainsForAddressDocument = gql`
-    query getDomainsForAddress($address: ID!, $first: Int = 100, $skip: Int = 0) {
+    query getDomainsForAddress($address: ID!, $first: Int = 1000, $skip: Int = 0) {
   account(id: $address) {
     registrations(
       first: $first
@@ -5182,25 +5181,16 @@ export const getDomainsForAddressDocument = gql`
       orderBy: expiryDate
       orderDirection: asc
     ) {
-      expiryDate
-      registrationDate
       domain {
-        id
         name
-      }
-      events(first: 1000) {
-        ... on NameRenewed {
-          blockNumber
-        }
       }
     }
   }
 }
     ` as unknown as DocumentNode<getDomainsForAddressQuery, getDomainsForAddressQueryVariables>;
-export const getDomainByNameDocument = gql`
-    query getDomainByName($name: String) {
-  domains(first: 1, where: {name: $name}) {
-    id
+export const getDomainsDocument = gql`
+    query getDomains($names: [String!]!, $first: Int = 1000, $skip: Int = 0) {
+  domains(first: $first, skip: $skip, where: {name_in: $names}) {
     name
     registration {
       id
@@ -5214,7 +5204,7 @@ export const getDomainByNameDocument = gql`
     }
   }
 }
-    ` as unknown as DocumentNode<getDomainByNameQuery, getDomainByNameQueryVariables>;
+    ` as unknown as DocumentNode<getDomainsQuery, getDomainsQueryVariables>;
 
 
 
@@ -5224,8 +5214,8 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     getDomainsForAddress(variables: getDomainsForAddressQueryVariables, options?: C): Promise<getDomainsForAddressQuery> {
       return requester<getDomainsForAddressQuery, getDomainsForAddressQueryVariables>(getDomainsForAddressDocument, variables, options) as Promise<getDomainsForAddressQuery>;
     },
-    getDomainByName(variables?: getDomainByNameQueryVariables, options?: C): Promise<getDomainByNameQuery> {
-      return requester<getDomainByNameQuery, getDomainByNameQueryVariables>(getDomainByNameDocument, variables, options) as Promise<getDomainByNameQuery>;
+    getDomains(variables: getDomainsQueryVariables, options?: C): Promise<getDomainsQuery> {
+      return requester<getDomainsQuery, getDomainsQueryVariables>(getDomainsDocument, variables, options) as Promise<getDomainsQuery>;
     }
   };
 }

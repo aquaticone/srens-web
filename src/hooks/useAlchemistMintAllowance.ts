@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers"
+import { ethers } from "ethers"
 import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from "wagmi"
 
 import { useToastStore } from "@/store"
@@ -17,20 +17,24 @@ export function useReadAlchemistMintAllowance() {
   })
 }
 
-export function useWriteAlchemistMintAllowance(amount: BigNumber, onSuccess?: (data: unknown) => void) {
+export function useUpdateAlchemistMintAllowance() {
   const setToast = useToastStore((store) => store.setToast)
   const prepare = usePrepareContractWrite({
     ...alchemistConfig,
     functionName: "approveMint",
-    args: [selfRepayingEnsAddress, amount],
+    args: [selfRepayingEnsAddress, ethers.constants.MaxUint256],
   })
   const write = useContractWrite({
     ...prepare.config,
-    onError: () => setToast("Transaction rejected", "error"),
+    onError: () => setToast("Transaction failed", "error"),
     onMutate: () => setToast("Waiting for signature", "pending"),
+    onSuccess: () => setToast("Waiting for confirmation", "pending"),
+  })
+  const wait = useWaitForTransaction({
+    hash: write.data?.hash,
+    onError: () => setToast("Error updating mint allowance", "error"),
     onSuccess: () => setToast("Mint allowance updated", "success"),
   })
-  const wait = useWaitForTransaction({ hash: write.data?.hash, onSuccess })
   return {
     isError: prepare.isError || write.isError,
     isLoading: prepare.isLoading,

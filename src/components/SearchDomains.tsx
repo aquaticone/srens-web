@@ -15,9 +15,10 @@ export const SearchDomains: FC = () => {
   const [submitted, setSubmitted] = useState<string>("")
 
   const { data, isError, isLoading } = useQuery({
-    ...queries.domains.lookup(submitted ?? ""),
+    ...queries.domains.list([submitted ?? ""]),
     enabled: !!submitted,
   })
+  const domain = data?.domains?.[0]
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
@@ -75,18 +76,16 @@ export const SearchDomains: FC = () => {
             </FallbackMessage>
           ) : isError ? (
             <FallbackMessage variant="black">Error finding domains</FallbackMessage>
-          ) : !data?.domains.length ? (
+          ) : !domain ? (
             <FallbackMessage variant="black">Domain not found</FallbackMessage>
           ) : (
-            data.domains.map((domain) => (
-              <Domain
-                key={domain.id}
-                name={domain.name}
-                expiryDate={domain.registration?.expiryDate}
-                registrationDate={domain.registration?.registrationDate}
-                renewalEvents={domain.registration?.events}
-              />
-            ))
+            <Domain
+              key={domain.registration?.id}
+              name={domain.name}
+              expiryDate={domain.registration?.expiryDate}
+              registrationDate={domain.registration?.registrationDate}
+              renewalEvents={domain.registration?.events}
+            />
           )}
         </div>
       )}
