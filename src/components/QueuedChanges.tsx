@@ -39,7 +39,7 @@ export const QueuedChanges: FC<QueuedChangesProps> = ({ onUpdated }) => {
                   className="grid grid-cols-[auto,1fr,auto] items-center gap-2 py-3 first:pt-1.5"
                 >
                   {type === "subscribe" ? (
-                    <FiPlus className="h-5 w-5 stroke-green-300" />
+                    <FiPlus className="h-5 w-5 stroke-green-100" />
                   ) : (
                     <FiMinus className="h-5 w-5 stroke-orange" />
                   )}
@@ -82,10 +82,10 @@ const ApproveAlchemist: FC = () => {
       </p>
       <button
         className={clsxm(
-          "flex w-full items-center justify-center gap-2 rounded bg-green-400 p-3 text-xs font-medium text-comet-900 transition-colors",
+          "flex w-full items-center justify-center gap-2 rounded bg-green-200 p-3 text-xs font-medium text-comet-900 transition-colors",
           {
             "cursor-wait opacity-50": writeMintAllowance.isWaiting,
-            "enabled:hover:bg-green-300 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
+            "enabled:hover:bg-green-100 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
               !writeMintAllowance.isWaiting,
           }
         )}
@@ -100,12 +100,7 @@ const ApproveAlchemist: FC = () => {
 }
 
 const UpdateSubscriptions: FC<QueuedChangesProps> = ({ onUpdated }) => {
-  const changes = useQueueStore((store) => store.calls)
-  const removeAllCalls = useQueueStore((store) => store.removeAllCalls)
-  const writeSubscriptions = useWriteSubscriptions(changes, () => {
-    removeAllCalls()
-    onUpdated()
-  })
+  const writeSubscriptions = useWriteSubscriptions(onUpdated)
 
   const onClickUpdate = () => {
     writeSubscriptions.write?.()
@@ -115,10 +110,10 @@ const UpdateSubscriptions: FC<QueuedChangesProps> = ({ onUpdated }) => {
     <div>
       <button
         className={clsxm(
-          "flex w-full items-center justify-center gap-2 rounded bg-green-400 p-3 text-xs font-medium text-comet-900 transition-colors",
+          "flex w-full items-center justify-center gap-2 rounded bg-green-200 p-3 text-xs font-medium text-comet-900 transition-colors",
           {
             "cursor-wait opacity-50": writeSubscriptions.isWaiting,
-            "enabled:hover:bg-green-300 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
+            "enabled:hover:bg-green-100 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
               !writeSubscriptions.isWaiting,
           }
         )}

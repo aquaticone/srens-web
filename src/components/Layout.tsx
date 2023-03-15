@@ -2,14 +2,14 @@ import Link from "next/link"
 import { FC, PropsWithChildren } from "react"
 import { FaGithub } from "react-icons/fa"
 
-import { ConnectButton } from "@/components"
+import { ConnectButton, Toaster } from "@/components"
 
 import Etherscan from "~/svg/etherscan.svg"
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="grid min-h-screen grid-cols-1 grid-rows-[auto,1fr,auto]">
-      <header className="border-b border-b-comet-700 py-5">
+      <header className="relative border-b border-b-comet-700 py-5">
         <div className="layout flex flex-wrap items-center justify-center gap-4 sm:justify-between">
           <div>
             <h1 className="text-lg font-semibold uppercase tracking-widest">Self-Repaying ENS</h1>
@@ -22,6 +22,9 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
             </Link>
           </div>
           <div className="flex shrink-0 gap-3">
+            <div className="max-md:absolute max-md:inset-x-0 max-md:top-0">
+              <Toaster />
+            </div>
             <ConnectButton />
           </div>
         </div>

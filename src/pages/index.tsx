@@ -43,7 +43,7 @@ export default function HomePage() {
 
       {isClientReady && hasQueuedCalls && (
         <button
-          className="fixed inset-x-0 bottom-0 mx-4 mb-4 rounded bg-green-400 py-3.5 text-center font-semibold text-comet-900 shadow-lg md:hidden"
+          className="fixed inset-x-0 bottom-0 mx-4 mb-4 rounded bg-green-200 py-3.5 text-center font-semibold text-comet-900 shadow-lg md:hidden"
           onClick={() => setChangesOpen(true)}
         >
           Review changes

@@ -7,7 +7,7 @@ import { clsxm, subscriptionName } from "@/lib"
 import { useReadSubscriptions } from "@/hooks"
 import { useBlockTimestamp } from "@/hooks/useBlockTimestamp"
 
-import { useQueueStore } from "@/store"
+import { usePendingStore, useQueueStore } from "@/store"
 
 import { Maybe, NameRenewed } from ".graphclient"
 
@@ -45,8 +45,7 @@ export const Domain: FC<DomainProps> = ({
   const isExpired = expiryDate.add(90, "days").isBefore(dayjs())
   const isSubscribed = subscribedDomains.data?.includes(subscriptionName(name) ?? "")
   const isSwitchChecked = (queuedCall?.type && queuedCall.type === "subscribe") ?? isSubscribed
-  // TODO: Disable switches during transactions
-  const isSwitchDisabled = false
+  const isSwitchDisabled = usePendingStore((state) => !!state.transaction)
 
   const onChangeSwitch = (checked: boolean) => {
     if (queuedCall) {
@@ -68,8 +67,9 @@ export const Domain: FC<DomainProps> = ({
             <Switch.Group>
               <div className="flex items-center">
                 <Switch.Label
-                  className={clsxm("mr-3 text-xs uppercase text-comet-300", {
-                    "cursor-pointer": isSwitchChecked,
+                  className={clsxm("pr-3 text-xs uppercase text-comet-300", {
+                    "cursor-pointer": !isSwitchDisabled,
+                    "cursor-wait": isSwitchDisabled,
                   })}
                 >
                   Subscribe
@@ -78,19 +78,9 @@ export const Domain: FC<DomainProps> = ({
                   checked={isSwitchChecked}
                   onChange={onChangeSwitch}
                   disabled={isSwitchDisabled}
-                  className={clsxm(
-                    "relative inline-flex h-6 w-11 items-center rounded-full bg-comet-800 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800",
-                    {
-                      "bg-green-300": isSwitchChecked,
-                    }
-                  )}
+                  className="relative inline-flex h-6 w-11 items-center rounded-full bg-comet-800 transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 disabled:cursor-wait disabled:opacity-50 disabled:grayscale ui-checked:bg-green-100"
                 >
-                  <span
-                    className={clsxm("inline-block h-4 w-4 translate-x-1 transform rounded-full transition-transform", {
-                      "translate-x-6 bg-white": isSwitchChecked,
-                      "translate-x-1 bg-comet-300": !isSwitchChecked,
-                    })}
-                  />
+                  <span className="inline-block h-4 w-4 translate-x-1 transform rounded-full transition-all ui-checked:translate-x-6 ui-checked:bg-white ui-not-checked:translate-x-1 ui-not-checked:bg-comet-300" />
                 </Switch>
               </div>
             </Switch.Group>

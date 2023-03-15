@@ -1,5 +1,4 @@
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
 
 import { Maybe } from ".graphclient"
 
@@ -15,14 +14,9 @@ type QueueStore = {
   removeAllCalls: () => void
 }
 
-export const useQueueStore = create<QueueStore>()(
-  persist(
-    (set) => ({
-      calls: [],
-      addCall: (call) => set((state) => ({ calls: [...state.calls, call] })),
-      removeCall: (name) => set((state) => ({ calls: state.calls.filter((c) => c.name !== name) })),
-      removeAllCalls: () => set({ calls: [] }),
-    }),
-    { name: "srens.queue" }
-  )
-)
+export const useQueueStore = create<QueueStore>()((set) => ({
+  calls: [],
+  addCall: (call) => set((state) => ({ calls: [...state.calls, call] })),
+  removeCall: (name) => set((state) => ({ calls: state.calls.filter((c) => c.name !== name) })),
+  removeAllCalls: () => set({ calls: [] }),
+}))
