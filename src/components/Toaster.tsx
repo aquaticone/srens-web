@@ -1,5 +1,5 @@
 import { Transition } from "@headlessui/react"
-import { FC, Fragment, useEffect, useRef, useState } from "react"
+import { FC, Fragment, useEffect, useRef } from "react"
 
 import { clsxm } from "@/lib"
 
@@ -9,23 +9,11 @@ import { useToastStore } from "@/store"
 
 export const Toaster: FC = () => {
   const timerRef = useRef<NodeJS.Timer>()
-  const [show, setShow] = useState(false)
   const [message, status, clearToast] = useToastStore((store) => [store.message, store.status, store.clearToast])
 
   useEffect(() => {
-    if (message && status) setShow(true)
-  }, [message, status])
-
-  useEffect(() => {
-    if (!show) {
-      timerRef.current = setTimeout(clearToast, 300)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [show])
-
-  useEffect(() => {
     if (status === "error" || status === "success") {
-      timerRef.current = setTimeout(() => setShow(false), 8000)
+      timerRef.current = setTimeout(clearToast, 8000)
     }
     return () => {
       clearTimeout(timerRef.current)
@@ -36,7 +24,7 @@ export const Toaster: FC = () => {
   return (
     <Transition
       as={Fragment}
-      show={show}
+      show={!!message && !!status}
       enter="transition-opacity ease-linear"
       enterFrom="opacity-0"
       enterTo="opacity-100"
