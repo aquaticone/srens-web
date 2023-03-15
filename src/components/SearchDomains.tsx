@@ -22,8 +22,8 @@ export const SearchDomains: FC = () => {
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
     if (!value || value.length < 3) return
-    if (value.endsWith(".eth")) setSubmitted(value)
-    else setSubmitted(`${value}.eth`)
+    if (value.endsWith(".eth")) setSubmitted(value.toLowerCase())
+    else setSubmitted(`${value}.eth`.toLowerCase())
   }
 
   const onClear = () => {
