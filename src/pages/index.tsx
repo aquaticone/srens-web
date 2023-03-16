@@ -1,24 +1,24 @@
 import { Dialog, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
 
-import { montserrat } from "@/lib"
+import { clsxm, montserrat } from "@/lib"
 import { useIsClientReady } from "@/hooks"
 
-import { Layout, MyDomains, QueuedChanges, SearchDomains, SectionTitle, Seo } from "@/components"
+import { CommitQueuedChanges, Layout, MyDomains, QueuedChanges, SearchDomains, SectionTitle, Seo } from "@/components"
 
 import { useQueueStore } from "@/store"
 
 export default function HomePage() {
   const isClientReady = useIsClientReady()
-  const hasQueuedCalls = useQueueStore((store) => store.calls.length > 0)
+  const callCount = useQueueStore((store) => store.calls.length)
   const [changesOpen, setChangesOpen] = useState(false)
 
   return (
     <Layout>
       <Seo />
 
-      <div className="layout divide-x divide-comet-700 md:grid md:grid-cols-[2fr,1fr] lg:grid-cols-[3fr,1fr]">
-        <main className="space-y-6 py-4 md:pr-4">
+      <div className="layout h-full divide-x divide-comet-700 md:grid md:grid-cols-[2fr,1fr] md:overflow-hidden lg:grid-cols-[3fr,1fr]">
+        <main className="space-y-6 overscroll-auto py-4 md:overflow-auto md:pr-4">
           <section>
             <SectionTitle>Search domains</SectionTitle>
             <div className="space-y-4">
@@ -34,14 +34,24 @@ export default function HomePage() {
           </section>
         </main>
 
-        <aside className="space-y-6 pt-4 pl-4 max-md:hidden">
-          <section>
-            <QueuedChanges onUpdated={() => setChangesOpen(false)} />
-          </section>
+        <aside className="grid max-h-full grid-cols-1 grid-rows-[max-content,auto] overflow-hidden pt-4 max-md:hidden">
+          <div className="space-y-6 pl-4">
+            <CommitQueuedChanges onUpdated={() => setChangesOpen(false)} />
+            <SectionTitle
+              className={clsxm("mb-0", {
+                "border-b border-b-comet-700 pb-3": callCount > 0,
+              })}
+            >
+              Changes{callCount > 0 ? ` (${callCount})` : null}
+            </SectionTitle>
+          </div>
+          <div className="-mr-4 overflow-y-auto px-4 py-3">
+            <QueuedChanges />
+          </div>
         </aside>
       </div>
 
-      {isClientReady && hasQueuedCalls && (
+      {isClientReady && callCount > 0 && (
         <button
           className="fixed inset-x-0 bottom-0 mx-4 mb-4 rounded bg-green-200 py-3.5 text-center font-semibold text-comet-900 shadow-lg md:hidden"
           onClick={() => setChangesOpen(true)}
@@ -78,9 +88,13 @@ export default function HomePage() {
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <Dialog.Panel className="w-4/5 border-l border-l-comet-700 bg-comet-900 shadow-lg shadow-black/80 focus:outline-none sm:max-w-lg">
-                <div className="py-6 px-4">
-                  <QueuedChanges onUpdated={() => setChangesOpen(false)} />
+              <Dialog.Panel className="w-4/5 overflow-y-auto border-l border-l-comet-700 bg-comet-900 shadow-lg shadow-black/80 focus:outline-none sm:max-w-lg">
+                <div className="space-y-6 py-6 px-4">
+                  <CommitQueuedChanges onUpdated={() => setChangesOpen(false)} />
+                  <div>
+                    <SectionTitle>Changes{callCount > 0 ? ` (${callCount})` : null}</SectionTitle>
+                    <QueuedChanges />
+                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

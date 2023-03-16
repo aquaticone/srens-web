@@ -13,9 +13,11 @@ export const MyDomains: FC = () => {
   const { isConnected } = useAccount()
   const allDomains = useAllDomains()
 
+  if (!isClientReady) return null
+
   return (
     <>
-      {!isConnected && isClientReady ? (
+      {!isConnected ? (
         <FallbackMessage variant="black">Connect your wallet to view your domains</FallbackMessage>
       ) : allDomains.isLoading ? (
         <FallbackMessage variant="transparent">

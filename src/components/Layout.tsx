@@ -8,7 +8,7 @@ import Etherscan from "~/svg/etherscan.svg"
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="grid min-h-screen grid-cols-1 grid-rows-[auto,1fr,auto]">
+    <div className="grid min-h-screen grid-cols-1 grid-rows-[auto,1fr,auto] md:max-h-screen md:overflow-hidden">
       <header className="relative border-b border-b-comet-700 py-5">
         <div className="layout flex flex-wrap items-center justify-center gap-4 sm:justify-between">
           <div>
