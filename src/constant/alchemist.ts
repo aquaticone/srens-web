@@ -1624,7 +1624,7 @@ const alchemistABI = [
   },
 ] as const
 
-export const alchemistAddress = "0x938DBA3B746B3cc6D47C703Aac3a7485287c0ed7" as const
+export const alchemistAddress = "0x062Bf725dC4cDF947aa79Ca2aaCCD4F385b13b5c" as const
 
 export const alchemistConfig = {
   address: alchemistAddress,
