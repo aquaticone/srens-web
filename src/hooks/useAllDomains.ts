@@ -42,6 +42,6 @@ export function useAllDomains() {
     data: allDomains.data?.domains
       .map((d) => ({ ...d, isSubscribed: subscribedDomains.data?.includes(d.name ?? "") }))
       .sort((a, b) => Number(a.registration?.expiryDate ?? "0") - Number(b.registration?.expiryDate ?? "0")),
-    isLoading: subscribedDomains.isLoading || ownedDomainNames.isLoading || allDomains.isLoading,
+    isLoading: subscribedDomains.isLoading || ownedDomainNames.isInitialLoading || allDomains.isInitialLoading,
   }
 }
