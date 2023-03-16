@@ -12,12 +12,14 @@ import {
 import { SectionTitle } from "@/components/SectionTitle"
 import { Spinner } from "@/components/Spinner"
 
-import { useQueueStore } from "@/store"
+import { useQueueStore, useToastStore } from "@/store"
 
 export const QueuedChanges: FC = () => {
   const isClientReady = useIsClientReady()
   const calls = useQueueStore((store) => store.calls)
   const removeCall = useQueueStore((store) => store.removeCall)
+
+  const isRemoveDisabled = useToastStore((state) => state.status === "pending")
 
   return (
     <>
@@ -32,7 +34,8 @@ export const QueuedChanges: FC = () => {
               )}
               <div className="grow-0 overflow-hidden text-ellipsis text-sm">{name}</div>
               <button
-                className="rounded text-comet-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+                className="rounded text-comet-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={isRemoveDisabled}
                 onClick={() => removeCall(name)}
               >
                 <FiX className="h-5 w-5 fill-current" />
