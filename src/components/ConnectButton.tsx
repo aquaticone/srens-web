@@ -1,9 +1,19 @@
 import { ConnectButton as RainbowConnectButton } from "@rainbow-me/rainbowkit"
-import { FC } from "react"
+import { FC, useEffect } from "react"
+import { useNetwork } from "wagmi"
 
 import { chains } from "@/lib"
 
+import { useQueueStore } from "@/store"
+
 export const ConnectButton: FC = () => {
+  const { chain } = useNetwork()
+  const removeAllCalls = useQueueStore((store) => store.removeAllCalls)
+  useEffect(() => {
+    removeAllCalls()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chain?.id])
+
   return (
     <RainbowConnectButton.Custom>
       {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
