@@ -27,7 +27,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
             </div>
           </div>
           <div className="flex shrink-0 gap-3">
-            <div className="max-md:absolute max-md:inset-x-0 max-md:top-0">
+            <div className="max-md:hidden">
               <Toaster />
             </div>
             <ConnectButton />
@@ -37,7 +37,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
 
       {children}
 
-      <footer className="border-t border-t-comet-700 py-6">
+      <footer className="border-t border-t-comet-700 py-6 max-md:pb-24">
         <div className="layout max-md:space-y-3 max-md:text-center md:flex md:justify-between">
           <div className="inline-flex gap-5 max-md:mx-auto md:gap-3">
             <Link
