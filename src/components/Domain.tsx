@@ -32,10 +32,10 @@ export const Domain: FC<DomainProps> = ({
 
   const renewalBlockDate = useBlockTimestamp(nearestRenewalEvent?.blockNumber)
   const subscribedDomains = useReadSubscriptions()
-  const [queuedCall, addCall, removeCall] = useQueueStore((state) => [
-    state.calls.find((c) => c.name === name),
-    state.addCall,
-    state.removeCall,
+  const [queuedCall, addCall, removeCall] = useQueueStore((store) => [
+    store.calls.find((c) => c.name === name),
+    store.addCall,
+    store.removeCall,
   ])
 
   const expiryDate = dayjs.unix(_expiryDate)

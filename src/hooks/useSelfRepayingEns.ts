@@ -1,4 +1,5 @@
 import { ethers } from "ethers"
+import { useMemo } from "react"
 import {
   Address,
   useAccount,
@@ -28,15 +29,20 @@ export function useReadSubscriptions() {
 }
 
 export function useUpdateSubscriptions(onSuccess?: () => void) {
-  const [calls, removeAllCalls] = useQueueStore((store) => [store.calls, store.removeAllCalls])
+  const calls = useQueueStore((store) => store.calls)
+  const removeAllCalls = useQueueStore((store) => store.removeAllCalls)
   const setToast = useToastStore((store) => store.setToast)
 
-  const contractInterface = new ethers.utils.Interface(selfRepayingEnsConfig.abi)
-  const calldata = calls.map(
-    (change) =>
-      contractInterface.encodeFunctionData(change.type, [
-        change.name?.substring(0, change.name.indexOf(".eth")).toLowerCase(),
-      ]) as Address
+  const contractInterface = useMemo(() => new ethers.utils.Interface(selfRepayingEnsConfig.abi), [])
+  const calldata = useMemo(
+    () =>
+      calls.map(
+        (change) =>
+          contractInterface.encodeFunctionData(change.type, [
+            change.name?.substring(0, change.name.indexOf(".eth")).toLowerCase(),
+          ]) as Address
+      ),
+    [calls, contractInterface]
   )
 
   const prepare = usePrepareContractWrite({
