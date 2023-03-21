@@ -3,8 +3,8 @@ import { useRouter } from "next/router"
 import { FC } from "react"
 
 const defaultMeta = {
-  title: "Self Repaying ENS",
-  siteName: "Self Repaying ENS",
+  title: "Self-Repaying ENS",
+  siteName: "Self-Repaying ENS",
   description: "",
   url: "https://selfrepayingens.dev",
   type: "website",
