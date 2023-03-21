@@ -12,7 +12,10 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
     <div className="grid min-h-screen grid-cols-1 grid-rows-[auto,1fr,auto] md:max-h-screen md:overflow-hidden">
       <header className="relative border-b border-b-comet-700 py-5">
         <div className="layout flex flex-wrap items-center justify-center gap-4 sm:justify-between">
-          <SRENSLogo className="h-11 w-44" />
+          <Link href="/">
+            <SRENSLogo className="h-11 w-44" />
+            <span className="sr-only">Alchemix Self-Repaying ENS</span>
+          </Link>
           <div className="flex shrink-0 gap-3">
             <div className="max-md:hidden">
               <Toaster />
