@@ -24,7 +24,6 @@ export function useReadSubscriptions() {
     watch: true,
     select: (data) => data.map((name) => `${name}.eth`),
     onError: () => setToast("Error fetching subscriptions", "error"),
-    keepPreviousData: true,
   })
 }
 
