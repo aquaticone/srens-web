@@ -56,7 +56,7 @@ export const AccountOverview: FC = () => {
           </dd>
         </dl>
         {isClientReady && accountMetrics.isSuccess && !accountMetrics.data?.isCollateralized && (
-          <p className="mb-1 text-xs text-red">
+          <p className="my-1 text-sm text-red md:text-xs">
             Auto-renewals will not be processed if your collateralization ratio is below{" "}
             {formatUnits(accountMetrics.data?.minCollatRatio ?? "2")}
           </p>
