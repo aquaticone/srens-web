@@ -29,7 +29,9 @@ export const Header: FC = () => {
 
   return (
     <>
-      <Toaster />
+      <div className="md:hidden">
+        <Toaster />
+      </div>
 
       <header className="sticky top-0 z-40 border-b border-b-comet-700 bg-comet-900 py-5">
         <div className="layout flex flex-wrap items-center justify-between gap-4">
