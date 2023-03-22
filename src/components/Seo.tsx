@@ -73,10 +73,5 @@ const favicons: Array<React.ComponentPropsWithoutRef<"link">> = [
     href: "/favicon/favicon-16x16.png",
   },
   { rel: "manifest", href: "/favicon/site.webmanifest" },
-  {
-    rel: "mask-icon",
-    href: "/favicon/safari-pinned-tab.svg",
-    color: "#00e887",
-  },
   { rel: "shortcut icon", href: "/favicon/favicon.ico" },
 ]
