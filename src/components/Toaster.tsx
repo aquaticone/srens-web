@@ -34,7 +34,7 @@ export const Toaster: FC = () => {
     >
       <div
         className={clsxm(
-          "flex items-center gap-3 p-3 text-sm font-medium text-white max-md:fixed max-md:inset-x-0 max-md:top-0 max-md:z-50 max-md:justify-center md:rounded md:py-1.5",
+          "flex items-center gap-3 p-3 text-sm font-medium text-white max-md:justify-center md:rounded md:py-1.5",
           {
             "bg-blue": status === "pending",
             "bg-green-300": status === "success",
