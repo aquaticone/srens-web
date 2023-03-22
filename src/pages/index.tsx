@@ -1,3 +1,7 @@
+import Link from "next/link"
+import { FaExternalLinkAlt } from "react-icons/fa"
+import { useAccount } from "wagmi"
+
 import { clsxm } from "@/lib"
 import { useIsClientReady } from "@/hooks"
 
@@ -18,11 +22,12 @@ import { useQueueStore } from "@/store"
 
 export default function Dashboard() {
   const isClientReady = useIsClientReady()
+  const { address } = useAccount()
   const callCount = useQueueStore((store) => store.calls.length)
 
   return (
     <Layout>
-      <Seo templateTitle="Dashboard" />
+      <Seo />
 
       <Header />
 
@@ -36,7 +41,18 @@ export default function Dashboard() {
           </section>
 
           <section>
-            <SectionTitle>My SRENS</SectionTitle>
+            <div className="flex items-baseline justify-between">
+              <SectionTitle>My SRENS</SectionTitle>
+              <Link
+                className="flex items-center gap-1 text-sm text-bronze underline md:text-xs"
+                href={`https://app.ens.domains${isClientReady && address ? `/address/${address}` : ""}`}
+                target="_blank"
+              >
+                ENS Dashboard
+                <FaExternalLinkAlt className="h-3 w-3" />
+              </Link>
+            </div>
+
             <div className="space-y-4">
               <MyDomains />
             </div>
