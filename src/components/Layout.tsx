@@ -72,7 +72,7 @@ export const Header: FC = () => {
               leaveFrom="translate-y-0"
               leaveTo="translate-y-full"
             >
-              <Dialog.Panel className="max-h-[66svh] w-full space-y-6 overflow-y-auto rounded-t-lg border-l border-l-comet-700 bg-comet-600 p-4 pb-6 shadow-lg shadow-black/80 focus:outline-none sm:max-w-lg md:py-6">
+              <Dialog.Panel className="max-h-[66svh] w-full space-y-6 overflow-y-auto rounded-t-lg border-l border-l-comet-700 bg-comet-600 p-4 pb-6 shadow shadow-black/80 focus:outline-none sm:max-w-lg md:py-6">
                 <div className="flex justify-end">
                   <button
                     className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-comet-700 p-2 text-comet-400"
