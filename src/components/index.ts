@@ -1,3 +1,4 @@
+export * from "./AccountOverview"
 export * from "./ConnectButton"
 export * from "./Domain"
 export * from "./FallbackMessage"

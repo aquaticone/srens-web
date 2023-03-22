@@ -1,12 +1,14 @@
 import Link from "next/link"
 import * as React from "react"
 
-import { Layout, Seo } from "@/components"
+import { Footer, Header, Layout, Seo } from "@/components"
 
 export default function NotFoundPage() {
   return (
     <Layout>
       <Seo templateTitle="Not Found" />
+
+      <Header />
 
       <div className="layout">
         <main className="py-8 text-center">
@@ -20,6 +22,8 @@ export default function NotFoundPage() {
           </p>
         </main>
       </div>
+
+      <Footer />
     </Layout>
   )
 }

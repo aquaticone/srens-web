@@ -4,7 +4,10 @@
 
 @layer base {
   body {
-    @apply h-screen text-white;
+    @apply h-screen bg-comet-900 text-white;
+  }
+
+  .bg-alchemix {
     background: linear-gradient(171.08deg, #010101 -11.16%, #141921 6.1%, #0a0d11 49.05%, #000000 93.22%) no-repeat
       fixed;
   }

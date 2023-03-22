@@ -18,7 +18,6 @@ export const QueuedChanges: FC = () => {
   const isClientReady = useIsClientReady()
   const calls = useQueueStore((store) => store.calls)
   const removeCall = useQueueStore((store) => store.removeCall)
-
   const isRemoveDisabled = useToastStore((state) => state.status === "pending")
 
   return (
@@ -34,17 +33,17 @@ export const QueuedChanges: FC = () => {
               )}
               <div className="grow-0 overflow-hidden text-ellipsis text-sm">{name}</div>
               <button
-                className="rounded text-comet-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded text-comet-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 disabled:cursor-not-allowed disabled:opacity-50 max-md:text-comet-300"
                 disabled={isRemoveDisabled}
                 onClick={() => removeCall(name)}
               >
-                <FiX className="h-5 w-5 fill-current" />
+                <FiX className="h-5 w-5 stroke-current" />
               </button>
             </li>
           ))}
         </ul>
       ) : (
-        <div className="text-xs text-comet-100">
+        <div className="text-sm text-comet-100 md:text-xs">
           Subscription changes you make will appear here for review. You can submit multiple changes in a single
           transaction.
         </div>
@@ -54,7 +53,7 @@ export const QueuedChanges: FC = () => {
 }
 
 type CommitQueuedChangesProps = {
-  onUpdated: () => void
+  onUpdated?: () => void
 }
 
 export const CommitQueuedChanges: FC<CommitQueuedChangesProps> = ({ onUpdated }) => {
@@ -73,32 +72,50 @@ export const CommitQueuedChanges: FC<CommitQueuedChangesProps> = ({ onUpdated })
 
   if (!isClientReady || !calls.length) return null
 
-  const isLoading = updateMintAllowance.isLoading || updateSubscriptions.isLoading
-  const isWaiting = updateMintAllowance.isWaiting || updateSubscriptions.isWaiting
-
   return (
     <div>
-      <SectionTitle>{mintAllowance.data ? "Update Subscriptions" : "Mint allowance"}</SectionTitle>
-      {!mintAllowance.data && (
-        <p className="mb-4 text-xs text-comet-100">
-          For Self-Repaying ENS to work you must approve SRENS to mint alETH on your behalf.
-        </p>
+      {mintAllowance.data ? (
+        <>
+          <SectionTitle className="max-md:text-white">Update subscriptions</SectionTitle>
+          <button
+            className={clsxm(
+              "flex w-full items-center justify-center gap-3 rounded bg-green-200 p-3 font-semibold text-comet-900 transition-colors md:text-xs",
+              {
+                "cursor-wait opacity-50": updateSubscriptions.isWaiting,
+                "enabled:hover:bg-green-100 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
+                  !updateSubscriptions.isWaiting,
+              }
+            )}
+            disabled={updateSubscriptions.isLoading || updateSubscriptions.isWaiting}
+            onClick={onClickUpdate}
+          >
+            {updateSubscriptions.isWaiting ? "Updating subscriptions" : "Update subscriptions"}
+            {updateSubscriptions.isWaiting && <Spinner className="h-5 w-5 fill-current md:h-4 md:w-4" />}
+          </button>
+        </>
+      ) : (
+        <>
+          <SectionTitle className="max-md:text-white">Mint allowance</SectionTitle>
+          <p className="mb-4 text-sm text-comet-100 md:text-xs">
+            For Self-Repaying ENS to work you must approve SRENS to mint alETH on your behalf.
+          </p>
+          <button
+            className={clsxm(
+              "flex w-full items-center justify-center gap-3 rounded bg-green-200 p-3 font-semibold text-comet-900 transition-colors md:text-xs",
+              {
+                "cursor-wait opacity-50": updateMintAllowance.isWaiting,
+                "enabled:hover:bg-green-100 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
+                  !updateMintAllowance.isWaiting,
+              }
+            )}
+            disabled={updateMintAllowance.isLoading || updateMintAllowance.isWaiting}
+            onClick={onClickApprove}
+          >
+            {updateMintAllowance.isWaiting ? "Approving" : "Approve"}
+            {updateMintAllowance.isWaiting && <Spinner className="h-5 w-5 fill-current md:h-4 md:w-4" />}
+          </button>
+        </>
       )}
-      <button
-        className={clsxm(
-          "flex w-full items-center justify-center gap-2 rounded bg-green-200 p-3 text-xs font-medium text-comet-900 transition-colors",
-          {
-            "cursor-wait opacity-50": isWaiting,
-            "enabled:hover:bg-green-100 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
-              !isWaiting,
-          }
-        )}
-        disabled={isLoading || isWaiting}
-        onClick={mintAllowance.data ? onClickUpdate : onClickApprove}
-      >
-        {mintAllowance.data ? "Update subscriptions" : "Approve"}
-        {isWaiting && <Spinner className="h-3 w-3 fill-current" />}
-      </button>
     </div>
   )
 }

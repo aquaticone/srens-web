@@ -1,8 +1,9 @@
 import { ConnectButton as RainbowConnectButton } from "@rainbow-me/rainbowkit"
 import { FC, useEffect } from "react"
+import { FaWallet } from "react-icons/fa"
 import { useNetwork } from "wagmi"
 
-import { chains } from "@/lib"
+import { chains, clsxm } from "@/lib"
 
 import { useQueueStore } from "@/store"
 
@@ -30,53 +31,67 @@ export const ConnectButton: FC = () => {
             })}
           >
             {(() => (
-              <div className="flex gap-3">
-                {connected ? (
-                  chain.unsupported ? (
-                    <button
-                      className="rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-                      onClick={openChainModal}
-                      type="button"
-                    >
-                      Unsupported chain
-                    </button>
-                  ) : (
-                    <>
-                      {chains.length > 1 && (
-                        <button
-                          className="rounded border border-comet-600 bg-comet-700 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-                          onClick={openChainModal}
-                          type="button"
-                        >
-                          <div className="flex items-center gap-3 px-3 py-1.5">
-                            {chain.hasIcon && chain.iconUrl && (
-                              // eslint-disable-next-line @next/next/no-img-element
-                              <img alt={chain.name ?? "Chain icon"} src={chain.iconUrl} className="h-4 w-4" />
-                            )}
-                            <span className="max-md:hidden">{chain.name}</span>
-                          </div>
-                        </button>
-                      )}
-
+              <>
+                <button
+                  className="p-1 md:hidden"
+                  onClick={connected ? (chain.unsupported ? openChainModal : openAccountModal) : openConnectModal}
+                >
+                  <FaWallet
+                    className={clsxm("h-7 w-7", {
+                      "fill-comet-300": !connected,
+                      "fill-green": connected && !chain.unsupported,
+                      "fill-red": connected && chain.unsupported,
+                    })}
+                  />
+                </button>
+                <div className="flex gap-3 max-md:hidden">
+                  {connected ? (
+                    chain.unsupported ? (
                       <button
                         className="rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-                        onClick={openAccountModal}
+                        onClick={openChainModal}
                         type="button"
                       >
-                        {account.displayName}
+                        Unsupported chain
                       </button>
-                    </>
-                  )
-                ) : (
-                  <button
-                    className="rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-                    onClick={openConnectModal}
-                    type="button"
-                  >
-                    Connect Wallet
-                  </button>
-                )}
-              </div>
+                    ) : (
+                      <>
+                        {chains.length > 1 && (
+                          <button
+                            className="rounded border border-comet-600 bg-comet-700 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+                            onClick={openChainModal}
+                            type="button"
+                          >
+                            <div className="flex items-center gap-3 px-3 py-1.5">
+                              {chain.hasIcon && chain.iconUrl && (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img alt={chain.name ?? "Chain icon"} src={chain.iconUrl} className="h-4 w-4" />
+                              )}
+                              <span className="max-md:hidden">{chain.name}</span>
+                            </div>
+                          </button>
+                        )}
+
+                        <button
+                          className="rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+                          onClick={openAccountModal}
+                          type="button"
+                        >
+                          {account.displayName}
+                        </button>
+                      </>
+                    )
+                  ) : (
+                    <button
+                      className="rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+                      onClick={openConnectModal}
+                      type="button"
+                    >
+                      Connect Wallet
+                    </button>
+                  )}
+                </div>
+              </>
             ))()}
           </div>
         )

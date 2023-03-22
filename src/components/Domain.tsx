@@ -4,7 +4,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat"
 import { FC } from "react"
 
 import { clsxm } from "@/lib"
-import { useReadSubscriptions } from "@/hooks"
+import { useAlchemistAccountMetrics, useReadSubscriptions } from "@/hooks"
 import { useBlockTimestamp } from "@/hooks/useBlockTimestamp"
 
 import { useQueueStore, useToastStore } from "@/store"
@@ -38,6 +38,8 @@ export const Domain: FC<DomainProps> = ({
     store.removeCall,
   ])
 
+  const accountMetrics = useAlchemistAccountMetrics()
+
   const expiryDate = dayjs.unix(_expiryDate)
   const registrationDate = dayjs.unix(_registrationDate)
   const renewalDate = renewalBlockDate.data ? dayjs.unix(renewalBlockDate.data) : undefined
@@ -45,7 +47,8 @@ export const Domain: FC<DomainProps> = ({
   const isExpired = expiryDate.add(90, "days").isBefore(dayjs())
   const isSubscribed = subscribedDomains.data?.includes(name ?? "")
   const isSwitchChecked = (queuedCall?.type && queuedCall.type === "subscribe") ?? isSubscribed
-  const isSwitchDisabled = useToastStore((state) => state.status === "pending")
+  const isSwitchDisabled = !isSubscribed && !accountMetrics.data?.isCollateralized
+  const isSwitchLoading = useToastStore((state) => state.status === "pending")
 
   const onChangeSwitch = (checked: boolean) => {
     if (queuedCall) {
@@ -69,7 +72,8 @@ export const Domain: FC<DomainProps> = ({
                 <Switch.Label
                   className={clsxm("pr-3 text-xs uppercase text-comet-300", {
                     "cursor-pointer": !isSwitchDisabled,
-                    "cursor-wait": isSwitchDisabled,
+                    "cursor-not-allowed": isSwitchDisabled,
+                    "cursor-wait": isSwitchLoading,
                   })}
                 >
                   Subscribe
@@ -77,8 +81,14 @@ export const Domain: FC<DomainProps> = ({
                 <Switch
                   checked={isSwitchChecked}
                   onChange={onChangeSwitch}
-                  disabled={isSwitchDisabled}
-                  className="relative inline-flex h-6 w-11 items-center rounded-full bg-comet-800 transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 disabled:cursor-wait disabled:opacity-50 disabled:grayscale ui-checked:bg-green-100"
+                  disabled={isSwitchDisabled || isSwitchLoading}
+                  className={clsxm(
+                    "relative inline-flex h-6 w-11 items-center rounded-full bg-comet-800 transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 disabled:opacity-50 disabled:grayscale ui-checked:bg-green-100",
+                    {
+                      "cursor-not-allowed": isSwitchDisabled,
+                      "cursor-wait": isSwitchLoading,
+                    }
+                  )}
                 >
                   <span className="inline-block h-4 w-4 translate-x-1 transform rounded-full transition-all ui-checked:translate-x-6 ui-checked:bg-white ui-not-checked:translate-x-1 ui-not-checked:bg-comet-300" />
                 </Switch>

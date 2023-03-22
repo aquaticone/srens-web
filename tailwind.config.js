@@ -39,6 +39,9 @@ module.exports = {
         orange: "#ec8339",
         red: "#fc4544",
       },
+      transitionTimingFunction: {
+        "cubic-bezier": "cubic-bezier(.15, 1.15, 0.6, 1.00)",
+      },
     },
   },
   plugins: [require("@headlessui/tailwindcss")],
