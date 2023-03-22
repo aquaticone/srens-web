@@ -97,7 +97,7 @@ export const Header: FC = () => {
 
       {isClientReady && callCount > 0 && (
         <button
-          className="fixed inset-x-0 bottom-0 mx-4 mb-4 rounded bg-green-200 py-3.5 text-center font-semibold text-comet-900 shadow-lg md:hidden"
+          className="fixed inset-x-0 bottom-0 z-30 mx-4 mb-4 rounded bg-green-200 py-3.5 text-center font-semibold text-comet-900 shadow-lg md:hidden"
           onClick={() => setIsMenuOpen(true)}
         >
           Review changes
