@@ -15,6 +15,7 @@ import { Toaster } from "@/components/Toaster"
 import { useQueueStore } from "@/store"
 
 import CloseIcon from "~/svg/close.svg"
+import Dune from "~/svg/dune.svg"
 import Etherscan from "~/svg/etherscan.svg"
 import SRENSLogo from "~/svg/srens_logo.svg"
 
@@ -124,6 +125,13 @@ export const Footer: FC = () => (
           target="_blank"
         >
           <Etherscan className="h-8 w-8 fill-comet-100 md:h-5 md:w-5" />
+        </Link>
+        <Link
+          className="focus-visible:ring-offset-comet-800-100 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+          href="https://dune.com/wary/self-repaying-ens"
+          target="_blank"
+        >
+          <Dune className="h-8 w-8 md:h-5 md:w-5" />
         </Link>
       </div>
       <div className="focus-visible:ring-offset-comet-800-100 rounded text-xs text-comet-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800">
