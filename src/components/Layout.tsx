@@ -60,22 +60,18 @@ export const Header: FC = () => {
             enter="transition-opacity ease duration-150"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
           >
             <div className="fixed inset-0 z-0 bg-black/50" aria-hidden="true" />
           </Transition.Child>
 
-          <div className="fixed inset-x-0 bottom-0 flex justify-end">
+          <div className="fixed inset-x-0 bottom-0 flex justify-end sm:inset-0 sm:items-center sm:justify-center">
             <Transition.Child
               as={Fragment}
               enter="transition-transform ease-cubic-bezier duration-[350ms]"
               enterFrom="translate-y-full"
               enterTo="translate-y-0"
-              leaveFrom="translate-y-0"
-              leaveTo="translate-y-full"
             >
-              <Dialog.Panel className="max-h-[66svh] w-full space-y-6 overflow-y-auto rounded-t-lg border-l border-l-comet-700 bg-comet-600 p-4 pb-6 shadow shadow-black/80 focus:outline-none sm:max-w-lg md:py-6">
+              <Dialog.Panel className="max-h-[66svh] w-full space-y-6 overflow-y-auto rounded-t-lg border-l border-l-comet-700 bg-comet-600 p-4 pb-6 shadow shadow-black/80 focus:outline-none sm:max-w-lg sm:rounded-b-lg sm:border sm:border-comet-500 md:py-6">
                 <div className="flex justify-end">
                   <button
                     className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-comet-700 p-2 text-comet-400"

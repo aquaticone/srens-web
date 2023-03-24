@@ -25,19 +25,22 @@ export const QueuedChanges: FC = () => {
       {isClientReady && calls.length > 0 ? (
         <ul>
           {calls.map(({ name, type }) => (
-            <li key={`queue-${name}`} className="grid grid-cols-[auto,1fr,auto] items-center gap-2 py-2">
+            <li
+              key={`queue-${name}`}
+              className="grid grid-cols-[auto,1fr,auto] items-center gap-3 py-2.5 md:gap-2 md:py-2"
+            >
               {type === "subscribe" ? (
                 <FiPlus className="h-5 w-5 stroke-green-100" />
               ) : (
                 <FiMinus className="h-5 w-5 stroke-orange" />
               )}
-              <div className="grow-0 overflow-hidden text-ellipsis text-sm">{name}</div>
+              <div className="grow-0 overflow-hidden text-ellipsis md:text-sm">{name}</div>
               <button
                 className="rounded text-comet-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 disabled:cursor-not-allowed disabled:opacity-50 max-md:text-comet-300"
                 disabled={isRemoveDisabled}
                 onClick={() => removeCall(name)}
               >
-                <FiX className="h-5 w-5 stroke-current" />
+                <FiX className="h-6 w-6 stroke-current md:h-5 md:w-5" />
               </button>
             </li>
           ))}

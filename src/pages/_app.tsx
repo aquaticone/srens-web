@@ -16,6 +16,7 @@ const alchemixTheme = {
     closeButton: "#616A85", // comet-400
     closeButtonBackground: "#20242C", // comet-700
     modalBackground: "#383D4D", // comet-600
+    modalBorder: "#4F576D", // comet-500
   },
   radii: {
     ...darkTheme().radii,
