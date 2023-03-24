@@ -61,7 +61,9 @@ export const AccountOverview: FC = () => {
           </dd>
           <dt className="text-comet-50">Renewal task</dt>
           <dd className="text-right">
-            {isClientReady && subscriptions.data?.taskId ? (
+            {isClientReady &&
+            subscriptions.data?.taskId &&
+            subscriptions.data.taskId !== "0x0000000000000000000000000000000000000000000000000000000000000000" ? (
               <Link
                 className="-mx-1.5 inline-flex items-center justify-end gap-1 rounded-lg px-1.5 text-bronze underline focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze"
                 href={`https://app.gelato.network/task/${subscriptions.data.taskId}?chainId=1`}
