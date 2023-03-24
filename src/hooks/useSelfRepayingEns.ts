@@ -3,9 +3,10 @@ import { useMemo } from "react"
 import {
   Address,
   useAccount,
-  useContractRead,
+  useContractReads,
   useContractWrite,
   usePrepareContractWrite,
+  UserRejectedRequestError,
   useWaitForTransaction,
 } from "wagmi"
 
@@ -16,13 +17,14 @@ import { selfRepayingEnsConfig } from "@/constant"
 export function useReadSubscriptions() {
   const { address } = useAccount()
   const setToast = useToastStore((store) => store.setToast)
-  return useContractRead({
-    ...selfRepayingEnsConfig,
-    functionName: "subscribedNames",
-    args: [address ?? "0x"],
+  return useContractReads({
+    contracts: [
+      { ...selfRepayingEnsConfig, functionName: "subscribedNames", args: [address ?? "0x"] },
+      { ...selfRepayingEnsConfig, functionName: "getTaskId", args: [address ?? "0x"] },
+    ],
     enabled: !!address,
     watch: true,
-    select: (data) => data.map((name) => `${name}.eth`),
+    select: ([subscribedNames, taskId]) => ({ subscribedNames: subscribedNames.map((name) => `${name}.eth`), taskId }),
     onError: () => setToast("Error fetching subscriptions", "error"),
   })
 }
@@ -52,7 +54,8 @@ export function useUpdateSubscriptions(onSuccess?: () => void) {
   })
   const write = useContractWrite({
     ...prepare.config,
-    onError: () => setToast("Transaction failed", "error"),
+    onError: (err) =>
+      setToast(err instanceof UserRejectedRequestError ? "Request rejected" : "Transaction failed", "error"),
     onMutate: () => setToast("Waiting for signature", "pending"),
     onSuccess: () => setToast("Waiting for confirmation", "pending"),
   })

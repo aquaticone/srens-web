@@ -11,7 +11,7 @@ export function useAllDomains() {
   const setToast = useToastStore((store) => store.setToast)
 
   // get subscribed domains from contract
-  const subscribedDomains = useReadSubscriptions()
+  const subscriptions = useReadSubscriptions()
 
   // get owned domains from subgraph
   const ownedDomainNames = useQuery({
@@ -24,7 +24,7 @@ export function useAllDomains() {
   // merge subscribed + owned into unique array of names
   const allDomainNames = Array.from(
     new Set([
-      ...(subscribedDomains.data ?? []),
+      ...(subscriptions.data?.subscribedNames ?? []),
       ...(ownedDomainNames.data?.account?.registrations?.map((r) => r.domain.name) ?? []),
     ])
   ).filter((name) => !!name) as Array<string>
@@ -32,7 +32,7 @@ export function useAllDomains() {
   // request full domain data from subgraph once unique list is ready
   const allDomains = useQuery({
     ...queries.domains.list(allDomainNames),
-    enabled: subscribedDomains.isFetchedAfterMount && ownedDomainNames.isFetchedAfterMount && allDomainNames.length > 0,
+    enabled: subscriptions.isFetchedAfterMount && ownedDomainNames.isFetchedAfterMount && allDomainNames.length > 0,
     onError: () => setToast("Error fetching domain data", "error"),
     keepPreviousData: true,
   })
@@ -42,6 +42,6 @@ export function useAllDomains() {
     data: allDomains.data?.domains.sort(
       (a, b) => Number(a.registration?.expiryDate ?? "0") - Number(b.registration?.expiryDate ?? "0")
     ),
-    isLoading: subscribedDomains.isLoading || ownedDomainNames.isInitialLoading || allDomains.isInitialLoading,
+    isLoading: subscriptions.isLoading || ownedDomainNames.isInitialLoading || allDomains.isInitialLoading,
   }
 }

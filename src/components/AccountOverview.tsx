@@ -6,7 +6,7 @@ import { useAccount } from "wagmi"
 
 import { clsxm } from "@/lib"
 import { formatLocaleUnits } from "@/lib/formatLocaleUnits"
-import { useAlchemistAccountMetrics, useIsClientReady } from "@/hooks"
+import { useAlchemistAccountMetrics, useIsClientReady, useReadSubscriptions } from "@/hooks"
 
 import { SectionTitle } from "@/components/SectionTitle"
 
@@ -14,6 +14,7 @@ export const AccountOverview: FC = () => {
   const isClientReady = useIsClientReady()
   const { isConnected } = useAccount()
   const accountMetrics = useAlchemistAccountMetrics()
+  const subscriptions = useReadSubscriptions()
 
   return (
     <section>
@@ -53,6 +54,26 @@ export const AccountOverview: FC = () => {
             {isClientReady && accountMetrics.data?.currCollatRatio
               ? formatLocaleUnits(accountMetrics.data.currCollatRatio)
               : "–"}
+          </dd>
+          <dt className="text-comet-50">Subscriptions</dt>
+          <dd className="text-right">
+            {isClientReady && subscriptions.data?.subscribedNames ? subscriptions.data.subscribedNames.length : "–"}
+          </dd>
+          <dt className="text-comet-50">Renewal task</dt>
+          <dd className="text-right">
+            {isClientReady && subscriptions.data?.taskId ? (
+              <Link
+                className="flex items-center justify-end gap-1 text-bronze underline"
+                href={`https://app.gelato.network/task/${subscriptions.data.taskId}?chainId=1`}
+                target="_blank"
+              >
+                <span className="sr-only">Gelato task</span>
+                <span>Gelato</span>
+                <FaExternalLinkAlt className="h-3 w-3" />
+              </Link>
+            ) : (
+              "–"
+            )}
           </dd>
         </dl>
         {isClientReady && accountMetrics.isSuccess && !accountMetrics.data?.isCollateralized && (

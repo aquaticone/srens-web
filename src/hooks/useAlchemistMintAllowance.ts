@@ -1,5 +1,12 @@
 import { ethers } from "ethers"
-import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from "wagmi"
+import {
+  useAccount,
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+  UserRejectedRequestError,
+  useWaitForTransaction,
+} from "wagmi"
 
 import { useToastStore } from "@/store"
 
@@ -26,7 +33,7 @@ export function useUpdateAlchemistMintAllowance() {
   })
   const write = useContractWrite({
     ...prepare.config,
-    onError: () => setToast("Transaction failed", "error"),
+    onError: (err) => (err instanceof UserRejectedRequestError ? null : setToast("Transaction failed", "error")),
     onMutate: () => setToast("Waiting for signature", "pending"),
     onSuccess: () => setToast("Waiting for confirmation", "pending"),
   })

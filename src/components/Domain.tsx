@@ -31,7 +31,7 @@ export const Domain: FC<DomainProps> = ({
   const nearestRenewalEvent = renewalEvents?.find((e) => Object.hasOwn(e, "blockNumber")) as RenewalEvent | undefined
 
   const renewalBlockDate = useBlockTimestamp(nearestRenewalEvent?.blockNumber)
-  const subscribedDomains = useReadSubscriptions()
+  const subscriptions = useReadSubscriptions()
   const [queuedCall, addCall, removeCall] = useQueueStore((store) => [
     store.calls.find((c) => c.name === name),
     store.addCall,
@@ -45,7 +45,7 @@ export const Domain: FC<DomainProps> = ({
   const renewalDate = renewalBlockDate.data ? dayjs.unix(renewalBlockDate.data) : undefined
 
   const isExpired = expiryDate.add(90, "days").isBefore(dayjs())
-  const isSubscribed = subscribedDomains.data?.includes(name ?? "")
+  const isSubscribed = subscriptions.data?.subscribedNames.includes(name ?? "")
   const isSwitchChecked = (queuedCall?.type && queuedCall.type === "subscribe") ?? isSubscribed
   const isSwitchDisabled = !isSubscribed && !accountMetrics.data?.isCollateralized
   const isSwitchLoading = useToastStore((state) => state.status === "pending")
