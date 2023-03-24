@@ -109,7 +109,7 @@ export const Header: FC = () => {
 }
 
 export const Footer: FC = () => (
-  <footer className="border-t border-t-comet-700 py-8 max-md:pb-24">
+  <footer className="border-t border-t-comet-700 py-6 sm:py-8">
     <div className="layout flex items-center justify-between max-sm:flex-col max-sm:gap-y-6">
       <Link
         className="rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
@@ -118,7 +118,7 @@ export const Footer: FC = () => (
       >
         <AlchemixLogo className="h-9 w-36 grayscale" />
       </Link>
-      <ul className="flex items-center gap-x-3 text-silver max-sm:flex-col max-sm:gap-y-4 sm:text-sm md:gap-x-6">
+      <ul className="flex flex-wrap items-center gap-3 text-sm text-silver max-sm:justify-center md:gap-x-6">
         <li>
           <Link
             className="inline-flex items-center gap-2 rounded hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
