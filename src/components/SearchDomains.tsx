@@ -1,5 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
-import { ChangeEventHandler, createRef, FC, FormEventHandler, KeyboardEventHandler, useState } from "react"
+import {
+  ChangeEventHandler,
+  createRef,
+  Dispatch,
+  FC,
+  FormEventHandler,
+  KeyboardEventHandler,
+  SetStateAction,
+} from "react"
 import { FiX } from "react-icons/fi"
 
 import { queries } from "@/lib"
@@ -8,11 +16,15 @@ import { Domain } from "@/components/Domain"
 import { FallbackMessage } from "@/components/FallbackMessage"
 import { Spinner } from "@/components/Spinner"
 
-export const SearchDomains: FC = () => {
-  const inputRef = createRef<HTMLInputElement>()
+type SearchDomainsProps = {
+  value: string
+  setValue: Dispatch<SetStateAction<string>>
+  submitted: string
+  setSubmitted: Dispatch<SetStateAction<string>>
+}
 
-  const [value, setValue] = useState<string>("")
-  const [submitted, setSubmitted] = useState<string>("")
+export const SearchDomains: FC<SearchDomainsProps> = ({ value, setValue, submitted, setSubmitted }) => {
+  const inputRef = createRef<HTMLInputElement>()
 
   const { data, isError, isLoading } = useQuery({
     ...queries.domains.list([submitted ?? ""]),

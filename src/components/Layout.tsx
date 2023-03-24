@@ -6,10 +6,7 @@ import { FaBars, FaGithub } from "react-icons/fa"
 import { montserrat } from "@/lib"
 import { useIsClientReady } from "@/hooks"
 
-import { AccountOverview } from "@/components/AccountOverview"
 import { ConnectButton } from "@/components/ConnectButton"
-import { CommitQueuedChanges, QueuedChanges } from "@/components/QueuedChanges"
-import { SectionTitle } from "@/components/SectionTitle"
 import { Toaster } from "@/components/Toaster"
 
 import { useQueueStore } from "@/store"
@@ -24,7 +21,11 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => (
   <div className="bg-alchemix grid min-h-screen grid-cols-1 grid-rows-[auto,1fr,auto]">{children}</div>
 )
 
-export const Header: FC = () => {
+type HeaderProps = {
+  children: (props: { setIsMenuOpen: (isOpen: boolean) => void }) => JSX.Element
+}
+
+export const Header: FC<HeaderProps> = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const isClientReady = useIsClientReady()
   const callCount = useQueueStore((store) => store.calls.length)
@@ -84,12 +85,7 @@ export const Header: FC = () => {
                     <CloseIcon />
                   </button>
                 </div>
-                <AccountOverview />
-                <CommitQueuedChanges onUpdated={() => setIsMenuOpen(false)} />
-                <div>
-                  <SectionTitle className="text-white">Changes{callCount > 0 ? ` (${callCount})` : null}</SectionTitle>
-                  <QueuedChanges />
-                </div>
+                {children({ setIsMenuOpen })}
               </Dialog.Panel>
             </Transition.Child>
           </div>
