@@ -44,7 +44,7 @@ export default function Dashboard() {
             <div className="flex items-baseline justify-between">
               <SectionTitle>My SRENS</SectionTitle>
               <Link
-                className="flex items-center gap-1 text-sm text-bronze underline md:text-xs"
+                className="flex items-center gap-1 rounded text-sm text-bronze underline focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 md:text-xs"
                 href={`https://app.ens.domains${isClientReady && address ? `/address/${address}` : ""}`}
                 target="_blank"
               >

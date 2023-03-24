@@ -11,6 +11,7 @@ module.exports = {
       },
       colors: {
         white: "#F1EEE9",
+        silver: "#898a8b",
         bronze: {
           DEFAULT: "#F5C59F",
           100: "#F5C59F",

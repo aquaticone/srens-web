@@ -21,7 +21,7 @@ export const AccountOverview: FC = () => {
       <div className="flex items-baseline justify-between">
         <SectionTitle className="max-md:text-white">Account</SectionTitle>
         <Link
-          className="flex items-center gap-1 text-sm text-bronze underline md:text-xs"
+          className="inline-flex items-center gap-1 rounded text-sm text-bronze underline focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 md:text-xs"
           href="https://alchemix.fi/vaults"
           target="_blank"
         >
@@ -63,7 +63,7 @@ export const AccountOverview: FC = () => {
           <dd className="text-right">
             {isClientReady && subscriptions.data?.taskId ? (
               <Link
-                className="flex items-center justify-end gap-1 text-bronze underline"
+                className="-mx-1.5 inline-flex items-center justify-end gap-1 rounded-lg px-1.5 text-bronze underline focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze"
                 href={`https://app.gelato.network/task/${subscriptions.data.taskId}?chainId=1`}
                 target="_blank"
               >

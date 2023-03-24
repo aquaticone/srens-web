@@ -14,6 +14,7 @@ import { Toaster } from "@/components/Toaster"
 
 import { useQueueStore } from "@/store"
 
+import AlchemixLogo from "~/svg/alchemix_logo.svg"
 import CloseIcon from "~/svg/close.svg"
 import Dune from "~/svg/dune.svg"
 import Etherscan from "~/svg/etherscan.svg"
@@ -36,7 +37,10 @@ export const Header: FC = () => {
 
       <header className="sticky top-0 z-40 border-b border-b-comet-700 bg-comet-900 py-5">
         <div className="layout flex flex-wrap items-center justify-between gap-4">
-          <Link href="/">
+          <Link
+            className="rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+            href="/"
+          >
             <SRENSLogo className="h-11 w-44" />
             <span className="sr-only">Alchemix Self-Repaying ENS</span>
           </Link>
@@ -105,34 +109,57 @@ export const Header: FC = () => {
 }
 
 export const Footer: FC = () => (
-  <footer className="border-t border-t-comet-700 py-6 max-md:pb-24">
-    <div className="layout max-md:space-y-3 max-md:text-center md:flex md:justify-between">
-      <div className="inline-flex gap-5 max-md:mx-auto md:gap-3">
-        <Link
-          className="focus-visible:ring-offset-comet-800-100 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-          href="https://github.com/The-Wary-One/self-repaying-ens"
-          target="_blank"
-        >
-          <FaGithub className="h-8 w-8 fill-comet-100 md:h-5 md:w-5" />
-        </Link>
-        <Link
-          className="focus-visible:ring-offset-comet-800-100 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-          href="https://etherscan.io/address/0xef6274Eb92b55dA6D4BCE0b7D686f37064348aBB#code"
-          target="_blank"
-        >
-          <Etherscan className="h-8 w-8 fill-comet-100 md:h-5 md:w-5" />
-        </Link>
-        <Link
-          className="focus-visible:ring-offset-comet-800-100 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-          href="https://dune.com/wary/self-repaying-ens"
-          target="_blank"
-        >
-          <Dune className="h-8 w-8 md:h-5 md:w-5" />
-        </Link>
-      </div>
-      <div className="focus-visible:ring-offset-comet-800-100 rounded text-xs text-comet-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800">
-        Powered by <span className="font-medium">Alchemix</span>
-      </div>
+  <footer className="border-t border-t-comet-700 py-8 max-md:pb-24">
+    <div className="layout flex items-center justify-between max-sm:flex-col max-sm:gap-y-6">
+      <Link
+        className="rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+        href="https://alchemix.fi/"
+        target="_blank"
+      >
+        <AlchemixLogo className="h-9 w-36 grayscale" />
+      </Link>
+      <ul className="flex items-center gap-x-3 text-silver max-sm:flex-col max-sm:gap-y-4 sm:text-sm md:gap-x-6">
+        <li>
+          <Link
+            className="inline-flex items-center gap-2 rounded hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+            href="https://etherscan.io/address/0xef6274Eb92b55dA6D4BCE0b7D686f37064348aBB#code"
+            target="_blank"
+          >
+            <Etherscan className="h-5 w-5 fill-silver" />
+            Etherscan
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="inline-flex items-center gap-2 rounded hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+            href="https://dune.com/wary/self-repaying-ens"
+            target="_blank"
+          >
+            <Dune className="h-5 w-5" />
+            Dune Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="inline-flex items-center gap-2 rounded hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+            href="https://github.com/The-Wary-One/self-repaying-ens"
+            target="_blank"
+          >
+            <FaGithub className="h-5 w-5 fill-silver" />
+            Contract
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="inline-flex items-center gap-2 rounded hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
+            href="https://github.com/The-Wary-One/self-repaying-ens"
+            target="_blank"
+          >
+            <FaGithub className="h-5 w-5 fill-silver" />
+            Client
+          </Link>
+        </li>
+      </ul>
     </div>
   </footer>
 )
