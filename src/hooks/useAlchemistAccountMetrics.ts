@@ -13,10 +13,10 @@ export function useAlchemistAccountMetrics() {
     ],
     enabled: address !== "0x",
     select: ([minCollatRatio, [totalDebt], totalDeposited]) => {
-      const currCollatRatio = totalDebt.gt(0) ? parseUnits(totalDeposited.div(totalDebt).toString()) : parseUnits("1")
+      const currCollatRatio = totalDebt.gt(0) ? parseUnits(totalDeposited.div(totalDebt).toString()) : parseUnits("0")
       return {
         currCollatRatio,
-        isCollateralized: currCollatRatio.gte(minCollatRatio),
+        isCollateralized: currCollatRatio.gte(minCollatRatio) || (totalDeposited.gt(0) && totalDebt.lte(0)),
         minCollatRatio,
         totalDeposited,
         totalDebt,

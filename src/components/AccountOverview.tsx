@@ -1,3 +1,4 @@
+import { BigNumber } from "ethers"
 import { formatUnits } from "ethers/lib/utils.js"
 import Link from "next/link"
 import { FC } from "react"
@@ -41,7 +42,9 @@ export const AccountOverview: FC = () => {
           <dt className="text-comet-50">Current debt</dt>
           <dd className="text-right font-mono">
             {isClientReady && accountMetrics.data?.totalDebt
-              ? `${formatLocaleUnits(accountMetrics.data.totalDebt)} ETH`
+              ? accountMetrics.data.totalDebt.gte(0)
+                ? `${formatLocaleUnits(accountMetrics.data.totalDebt)} ETH`
+                : `${formatLocaleUnits(BigNumber.from(0))} ETH`
               : "–"}
           </dd>
           <dt className="text-comet-50">Collateralization</dt>
@@ -52,7 +55,11 @@ export const AccountOverview: FC = () => {
             })}
           >
             {isClientReady && accountMetrics.data?.currCollatRatio
-              ? formatLocaleUnits(accountMetrics.data.currCollatRatio)
+              ? accountMetrics.data.totalDebt.gte(0) && accountMetrics.data.totalDeposited.gt(0)
+                ? formatLocaleUnits(accountMetrics.data.currCollatRatio)
+                : accountMetrics.data.totalDeposited.gt(0)
+                ? "∞"
+                : "0.0"
               : "–"}
           </dd>
           <dt className="text-comet-50">Subscriptions</dt>
