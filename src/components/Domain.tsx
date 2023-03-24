@@ -46,7 +46,7 @@ export const Domain: FC<DomainProps> = ({
 
   const isExpired = expiryDate.add(90, "days").isBefore(dayjs())
   const isSubscribed = subscriptions.data?.subscribedNames.includes(name ?? "")
-  const isSwitchChecked = (queuedCall?.type && queuedCall.type === "subscribe") ?? isSubscribed
+  const isSwitchChecked = (queuedCall?.type && queuedCall.type === "subscribe") ?? isSubscribed ?? false
   const isSwitchDisabled = !isSubscribed && !accountMetrics.data?.isCollateralized
   const isSwitchLoading = useToastStore((state) => state.status === "pending")
 
