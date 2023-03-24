@@ -22,7 +22,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => (
 )
 
 type HeaderProps = {
-  children: (props: { setIsMenuOpen: (isOpen: boolean) => void }) => JSX.Element
+  children?: (props: { setIsMenuOpen: (isOpen: boolean) => void }) => JSX.Element
 }
 
 export const Header: FC<HeaderProps> = ({ children }) => {
@@ -85,7 +85,7 @@ export const Header: FC<HeaderProps> = ({ children }) => {
                     <CloseIcon />
                   </button>
                 </div>
-                {children({ setIsMenuOpen })}
+                {children?.({ setIsMenuOpen })}
               </Dialog.Panel>
             </Transition.Child>
           </div>
