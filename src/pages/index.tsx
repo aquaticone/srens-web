@@ -31,7 +31,7 @@ export default function Dashboard() {
 
       <Header />
 
-      <div className="layout h-full divide-x divide-comet-700 md:grid md:grid-cols-[2fr,1fr] lg:grid-cols-[3fr,1fr]">
+      <div className="layout h-full divide-x divide-comet-700 md:grid md:grid-cols-[2fr,1fr] lg:grid-cols-[5fr,2fr]">
         <main className="space-y-6 overscroll-auto py-4 md:pr-4">
           <section>
             <SectionTitle>Search domains</SectionTitle>
