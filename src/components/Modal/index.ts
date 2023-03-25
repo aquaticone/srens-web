@@ -1,2 +1,2 @@
-export * from './Modal';
-export * from './QueuedChangesModal';
+export * from "./Modal"
+export * from "./QueuedChangesModal"
