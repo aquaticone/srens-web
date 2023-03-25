@@ -14,8 +14,9 @@ module.exports = {
         silver: "#898a8b",
         bronze: {
           DEFAULT: "#F5C59F",
-          100: "#F5C59F",
-          200: "#ad937c",
+          100: "#fcd5ba",
+          200: "#F5C59F",
+          300: "#ad937c",
         },
         comet: {
           DEFAULT: "#4F576D",

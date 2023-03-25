@@ -12,19 +12,19 @@ import {
 import { SectionTitle } from "@/components/SectionTitle"
 import { Spinner } from "@/components/Spinner"
 
-import { useQueueStore, useToastStore } from "@/store"
+import { useSrensStore } from "@/store"
 
 export const QueuedChanges: FC = () => {
   const isClientReady = useIsClientReady()
-  const calls = useQueueStore((store) => store.calls)
-  const removeCall = useQueueStore((store) => store.removeCall)
-  const isRemoveDisabled = useToastStore((state) => state.status === "pending")
+  const queuedCalls = useSrensStore((store) => store.queuedCalls)
+  const dequeueCall = useSrensStore((store) => store.dequeueCall)
+  const isRemoveDisabled = useSrensStore((state) => state.toast?.status === "pending")
 
   return (
     <>
-      {isClientReady && calls.length > 0 ? (
+      {isClientReady && queuedCalls.length > 0 ? (
         <ul>
-          {calls.map(({ name, type }) => (
+          {queuedCalls.map(({ name, type }) => (
             <li
               key={`queue-${name}`}
               className="grid grid-cols-[auto,1fr,auto] items-center gap-3 py-2.5 md:gap-2 md:py-2"
@@ -38,7 +38,7 @@ export const QueuedChanges: FC = () => {
               <button
                 className="rounded text-comet-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 disabled:cursor-not-allowed disabled:opacity-50 max-md:text-comet-300"
                 disabled={isRemoveDisabled}
-                onClick={() => removeCall(name)}
+                onClick={() => dequeueCall(name)}
               >
                 <FiX className="h-6 w-6 stroke-current md:h-5 md:w-5" />
               </button>
@@ -61,7 +61,7 @@ type CommitQueuedChangesProps = {
 
 export const CommitQueuedChanges: FC<CommitQueuedChangesProps> = ({ onUpdated }) => {
   const isClientReady = useIsClientReady()
-  const calls = useQueueStore((store) => store.calls)
+  const queuedCalls = useSrensStore((store) => store.queuedCalls)
   const mintAllowance = useReadAlchemistMintAllowance()
   const updateMintAllowance = useUpdateAlchemistMintAllowance()
   const updateSubscriptions = useUpdateSubscriptions(onUpdated)
@@ -73,7 +73,7 @@ export const CommitQueuedChanges: FC<CommitQueuedChangesProps> = ({ onUpdated })
     updateSubscriptions.write?.()
   }
 
-  if (!isClientReady || !calls.length) return null
+  if (!isClientReady || !queuedCalls.length) return null
 
   return (
     <div>

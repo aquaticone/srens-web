@@ -7,7 +7,7 @@ import { clsxm } from "@/lib"
 import { useAlchemistAccountMetrics, useReadSubscriptions } from "@/hooks"
 import { useBlockTimestamp } from "@/hooks/useBlockTimestamp"
 
-import { useQueueStore, useToastStore } from "@/store"
+import { useSrensStore } from "@/store"
 
 import { Maybe, NameRenewed } from ".graphclient"
 
@@ -32,11 +32,9 @@ export const Domain: FC<DomainProps> = ({
 
   const renewalBlockDate = useBlockTimestamp(nearestRenewalEvent?.blockNumber)
   const subscriptions = useReadSubscriptions()
-  const [queuedCall, addCall, removeCall] = useQueueStore((store) => [
-    store.calls.find((c) => c.name === name),
-    store.addCall,
-    store.removeCall,
-  ])
+  const queuedCall = useSrensStore((state) => state.queuedCalls.find((c) => c.name === name))
+  const enqueueCall = useSrensStore((state) => state.enqueueCall)
+  const dequeueCall = useSrensStore((state) => state.dequeueCall)
 
   const accountMetrics = useAlchemistAccountMetrics()
 
@@ -48,13 +46,13 @@ export const Domain: FC<DomainProps> = ({
   const isSubscribed = subscriptions.data?.subscribedNames.includes(name ?? "")
   const isSwitchChecked = (queuedCall?.type && queuedCall.type === "subscribe") ?? isSubscribed ?? false
   const isSwitchDisabled = !isSubscribed && !accountMetrics.data?.isCollateralized
-  const isSwitchLoading = useToastStore((state) => state.status === "pending")
+  const isSwitchLoading = useSrensStore((state) => state.toast?.status === "pending")
 
   const onChangeSwitch = (checked: boolean) => {
     if (queuedCall) {
-      removeCall(name)
+      dequeueCall(name)
     } else {
-      addCall({ name, type: checked ? "subscribe" : "unsubscribe" })
+      enqueueCall({ name, type: checked ? "subscribe" : "unsubscribe" })
     }
   }
 

@@ -5,26 +5,27 @@ import { clsxm } from "@/lib"
 
 import { Spinner } from "@/components/Spinner"
 
-import { useToastStore } from "@/store"
+import { useSrensStore } from "@/store"
 
 export const Toaster: FC = () => {
   const timerRef = useRef<NodeJS.Timer>()
-  const [message, status, clearToast] = useToastStore((store) => [store.message, store.status, store.clearToast])
+  const toast = useSrensStore((store) => store.toast)
+  const unsetToast = useSrensStore((store) => store.unsetToast)
 
   useEffect(() => {
-    if (status === "error" || status === "success") {
-      timerRef.current = setTimeout(clearToast, 6000)
+    if (toast?.status === "error" || toast?.status === "success") {
+      timerRef.current = setTimeout(unsetToast, 6000)
     }
     return () => {
       clearTimeout(timerRef.current)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [message, status])
+  }, [toast])
 
   return (
     <Transition
       as={Fragment}
-      show={!!message && !!status}
+      show={!!toast?.message && !!toast?.status}
       enter="transition-opacity ease-linear"
       enterFrom="opacity-0"
       enterTo="opacity-100"
@@ -36,14 +37,14 @@ export const Toaster: FC = () => {
         className={clsxm(
           "flex items-center gap-3 p-3 text-sm font-medium text-white max-md:justify-center md:rounded md:py-1.5",
           {
-            "bg-blue": status === "pending",
-            "bg-green-300": status === "success",
-            "bg-red": status === "error",
+            "bg-blue": toast?.status === "pending",
+            "bg-green-300": toast?.status === "success",
+            "bg-red": toast?.status === "error",
           }
         )}
       >
-        {message}
-        {status === "pending" && <Spinner className="h-4 w-4 fill-current" />}
+        {toast?.message}
+        {toast?.status === "pending" && <Spinner className="h-4 w-4 fill-current" />}
       </div>
     </Transition>
   )

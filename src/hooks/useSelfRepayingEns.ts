@@ -10,13 +10,13 @@ import {
   useWaitForTransaction,
 } from "wagmi"
 
-import { useQueueStore, useToastStore } from "@/store"
+import { useSrensStore } from "@/store"
 
 import { selfRepayingEnsConfig } from "@/constant"
 
 export function useReadSubscriptions() {
   const { address } = useAccount()
-  const setToast = useToastStore((store) => store.setToast)
+  const setToast = useSrensStore((store) => store.setToast)
   return useContractReads({
     contracts: [
       { ...selfRepayingEnsConfig, functionName: "subscribedNames", args: [address ?? "0x"] },
@@ -25,25 +25,25 @@ export function useReadSubscriptions() {
     enabled: !!address,
     watch: true,
     select: ([subscribedNames, taskId]) => ({ subscribedNames: subscribedNames.map((name) => `${name}.eth`), taskId }),
-    onError: () => setToast("Error fetching subscriptions", "error"),
+    onError: () => setToast("error", "Error fetching subscriptions"),
   })
 }
 
 export function useUpdateSubscriptions(onSuccess?: () => void) {
-  const calls = useQueueStore((store) => store.calls)
-  const removeAllCalls = useQueueStore((store) => store.removeAllCalls)
-  const setToast = useToastStore((store) => store.setToast)
+  const queuedCalls = useSrensStore((store) => store.queuedCalls)
+  const dequeueAllCalls = useSrensStore((store) => store.dequeueAllCalls)
+  const setToast = useSrensStore((store) => store.setToast)
 
   const contractInterface = useMemo(() => new ethers.utils.Interface(selfRepayingEnsConfig.abi), [])
   const calldata = useMemo(
     () =>
-      calls.map(
+      queuedCalls.map(
         (change) =>
           contractInterface.encodeFunctionData(change.type, [
             change.name?.substring(0, change.name.indexOf(".eth")).toLowerCase(),
           ]) as Address
       ),
-    [calls, contractInterface]
+    [queuedCalls, contractInterface]
   )
 
   const prepare = usePrepareContractWrite({
@@ -55,16 +55,16 @@ export function useUpdateSubscriptions(onSuccess?: () => void) {
   const write = useContractWrite({
     ...prepare.config,
     onError: (err) =>
-      setToast(err instanceof UserRejectedRequestError ? "Request rejected" : "Transaction failed", "error"),
-    onMutate: () => setToast("Waiting for signature", "pending"),
-    onSuccess: () => setToast("Waiting for confirmation", "pending"),
+      setToast("error", err instanceof UserRejectedRequestError ? "Request rejected" : "Transaction failed"),
+    onMutate: () => setToast("pending", "Waiting for signature"),
+    onSuccess: () => setToast("pending", "Waiting for confirmation"),
   })
   const wait = useWaitForTransaction({
     hash: write.data?.hash,
-    onError: () => setToast("Error updating subscriptions", "error"),
+    onError: () => setToast("error", "Error updating subscriptions"),
     onSuccess: () => {
-      setToast("Subscriptions updated", "success")
-      removeAllCalls()
+      setToast("success", "Subscriptions updated")
+      dequeueAllCalls()
       onSuccess?.()
     },
   })

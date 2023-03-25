@@ -5,13 +5,15 @@ import { useNetwork } from "wagmi"
 
 import { chains, clsxm } from "@/lib"
 
-import { useQueueStore } from "@/store"
+import { HeaderButton } from "@/components/Button"
+
+import { useSrensStore } from "@/store"
 
 export const ConnectButton: FC = () => {
   const { chain } = useNetwork()
-  const removeAllCalls = useQueueStore((store) => store.removeAllCalls)
+  const dequeueAllCalls = useSrensStore((store) => store.dequeueAllCalls)
   useEffect(() => {
-    removeAllCalls()
+    dequeueAllCalls()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chain?.id])
 
@@ -47,21 +49,11 @@ export const ConnectButton: FC = () => {
                 <div className="flex gap-3 max-md:hidden">
                   {connected ? (
                     chain.unsupported ? (
-                      <button
-                        className="rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-                        onClick={openChainModal}
-                        type="button"
-                      >
-                        Unsupported chain
-                      </button>
+                      <HeaderButton onClick={openChainModal}>Unsupported chain</HeaderButton>
                     ) : (
                       <>
                         {chains.length > 1 && (
-                          <button
-                            className="rounded border border-comet-600 bg-comet-700 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-                            onClick={openChainModal}
-                            type="button"
-                          >
+                          <HeaderButton onClick={openChainModal}>
                             <div className="flex items-center gap-3 px-3 py-1.5">
                               {chain.hasIcon && chain.iconUrl && (
                                 // eslint-disable-next-line @next/next/no-img-element
@@ -69,26 +61,13 @@ export const ConnectButton: FC = () => {
                               )}
                               <span className="max-md:hidden">{chain.name}</span>
                             </div>
-                          </button>
+                          </HeaderButton>
                         )}
-
-                        <button
-                          className="rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-                          onClick={openAccountModal}
-                          type="button"
-                        >
-                          {account.displayName}
-                        </button>
+                        <HeaderButton onClick={openAccountModal}>{account.displayName}</HeaderButton>
                       </>
                     )
                   ) : (
-                    <button
-                      className="rounded border border-comet-600 bg-comet-700 px-3 py-1.5 text-sm text-comet-100 transition-colors hover:border-comet-500 hover:bg-comet-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-                      onClick={openConnectModal}
-                      type="button"
-                    >
-                      Connect Wallet
-                    </button>
+                    <HeaderButton onClick={openConnectModal}>Connect Wallet</HeaderButton>
                   )}
                 </div>
               </>

@@ -4,11 +4,11 @@ import { useAccount } from "wagmi"
 import { queries } from "@/lib"
 import { useReadSubscriptions } from "@/hooks/useSelfRepayingEns"
 
-import { useToastStore } from "@/store"
+import { useSrensStore } from "@/store"
 
 export function useAllDomains() {
   const { address } = useAccount()
-  const setToast = useToastStore((store) => store.setToast)
+  const setToast = useSrensStore((store) => store.setToast)
 
   // get subscribed domains from contract
   const subscriptions = useReadSubscriptions()
@@ -17,7 +17,7 @@ export function useAllDomains() {
   const ownedDomainNames = useQuery({
     ...queries.domains.user(address ?? "0x"),
     enabled: !!address,
-    onError: () => setToast("Error fetching owned domains", "error"),
+    onError: () => setToast("error", "Error fetching owned domains"),
     keepPreviousData: true,
   })
 
@@ -33,7 +33,7 @@ export function useAllDomains() {
   const allDomains = useQuery({
     ...queries.domains.list(allDomainNames),
     enabled: subscriptions.isFetchedAfterMount && ownedDomainNames.isFetchedAfterMount && allDomainNames.length > 0,
-    onError: () => setToast("Error fetching domain data", "error"),
+    onError: () => setToast("error", "Error fetching domain data"),
     keepPreviousData: true,
   })
 

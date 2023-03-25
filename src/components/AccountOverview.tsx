@@ -1,14 +1,13 @@
 import { BigNumber } from "ethers"
 import { formatUnits } from "ethers/lib/utils.js"
-import Link from "next/link"
 import { FC } from "react"
-import { FaExternalLinkAlt } from "react-icons/fa"
 import { useAccount } from "wagmi"
 
 import { clsxm } from "@/lib"
 import { formatLocaleUnits } from "@/lib/formatLocaleUnits"
 import { useAlchemistAccountMetrics, useIsClientReady, useReadSubscriptions } from "@/hooks"
 
+import { PrettyLink } from "@/components/PrettyLink"
 import { SectionTitle } from "@/components/SectionTitle"
 
 export const AccountOverview: FC = () => {
@@ -21,14 +20,9 @@ export const AccountOverview: FC = () => {
     <section>
       <div className="flex items-baseline justify-between">
         <SectionTitle className="max-md:text-white">Account</SectionTitle>
-        <Link
-          className="inline-flex items-center gap-1 rounded text-sm text-bronze underline focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800 md:text-xs"
-          href="https://alchemix.fi/vaults"
-          target="_blank"
-        >
+        <PrettyLink className="text-xs text-bronze" href="https://alchemix.fi/vaults" external>
           Alchemix
-          <FaExternalLinkAlt className="h-3 w-3" />
-        </Link>
+        </PrettyLink>
       </div>
 
       <div className="rounded md:border md:border-comet-600 md:bg-comet-700 md:py-1 md:px-2">
@@ -71,15 +65,13 @@ export const AccountOverview: FC = () => {
             {isClientReady &&
             subscriptions.data?.taskId &&
             subscriptions.data.taskId !== "0x0000000000000000000000000000000000000000000000000000000000000000" ? (
-              <Link
-                className="-mx-1.5 inline-flex items-center justify-end gap-1 rounded-lg px-1.5 text-bronze underline focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze"
+              <PrettyLink
+                className="text-xs text-bronze"
                 href={`https://app.gelato.network/task/${subscriptions.data.taskId}?chainId=1`}
-                target="_blank"
+                external
               >
-                <span className="sr-only">Gelato task</span>
-                <span>Gelato</span>
-                <FaExternalLinkAlt className="h-3 w-3" />
-              </Link>
+                Gelato
+              </PrettyLink>
             ) : (
               "–"
             )}

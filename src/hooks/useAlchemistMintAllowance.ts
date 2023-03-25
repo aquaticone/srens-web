@@ -8,7 +8,7 @@ import {
   useWaitForTransaction,
 } from "wagmi"
 
-import { useToastStore } from "@/store"
+import { useSrensStore } from "@/store"
 
 import { alchemistConfig, selfRepayingEnsAddress } from "@/constant"
 
@@ -25,7 +25,7 @@ export function useReadAlchemistMintAllowance() {
 }
 
 export function useUpdateAlchemistMintAllowance() {
-  const setToast = useToastStore((store) => store.setToast)
+  const setToast = useSrensStore((store) => store.setToast)
   const prepare = usePrepareContractWrite({
     ...alchemistConfig,
     functionName: "approveMint",
@@ -33,14 +33,14 @@ export function useUpdateAlchemistMintAllowance() {
   })
   const write = useContractWrite({
     ...prepare.config,
-    onError: (err) => (err instanceof UserRejectedRequestError ? null : setToast("Transaction failed", "error")),
-    onMutate: () => setToast("Waiting for signature", "pending"),
-    onSuccess: () => setToast("Waiting for confirmation", "pending"),
+    onError: (err) => (err instanceof UserRejectedRequestError ? null : setToast("error", "Transaction failed")),
+    onMutate: () => setToast("pending", "Waiting for signature"),
+    onSuccess: () => setToast("pending", "Waiting for confirmation"),
   })
   const wait = useWaitForTransaction({
     hash: write.data?.hash,
-    onError: () => setToast("Error updating mint allowance", "error"),
-    onSuccess: () => setToast("Mint allowance updated", "success"),
+    onError: () => setToast("error", "Error updating mint allowance"),
+    onSuccess: () => setToast("success", "Mint allowance updated"),
   })
   return {
     isError: prepare.isError || write.isError,
