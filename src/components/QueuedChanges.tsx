@@ -46,7 +46,7 @@ export const QueuedChanges: FC = () => {
           ))}
         </ul>
       ) : (
-        <div className="text-sm text-comet-100 md:text-xs">
+        <div className="text-sm text-comet-100 md:text-xs lg:text-sm">
           Subscription changes you make will appear here for review. You can submit multiple changes in a single
           transaction.
         </div>
