@@ -1,5 +1,6 @@
 import { Transition } from "@headlessui/react"
 import { FC, Fragment, useEffect, useRef } from "react"
+import { useAccount } from "wagmi"
 
 import { clsxm } from "@/lib"
 
@@ -8,6 +9,7 @@ import { Spinner } from "@/components/Spinner"
 import { useSrensStore } from "@/store"
 
 export const Toaster: FC = () => {
+  const { address } = useAccount()
   const timerRef = useRef<NodeJS.Timer>()
   const toast = useSrensStore((store) => store.toast)
   const unsetToast = useSrensStore((store) => store.unsetToast)
@@ -21,6 +23,13 @@ export const Toaster: FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toast])
+
+  useEffect(() => {
+    if (toast?.status === "pending") {
+      unsetToast()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address])
 
   return (
     <Transition

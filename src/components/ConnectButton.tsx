@@ -11,6 +11,7 @@ import { useSrensStore } from "@/store"
 
 export const ConnectButton: FC = () => {
   const { chain } = useNetwork()
+
   const dequeueAllCalls = useSrensStore((store) => store.dequeueAllCalls)
   useEffect(() => {
     dequeueAllCalls()
