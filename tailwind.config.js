@@ -41,8 +41,20 @@ module.exports = {
         orange: "#ec8339",
         red: "#fc4544",
       },
+      keyframes: {
+        ping: {
+          "75%, 100%": { transform: "scale(1.15, 1.5)", opacity: "0" },
+          "0% 10%": { transform: "scale(1)", opacity: "1" },
+        },
+      },
+      animation: {
+        ping: "ping 3s cubic-bezier(0, 0, 0.2, 1) infinite",
+      },
       screens: {
         md: "820px",
+      },
+      boxShadow: {
+        glow: "0 0 12px 0 #2ecc94",
       },
       transitionTimingFunction: {
         "cubic-bezier": "cubic-bezier(.15, 1.15, 0.6, 1.00)",

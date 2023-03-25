@@ -55,16 +55,21 @@ export const QueuedChanges: FC = () => {
   )
 }
 
-type CommitQueuedChangesProps = {
-  onUpdated?: () => void
-}
-
-export const CommitQueuedChanges: FC<CommitQueuedChangesProps> = ({ onUpdated }) => {
+export const CommitQueuedChanges: FC = () => {
   const isClientReady = useIsClientReady()
+
   const queuedCalls = useSrensStore((store) => store.queuedCalls)
+  const setModal = useSrensStore((store) => store.setModal)
+  const setSearchQuery = useSrensStore((store) => store.setSearchQuery)
+  const setSubmittedSearch = useSrensStore((store) => store.setSubmittedSearch)
+
   const mintAllowance = useReadAlchemistMintAllowance()
   const updateMintAllowance = useUpdateAlchemistMintAllowance()
-  const updateSubscriptions = useUpdateSubscriptions(onUpdated)
+  const updateSubscriptions = useUpdateSubscriptions(() => {
+    setModal(undefined)
+    setSearchQuery("")
+    setSubmittedSearch("")
+  })
 
   const onClickApprove = () => {
     updateMintAllowance.write?.()
@@ -77,15 +82,15 @@ export const CommitQueuedChanges: FC<CommitQueuedChangesProps> = ({ onUpdated })
 
   return (
     <div>
-      {mintAllowance.data ? (
+      {!mintAllowance.data ? (
         <>
           <SectionTitle className="max-md:text-white">Update subscriptions</SectionTitle>
           <button
             className={clsxm(
-              "flex w-full items-center justify-center gap-3 rounded bg-green-200 p-3 font-semibold text-comet-900 transition-colors md:text-xs",
+              "relative flex w-full items-center justify-center gap-3 rounded bg-green p-3 font-semibold text-comet-900 transition-colors md:text-sm",
               {
                 "cursor-wait opacity-50": updateSubscriptions.isWaiting,
-                "enabled:hover:bg-green-100 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
+                "enabled:shadow-glow enabled:ring-1 enabled:ring-white/30 enabled:hover:bg-green-100 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
                   !updateSubscriptions.isWaiting,
               }
             )}
@@ -94,6 +99,9 @@ export const CommitQueuedChanges: FC<CommitQueuedChangesProps> = ({ onUpdated })
           >
             {updateSubscriptions.isWaiting ? "Updating subscriptions" : "Update subscriptions"}
             {updateSubscriptions.isWaiting && <Spinner className="h-5 w-5 fill-current md:h-4 md:w-4" />}
+            {!(updateSubscriptions.isLoading || updateSubscriptions.isWaiting) && (
+              <div aria-hidden="true" className="absolute inset-0 animate-ping rounded ring-1 ring-green" />
+            )}
           </button>
         </>
       ) : (
@@ -104,10 +112,10 @@ export const CommitQueuedChanges: FC<CommitQueuedChangesProps> = ({ onUpdated })
           </p>
           <button
             className={clsxm(
-              "flex w-full items-center justify-center gap-3 rounded bg-green-200 p-3 font-semibold text-comet-900 transition-colors md:text-xs",
+              "relative flex w-full items-center justify-center gap-3 rounded bg-green p-3 font-semibold text-comet-900 transition-colors md:text-sm",
               {
                 "cursor-wait opacity-50": updateMintAllowance.isWaiting,
-                "enabled:hover:bg-green-100 enabled:focus:outline-none enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
+                "enabled:shadow-glow enabled:ring-1 enabled:ring-white/30 enabled:hover:bg-green-100 enabled:focus:outline-none  enabled:focus-visible:ring-1 enabled:focus-visible:ring-bronze enabled:focus-visible:ring-offset-4 enabled:focus-visible:ring-offset-comet-800":
                   !updateMintAllowance.isWaiting,
               }
             )}
@@ -116,6 +124,9 @@ export const CommitQueuedChanges: FC<CommitQueuedChangesProps> = ({ onUpdated })
           >
             {updateMintAllowance.isWaiting ? "Approving" : "Approve"}
             {updateMintAllowance.isWaiting && <Spinner className="h-5 w-5 fill-current md:h-4 md:w-4" />}
+            {!(updateSubscriptions.isLoading || updateSubscriptions.isWaiting) && (
+              <div aria-hidden="true" className="absolute inset-0 animate-ping rounded ring-1 ring-green" />
+            )}
           </button>
         </>
       )}

@@ -1,5 +1,5 @@
 import { Transition } from "@headlessui/react"
-import { Fragment, useState } from "react"
+import { Fragment } from "react"
 import { useAccount } from "wagmi"
 
 import { clsxm } from "@/lib"
@@ -19,6 +19,8 @@ import {
   SectionTitle,
   Seo,
 } from "@/components"
+import { QueuedChangesModal } from "@/components/Modal"
+import { UnderCollateralizedModal } from "@/components/Modal/UnderCollateralizedModal"
 
 import { useSrensStore } from "@/store"
 
@@ -29,39 +31,12 @@ export default function Dashboard() {
   const showExplainer = useSrensStore((store) => store.showExplainer)
   const queuedCallsCount = useSrensStore((store) => store.queuedCalls.length)
 
-  const [value, setValue] = useState<string>("")
-  const [submitted, setSubmitted] = useState<string>("")
-
-  const resetSearch = () => {
-    setValue("")
-    setSubmitted("")
-  }
-
   return (
     <Layout>
       <Seo />
 
       <div>
-        <Header showExplainerButton>
-          {({ setIsMenuOpen }) => (
-            <>
-              {/* Mobile account overview + changes */}
-              <AccountOverview />
-              <CommitQueuedChanges
-                onUpdated={() => {
-                  setIsMenuOpen(false)
-                  resetSearch()
-                }}
-              />
-              <div>
-                <SectionTitle className="text-white">
-                  Changes{queuedCallsCount > 0 ? ` (${queuedCallsCount})` : null}
-                </SectionTitle>
-                <QueuedChanges />
-              </div>
-            </>
-          )}
-        </Header>
+        <Header showExplainerButton />
 
         <Transition
           as={Fragment}
@@ -82,7 +57,7 @@ export default function Dashboard() {
           <section>
             <SectionTitle>Search domains</SectionTitle>
             <div className="space-y-4">
-              <SearchDomains value={value} setValue={setValue} submitted={submitted} setSubmitted={setSubmitted} />
+              <SearchDomains />
             </div>
           </section>
 
@@ -107,8 +82,8 @@ export default function Dashboard() {
         {/* Desktop account overview + changes */}
         <aside className="grid max-h-full grid-cols-1 grid-rows-[max-content,auto] pt-4 max-md:hidden">
           <div className="space-y-6 pl-4">
-            <AccountOverview />
-            <CommitQueuedChanges onUpdated={resetSearch} />
+            <AccountOverview showAlchemixLink showCollateralizationHelp />
+            <CommitQueuedChanges />
             <SectionTitle
               className={clsxm("mb-0", {
                 "border-b border-b-comet-700 pb-3": queuedCallsCount > 0,
@@ -124,6 +99,11 @@ export default function Dashboard() {
       </div>
 
       <Footer />
+
+      <UnderCollateralizedModal />
+      <div className="md:hidden">
+        <QueuedChangesModal />
+      </div>
     </Layout>
   )
 }

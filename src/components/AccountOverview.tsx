@@ -1,28 +1,40 @@
 import { BigNumber } from "ethers"
-import { formatUnits } from "ethers/lib/utils.js"
 import { FC } from "react"
+import { FaRegQuestionCircle } from "react-icons/fa"
 import { useAccount } from "wagmi"
 
 import { clsxm } from "@/lib"
 import { formatLocaleUnits } from "@/lib/formatLocaleUnits"
 import { useAlchemistAccountMetrics, useIsClientReady, useReadSubscriptions } from "@/hooks"
 
+import { Button } from "@/components/Button"
 import { PrettyLink } from "@/components/PrettyLink"
 import { SectionTitle } from "@/components/SectionTitle"
 
-export const AccountOverview: FC = () => {
+import { useSrensStore } from "@/store"
+
+type AccountOverviewProps = {
+  showAlchemixLink?: boolean
+  showCollateralizationHelp?: boolean
+}
+
+export const AccountOverview: FC<AccountOverviewProps> = ({ showAlchemixLink, showCollateralizationHelp }) => {
   const isClientReady = useIsClientReady()
   const { isConnected } = useAccount()
   const accountMetrics = useAlchemistAccountMetrics()
   const subscriptions = useReadSubscriptions()
 
+  const setModal = useSrensStore((store) => store.setModal)
+
   return (
     <section>
       <div className="flex items-baseline justify-between">
         <SectionTitle className="max-md:text-white">Account</SectionTitle>
-        <PrettyLink className="text-xs text-bronze" href="https://alchemix.fi/vaults" external>
-          Alchemix
-        </PrettyLink>
+        {showAlchemixLink && (
+          <PrettyLink className="text-xs text-bronze" href="https://alchemix.fi/vaults" external>
+            Alchemix
+          </PrettyLink>
+        )}
       </div>
 
       <div className="rounded md:border md:border-comet-600 md:bg-comet-700 md:py-1 md:px-2">
@@ -43,7 +55,7 @@ export const AccountOverview: FC = () => {
           </dd>
           <dt className="text-comet-50">Collateralization</dt>
           <dd
-            className={clsxm("text-right font-mono", {
+            className={clsxm("inline-flex items-center justify-end gap-2 text-right font-mono", {
               "text-green": isClientReady && accountMetrics.data?.isCollateralized,
               "text-red": isClientReady && isConnected && !accountMetrics.data?.isCollateralized,
             })}
@@ -55,6 +67,11 @@ export const AccountOverview: FC = () => {
                 ? "∞"
                 : "0.0"
               : "–"}
+            {isClientReady && isConnected && !accountMetrics.data?.isCollateralized && showCollateralizationHelp && (
+              <Button onClick={() => setModal("underCollateralized")}>
+                <FaRegQuestionCircle className="h-4 w-4" />
+              </Button>
+            )}
           </dd>
           <dt className="text-comet-50">Subscriptions</dt>
           <dd className="text-right">
@@ -77,12 +94,6 @@ export const AccountOverview: FC = () => {
             )}
           </dd>
         </dl>
-        {isClientReady && accountMetrics.isSuccess && !accountMetrics.data?.isCollateralized && (
-          <p className="my-1 text-sm text-red md:text-xs">
-            Auto-renewals will not be processed if your collateralization ratio is below{" "}
-            {formatUnits(accountMetrics.data?.minCollatRatio ?? "2")}
-          </p>
-        )}
       </div>
     </section>
   )

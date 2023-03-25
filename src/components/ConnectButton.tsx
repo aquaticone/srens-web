@@ -53,14 +53,12 @@ export const ConnectButton: FC = () => {
                     ) : (
                       <>
                         {chains.length > 1 && (
-                          <HeaderButton onClick={openChainModal}>
-                            <div className="flex items-center gap-3 px-3 py-1.5">
-                              {chain.hasIcon && chain.iconUrl && (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img alt={chain.name ?? "Chain icon"} src={chain.iconUrl} className="h-4 w-4" />
-                              )}
-                              <span className="max-md:hidden">{chain.name}</span>
-                            </div>
+                          <HeaderButton className="flex items-center gap-2" onClick={openChainModal}>
+                            {chain.hasIcon && chain.iconUrl && (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img alt={chain.name ?? "Chain icon"} src={chain.iconUrl} className="h-4 w-4" />
+                            )}
+                            <span className="max-md:hidden">{chain.name}</span>
                           </HeaderButton>
                         )}
                         <HeaderButton onClick={openAccountModal}>{account.displayName}</HeaderButton>

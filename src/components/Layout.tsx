@@ -1,9 +1,7 @@
-import { Dialog, Transition } from "@headlessui/react"
 import Link from "next/link"
-import { FC, Fragment, PropsWithChildren, useState } from "react"
+import { FC, Fragment, PropsWithChildren } from "react"
 import { FaBars, FaGithub, FaRegQuestionCircle } from "react-icons/fa"
 
-import { montserrat } from "@/lib"
 import { useIsClientReady } from "@/hooks"
 
 import { HeaderButton } from "@/components/Button"
@@ -13,7 +11,6 @@ import { Toaster } from "@/components/Toaster"
 import { useSrensStore } from "@/store"
 
 import AlchemixLogo from "~/svg/alchemix_logo.svg"
-import CloseIcon from "~/svg/close.svg"
 import Dune from "~/svg/dune.svg"
 import Etherscan from "~/svg/etherscan.svg"
 import SRENSLogo from "~/svg/srens_logo.svg"
@@ -23,13 +20,13 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => (
 )
 
 type HeaderProps = {
-  children?: (props: { setIsMenuOpen: (isOpen: boolean) => void }) => JSX.Element
   showExplainerButton?: boolean
 }
 
-export const Header: FC<HeaderProps> = ({ children, showExplainerButton }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+export const Header: FC<HeaderProps> = ({ showExplainerButton }) => {
   const isClientReady = useIsClientReady()
+
+  const setModal = useSrensStore((store) => store.setModal)
   const showExplainer = useSrensStore((store) => store.showExplainer)
   const setShowExplainer = useSrensStore((store) => store.setShowExplainer)
   const queuedCallsCount = useSrensStore((store) => store.queuedCalls.length)
@@ -59,7 +56,7 @@ export const Header: FC<HeaderProps> = ({ children, showExplainerButton }) => {
               </button>
             )}
             <ConnectButton />
-            <button className="p-2" onClick={() => setIsMenuOpen(true)}>
+            <button className="p-2" onClick={() => setModal("queuedChanges")}>
               <FaBars className="h-7 w-7 fill-comet-300" />
             </button>
           </div>
@@ -73,44 +70,10 @@ export const Header: FC<HeaderProps> = ({ children, showExplainerButton }) => {
         </div>
       </header>
 
-      <Transition.Root show={isMenuOpen} as={Fragment}>
-        <Dialog as="div" className={`${montserrat.variable} relative z-40 font-sans md:hidden`} onClose={setIsMenuOpen}>
-          <Transition.Child
-            as={Fragment}
-            enter="transition-opacity ease duration-150"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-          >
-            <div className="fixed inset-0 z-0 bg-black/50" aria-hidden="true" />
-          </Transition.Child>
-
-          <div className="fixed inset-x-0 bottom-0 flex justify-end sm:inset-0 sm:items-center sm:justify-center">
-            <Transition.Child
-              as={Fragment}
-              enter="transition-transform ease-cubic-bezier duration-[350ms]"
-              enterFrom="translate-y-full"
-              enterTo="translate-y-0"
-            >
-              <Dialog.Panel className="max-h-[66svh] w-full space-y-6 overflow-y-auto rounded-t-lg border-l border-l-comet-700 bg-comet-600 p-4 pb-6 shadow shadow-black/80 focus:outline-none sm:max-w-lg sm:rounded-b-lg sm:border sm:border-comet-500 md:py-6">
-                <div className="flex justify-end">
-                  <button
-                    className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-comet-700 p-2 text-comet-400"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <CloseIcon />
-                  </button>
-                </div>
-                {children?.({ setIsMenuOpen })}
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition.Root>
-
       {isClientReady && queuedCallsCount > 0 && (
         <button
-          className="fixed inset-x-0 bottom-0 z-30 mx-4 mb-4 rounded bg-green-200 py-3.5 text-center font-semibold text-comet-900 shadow-md shadow-comet-900/50 md:hidden"
-          onClick={() => setIsMenuOpen(true)}
+          className="fixed inset-x-0 bottom-0 z-30 mx-4 mb-4 rounded bg-green py-3.5 text-center font-semibold text-comet-900 shadow-md shadow-comet-900/50 md:hidden"
+          onClick={() => setModal("queuedChanges")}
         >
           Review changes
         </button>

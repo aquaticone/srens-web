@@ -75,7 +75,7 @@ export const Explainer = forwardRef<HTMLDivElement>((_props, ref) => {
           </li>
         </ol>
 
-        <AlchemixLogoThin className="absolute bottom-0 right-0 h-96 w-96 translate-x-1/4 translate-y-1/4 opacity-10 lg:opacity-75" />
+        <AlchemixLogoThin className="absolute bottom-0 right-0 h-96 w-96 translate-x-1/4 translate-y-1/4 opacity-10 lg:opacity-75 xl:h-[28rem] xl:w-[28rem] xl:translate-y-32 xl:translate-x-14" />
       </div>
     </div>
   )
