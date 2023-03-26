@@ -82,7 +82,7 @@ export const CommitQueuedChanges: FC = () => {
 
   return (
     <div>
-      {!mintAllowance.data ? (
+      {mintAllowance.data ? (
         <>
           <SectionTitle className="max-md:text-white">Update subscriptions</SectionTitle>
           <button
