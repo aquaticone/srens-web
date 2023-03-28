@@ -81,14 +81,8 @@ export const Domain: FC<DomainProps> = ({
           ) : (
             <Switch.Group>
               <div className="flex items-center">
-                <Switch.Label
-                  className={clsxm("pr-3 text-sm uppercase", {
-                    "cursor-wait": isSwitchLoading,
-                    "text-comet-50": !isSubscribed,
-                    "text-comet-300": isSubscribed,
-                  })}
-                >
-                  {isSubscribed ? "Subscribed" : "Subscribe"}
+                <Switch.Label className={clsxm("pr-3 text-bronze", { "cursor-wait": isSwitchLoading })}>
+                  Auto-renew
                 </Switch.Label>
                 <Switch
                   checked={isSwitchChecked}
