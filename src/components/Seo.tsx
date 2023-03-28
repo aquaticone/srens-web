@@ -5,11 +5,11 @@ import { FC } from "react"
 const defaultMeta = {
   title: "Self-Repaying ENS",
   siteName: "Self-Repaying ENS",
-  description: "",
-  url: "https://selfrepayingens.dev",
+  description: "Deposit some ETH with the Alchemists and never worry about losing your ENS again.",
+  url: "https://srens-web.vercel.app",
   type: "website",
   robots: "follow, index",
-  image: "https://selfrepayingens.dev/images/large-og.png",
+  image: "https://srens-web.vercel.app/images/srens_og.png",
 }
 
 type SeoProps = {
