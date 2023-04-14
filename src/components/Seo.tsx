@@ -6,10 +6,10 @@ const defaultMeta = {
   title: "Self-Repaying ENS",
   siteName: "Self-Repaying ENS",
   description: "Deposit some ETH with the Alchemists and never worry about losing your ENS again.",
-  url: "https://srens-web.vercel.app",
+  url: "https://ens.alchemix.fi/",
   type: "website",
   robots: "follow, index",
-  image: "https://srens-web.vercel.app/images/srens_og.png",
+  image: "https://ens.alchemix.fi/images/srens_og.png",
 }
 
 type SeoProps = {
