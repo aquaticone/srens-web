@@ -1,7 +1,7 @@
 import { getDefaultWallets } from "@rainbow-me/rainbowkit"
 import { configureChains, createClient } from "wagmi"
 import { foundry, mainnet } from "wagmi/chains"
-import { alchemyProvider } from "wagmi/providers/alchemy"
+import { infuraProvider } from "wagmi/providers/infura"
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc"
 
 const isFoundryEnabled = process.env.NEXT_PUBLIC_ENABLE_FOUNDRY === "true"
@@ -9,7 +9,7 @@ const isFoundryEnabled = process.env.NEXT_PUBLIC_ENABLE_FOUNDRY === "true"
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet, ...(isFoundryEnabled ? [foundry] : [])],
   [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY ?? "" }),
+    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_KEY ?? "" }),
     jsonRpcProvider({ rpc: (_chain) => ({ http: "https://eth.llamarpc.com" }) }),
   ]
 )
