@@ -36,10 +36,9 @@ export const Explainer = forwardRef<HTMLDivElement>((_props, ref) => {
             </span>
             <div className="max-w-prose font-medium">
               <PrettyLink href="https://alchemix.fi/vaults" external>
-                Ensure you have some ETH deposited into Alchemix.
+                Ensure you have adequate ETH deposited in an Alchemix alETH position.
               </PrettyLink>{" "}
-              Alchemix LTV is 50%, so make sure the borrowable amount is sufficient for at least a 1-year renewal on all
-              selected domains.
+              Alchemix’s LTV ratio is 50%, so make sure the borrowable amount of alETH is sufficient to pay for at least a 1-year renewal on all your selected domains.
             </div>
           </li>
           <li className="flex gap-5">
@@ -47,8 +46,7 @@ export const Explainer = forwardRef<HTMLDivElement>((_props, ref) => {
               2
             </span>
             <div className="max-w-prose font-medium">
-              Search for ENS domains you want to auto-renew Then click the toggle switch on for each ENS you want to
-              auto-renew.
+              Search for any ENS address you want to renew. These could be your own, or someone else’s, and then click the toggle switch for each ENS to which you want to auto-renew. ENS domains associated with your connected wallet will automatically populate.
             </div>
           </li>
           <li className="flex gap-5">
@@ -56,8 +54,7 @@ export const Explainer = forwardRef<HTMLDivElement>((_props, ref) => {
               3
             </span>
             <div className="max-w-prose font-medium">
-              Click the big green "Approve" button This gives the SRENS contract the ability to mint alETH from your
-              CDP.
+              In order for the contract to do its thing, click the big green "Approve" button to give the SRENS contract the ability to mint alETH from your Alchemix position on your behalf.
             </div>
           </li>
           <li className="flex gap-5">
@@ -65,7 +62,7 @@ export const Explainer = forwardRef<HTMLDivElement>((_props, ref) => {
               4
             </span>
             <div className="max-w-prose font-medium">
-              After that clears, click the big green "Auto-renew" button This enables SRENS to auto-renew your ENS.
+              After the approval from step 3 is confirmed, click the big green "Subscribe" button to enable SRENS to Auto-renew your ENS so that your name never expires.
             </div>
           </li>
         </ol>
