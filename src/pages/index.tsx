@@ -2,8 +2,8 @@ import { Transition } from "@headlessui/react"
 import { Fragment } from "react"
 import { useAccount } from "wagmi"
 
-import { clsxm } from "@/lib"
 import { useIsClientReady } from "@/hooks"
+import { clsxm } from "@/lib"
 
 import {
   AccountOverview,
@@ -21,6 +21,7 @@ import {
 } from "@/components"
 import { QueuedChangesModal } from "@/components/Modal"
 import { UnderCollateralizedModal } from "@/components/Modal/UnderCollateralizedModal"
+import { SrensUnavailable } from "@/components/SrensUnavailable"
 
 import { useSrensStore } from "@/store"
 
@@ -37,6 +38,8 @@ export default function Dashboard() {
 
       <div>
         <Header showExplainerButton />
+
+        <SrensUnavailable />
 
         <Transition
           as={Fragment}
