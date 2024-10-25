@@ -8,7 +8,7 @@
 
 ### Environment variables
 
-- `NEXT_PUBLIC_ALCHEMY_KEY` - required for mainnet RPC
+- `NEXT_PUBLIC_INFURA_KEY` - required for mainnet RPC
 - `NEXT_PUBLIC_ENABLE_FOUNDRY` - set to `true` to enable localhost network
 
 ## GraphQL codegen

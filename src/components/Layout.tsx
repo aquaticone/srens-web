@@ -117,16 +117,6 @@ export const Footer: FC = () => (
         <li>
           <Link
             className="inline-flex items-center gap-2 rounded hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
-            href="https://github.com/The-Wary-One/self-repaying-ens"
-            target="_blank"
-          >
-            <FaGithub className="h-5 w-5 fill-silver" />
-            Contract
-          </Link>
-        </li>
-        <li>
-          <Link
-            className="inline-flex items-center gap-2 rounded hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-bronze focus-visible:ring-offset-4 focus-visible:ring-offset-comet-800"
             href="https://github.com/alchemix-finance/srens-web"
             target="_blank"
           >
